@@ -1,0 +1,299 @@
+{
+  "id": "PT02-invalid",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "stacks": {
+          "type": {
+            "map": {
+              "record": {
+                "qty": "int"
+              }
+            }
+          },
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "Pickup": {
+          "record": {
+            "item": "string",
+            "qty": "int"
+          }
+        },
+        "InventoryFull": {
+          "record": {}
+        },
+        "InvalidQuantity": {
+          "record": {}
+        }
+      },
+      "handlers": [],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "bag",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "bag",
+          "event": "Pickup",
+          "priority": 0,
+          "body": [
+            {
+              "op": "if",
+              "condition": {
+                "op": "gt",
+                "a": {
+                  "op": "var",
+                  "name": "qty"
+                },
+                "b": {
+                  "op": "literal",
+                  "type": "int",
+                  "value": 0
+                }
+              },
+              "then": [
+                {
+                  "op": "let",
+                  "name": "inv",
+                  "value": {
+                    "op": "require",
+                    "value": {
+                      "op": "read",
+                      "entity": {
+                        "op": "literal",
+                        "type": "EntityID",
+                        "value": [
+                          "world",
+                          -1,
+                          "genesis",
+                          0
+                        ]
+                      },
+                      "field": "stacks"
+                    }
+                  }
+                },
+                {
+                  "op": "let",
+                  "name": "found",
+                  "value": {
+                    "op": "map_get",
+                    "value": {
+                      "op": "var",
+                      "name": "inv"
+                    },
+                    "key": {
+                      "op": "var",
+                      "name": "item"
+                    }
+                  }
+                },
+                {
+                  "op": "if",
+                  "condition": {
+                    "op": "is_some",
+                    "value": {
+                      "op": "var",
+                      "name": "found"
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "write",
+                      "entity": {
+                        "op": "literal",
+                        "type": "EntityID",
+                        "value": [
+                          "world",
+                          -1,
+                          "genesis",
+                          0
+                        ]
+                      },
+                      "field": "stacks",
+                      "value": {
+                        "op": "map_put",
+                        "value": {
+                          "op": "var",
+                          "name": "inv"
+                        },
+                        "key": {
+                          "op": "var",
+                          "name": "item"
+                        },
+                        "item": {
+                          "op": "record",
+                          "items": {
+                            "qty": {
+                              "op": "add",
+                              "a": {
+                                "op": "member",
+                                "value": {
+                                  "op": "require",
+                                  "value": {
+                                    "op": "var",
+                                    "name": "found"
+                                  }
+                                },
+                                "name": "qty"
+                              },
+                              "b": {
+                                "op": "var",
+                                "name": "qty"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "if",
+                      "condition": {
+                        "op": "lt",
+                        "a": {
+                          "op": "count",
+                          "value": {
+                            "op": "var",
+                            "name": "inv"
+                          }
+                        },
+                        "b": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 2
+                        }
+                      },
+                      "then": [
+                        {
+                          "op": "write",
+                          "entity": {
+                            "op": "literal",
+                            "type": "EntityID",
+                            "value": [
+                              "world",
+                              -1,
+                              "genesis",
+                              0
+                            ]
+                          },
+                          "field": "stacks",
+                          "value": {
+                            "op": "map_put",
+                            "value": {
+                              "op": "var",
+                              "name": "inv"
+                            },
+                            "key": {
+                              "op": "var",
+                              "name": "item"
+                            },
+                            "item": {
+                              "op": "record",
+                              "items": {
+                                "qty": {
+                                  "op": "var",
+                                  "name": "qty"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "emit",
+                          "event": "InventoryFull",
+                          "payload": {
+                            "op": "literal",
+                            "type": {
+                              "record": {}
+                            },
+                            "value": {}
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "emit",
+                  "event": "InvalidQuantity",
+                  "payload": {
+                    "op": "literal",
+                    "type": {
+                      "record": {}
+                    },
+                    "value": {}
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "stacks": {}
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Pickup",
+          "payload": {
+            "item": "A",
+            "qty": 0
+          }
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "values": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "field": "stacks",
+        "value": {}
+      }
+    ],
+    "events": {
+      "InvalidQuantity": 1
+    }
+  }
+}

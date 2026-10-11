@@ -1,0 +1,372 @@
+{
+  "id": "PT09",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "stacks": {
+          "type": {
+            "map": {
+              "record": {
+                "qty": "int"
+              }
+            }
+          },
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "Craft": {
+          "record": {}
+        },
+        "Crafted": {
+          "record": {}
+        },
+        "InventoryFull": {
+          "record": {}
+        },
+        "InsufficientMaterial": {
+          "record": {}
+        }
+      },
+      "handlers": [],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "recipe",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "recipe",
+          "event": "Craft",
+          "priority": 0,
+          "body": [
+            {
+              "op": "let",
+              "name": "inv",
+              "value": {
+                "op": "require",
+                "value": {
+                  "op": "read",
+                  "entity": {
+                    "op": "literal",
+                    "type": "EntityID",
+                    "value": [
+                      "world",
+                      -1,
+                      "genesis",
+                      0
+                    ]
+                  },
+                  "field": "stacks"
+                }
+              }
+            },
+            {
+              "op": "let",
+              "name": "wood",
+              "value": {
+                "op": "map_get",
+                "value": {
+                  "op": "var",
+                  "name": "inv"
+                },
+                "key": {
+                  "op": "literal",
+                  "type": "string",
+                  "value": "wood"
+                }
+              }
+            },
+            {
+              "op": "if",
+              "condition": {
+                "op": "and",
+                "a": {
+                  "op": "is_some",
+                  "value": {
+                    "op": "var",
+                    "name": "wood"
+                  }
+                },
+                "b": {
+                  "op": "ge",
+                  "a": {
+                    "op": "member",
+                    "value": {
+                      "op": "require",
+                      "value": {
+                        "op": "var",
+                        "name": "wood"
+                      }
+                    },
+                    "name": "qty"
+                  },
+                  "b": {
+                    "op": "literal",
+                    "type": "int",
+                    "value": 2
+                  }
+                }
+              },
+              "then": [
+                {
+                  "op": "let",
+                  "name": "next",
+                  "value": {
+                    "op": "var",
+                    "name": "inv"
+                  }
+                },
+                {
+                  "op": "if",
+                  "condition": {
+                    "op": "eq",
+                    "a": {
+                      "op": "member",
+                      "value": {
+                        "op": "require",
+                        "value": {
+                          "op": "var",
+                          "name": "wood"
+                        }
+                      },
+                      "name": "qty"
+                    },
+                    "b": {
+                      "op": "literal",
+                      "type": "int",
+                      "value": 2
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "let",
+                      "name": "next",
+                      "value": {
+                        "op": "map_remove",
+                        "value": {
+                          "op": "var",
+                          "name": "next"
+                        },
+                        "key": {
+                          "op": "literal",
+                          "type": "string",
+                          "value": "wood"
+                        }
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "let",
+                      "name": "next",
+                      "value": {
+                        "op": "map_put",
+                        "value": {
+                          "op": "var",
+                          "name": "next"
+                        },
+                        "key": {
+                          "op": "literal",
+                          "type": "string",
+                          "value": "wood"
+                        },
+                        "item": {
+                          "op": "record",
+                          "items": {
+                            "qty": {
+                              "op": "sub",
+                              "a": {
+                                "op": "member",
+                                "value": {
+                                  "op": "require",
+                                  "value": {
+                                    "op": "var",
+                                    "name": "wood"
+                                  }
+                                },
+                                "name": "qty"
+                              },
+                              "b": {
+                                "op": "literal",
+                                "type": "int",
+                                "value": 2
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "let",
+                  "name": "next",
+                  "value": {
+                    "op": "map_put",
+                    "value": {
+                      "op": "var",
+                      "name": "next"
+                    },
+                    "key": {
+                      "op": "literal",
+                      "type": "string",
+                      "value": "plank"
+                    },
+                    "item": {
+                      "op": "literal",
+                      "type": {
+                        "record": {
+                          "qty": "int"
+                        }
+                      },
+                      "value": {
+                        "qty": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "op": "if",
+                  "condition": {
+                    "op": "le",
+                    "a": {
+                      "op": "count",
+                      "value": {
+                        "op": "var",
+                        "name": "next"
+                      }
+                    },
+                    "b": {
+                      "op": "literal",
+                      "type": "int",
+                      "value": 1
+                    }
+                  },
+                  "then": [
+                    {
+                      "op": "write",
+                      "entity": {
+                        "op": "literal",
+                        "type": "EntityID",
+                        "value": [
+                          "world",
+                          -1,
+                          "genesis",
+                          0
+                        ]
+                      },
+                      "field": "stacks",
+                      "value": {
+                        "op": "var",
+                        "name": "next"
+                      }
+                    },
+                    {
+                      "op": "emit",
+                      "event": "Crafted",
+                      "payload": {
+                        "op": "literal",
+                        "type": {
+                          "record": {}
+                        },
+                        "value": {}
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "emit",
+                      "event": "InventoryFull",
+                      "payload": {
+                        "op": "literal",
+                        "type": {
+                          "record": {}
+                        },
+                        "value": {}
+                      }
+                    }
+                  ]
+                }
+              ],
+              "else": [
+                {
+                  "op": "emit",
+                  "event": "InsufficientMaterial",
+                  "payload": {
+                    "op": "literal",
+                    "type": {
+                      "record": {}
+                    },
+                    "value": {}
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "stacks": {
+          "wood": {
+            "qty": 2
+          }
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Craft",
+          "payload": {}
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "values": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "field": "stacks",
+        "value": {
+          "plank": {
+            "qty": 1
+          }
+        }
+      }
+    ],
+    "events": {
+      "Crafted": 1
+    }
+  }
+}

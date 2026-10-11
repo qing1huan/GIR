@@ -1,0 +1,155 @@
+{
+  "id": "PT01",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "key": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "exclusive",
+          "range": [
+            0,
+            10
+          ]
+        },
+        "open": {
+          "type": "bool",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "Open": {
+          "record": {
+            "player": "EntityID",
+            "door": "EntityID"
+          }
+        },
+        "Opened": {
+          "record": {
+            "door": "EntityID"
+          }
+        },
+        "MissingKey": {
+          "record": {
+            "player": "EntityID"
+          }
+        }
+      },
+      "handlers": [],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "door.open",
+        "library": "Door@1",
+        "event": "Open",
+        "key_field": "key",
+        "open_field": "open"
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "key": 1
+      }
+    },
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        1
+      ],
+      "values": {
+        "open": false
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Open",
+          "payload": {
+            "player": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "door": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ]
+          }
+        },
+        {
+          "name": "Open",
+          "payload": {
+            "player": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "door": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "values": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "field": "key",
+        "value": 0
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "field": "open",
+        "value": true
+      }
+    ],
+    "events": {
+      "Opened": 1
+    }
+  }
+}

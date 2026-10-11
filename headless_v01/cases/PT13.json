@@ -1,0 +1,525 @@
+{
+  "id": "PT13",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "pose": {
+          "type": "vec2",
+          "authority": "Backend",
+          "policy": "exclusive"
+        },
+        "desired": {
+          "type": "vec2",
+          "authority": "IR",
+          "policy": "exclusive"
+        },
+        "move": {
+          "type": "string",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "FormationRequest": {
+          "record": {}
+        },
+        "NavReply": {
+          "record": {
+            "target": "EntityID",
+            "result": {
+              "result": {
+                "ok": "string",
+                "err": {
+                  "enum": [
+                    "NoPath"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "handlers": [],
+      "services": {
+        "Nav.moveTo@1": {
+          "kind": "command",
+          "input": {
+            "record": {
+              "target": "EntityID",
+              "point": "vec2"
+            }
+          },
+          "determinism": "BackendSemantic",
+          "cost": 1,
+          "delivery": "idempotent",
+          "resource_field": "target"
+        }
+      },
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "formation",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "formation",
+          "event": "FormationRequest",
+          "priority": 0,
+          "body": [
+            {
+              "op": "let",
+              "name": "ids",
+              "value": {
+                "op": "query",
+                "fields": [
+                  "desired"
+                ]
+              }
+            },
+            {
+              "op": "let",
+              "name": "origin",
+              "value": {
+                "op": "observe",
+                "entity": {
+                  "op": "literal",
+                  "type": "EntityID",
+                  "value": [
+                    "world",
+                    -1,
+                    "genesis",
+                    0
+                  ]
+                },
+                "field": "pose"
+              }
+            },
+            {
+              "op": "let",
+              "name": "offsets",
+              "value": {
+                "op": "literal",
+                "type": {
+                  "list": "vec2"
+                },
+                "value": [
+                  [
+                    -1.0,
+                    0.0
+                  ],
+                  [
+                    0.0,
+                    -1.0
+                  ],
+                  [
+                    1.0,
+                    0.0
+                  ]
+                ]
+              }
+            },
+            {
+              "op": "repeat",
+              "name": "i",
+              "count": {
+                "op": "count",
+                "value": {
+                  "op": "var",
+                  "name": "ids"
+                }
+              },
+              "max": 3,
+              "body": [
+                {
+                  "op": "let",
+                  "name": "id",
+                  "value": {
+                    "op": "at",
+                    "value": {
+                      "op": "var",
+                      "name": "ids"
+                    },
+                    "index": {
+                      "op": "var",
+                      "name": "i"
+                    }
+                  }
+                },
+                {
+                  "op": "write",
+                  "entity": {
+                    "op": "var",
+                    "name": "id"
+                  },
+                  "field": "desired",
+                  "value": {
+                    "op": "vec2",
+                    "x": {
+                      "op": "add",
+                      "a": {
+                        "op": "at",
+                        "value": {
+                          "op": "var",
+                          "name": "origin"
+                        },
+                        "index": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 0
+                        }
+                      },
+                      "b": {
+                        "op": "at",
+                        "value": {
+                          "op": "at",
+                          "value": {
+                            "op": "var",
+                            "name": "offsets"
+                          },
+                          "index": {
+                            "op": "var",
+                            "name": "i"
+                          }
+                        },
+                        "index": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 0
+                        }
+                      }
+                    },
+                    "y": {
+                      "op": "add",
+                      "a": {
+                        "op": "at",
+                        "value": {
+                          "op": "var",
+                          "name": "origin"
+                        },
+                        "index": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 1
+                        }
+                      },
+                      "b": {
+                        "op": "at",
+                        "value": {
+                          "op": "at",
+                          "value": {
+                            "op": "var",
+                            "name": "offsets"
+                          },
+                          "index": {
+                            "op": "var",
+                            "name": "i"
+                          }
+                        },
+                        "index": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "op": "command",
+                  "service": "Nav.moveTo@1",
+                  "args": {
+                    "op": "record",
+                    "items": {
+                      "target": {
+                        "op": "var",
+                        "name": "id"
+                      },
+                      "point": {
+                        "op": "require",
+                        "value": {
+                          "op": "read",
+                          "entity": {
+                            "op": "var",
+                            "name": "id"
+                          },
+                          "field": "desired"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "ack",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "ack",
+          "event": "NavReply",
+          "priority": 0,
+          "body": [
+            {
+              "op": "if",
+              "condition": {
+                "op": "is_ok",
+                "value": {
+                  "op": "var",
+                  "name": "result"
+                }
+              },
+              "then": [
+                {
+                  "op": "write",
+                  "entity": {
+                    "op": "var",
+                    "name": "target"
+                  },
+                  "field": "move",
+                  "value": {
+                    "op": "literal",
+                    "type": "string",
+                    "value": "Accepted"
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "op": "write",
+                  "entity": {
+                    "op": "var",
+                    "name": "target"
+                  },
+                  "field": "move",
+                  "value": {
+                    "op": "literal",
+                    "type": "string",
+                    "value": "Blocked"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {}
+    },
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        1
+      ],
+      "values": {
+        "desired": [
+          0.0,
+          0.0
+        ],
+        "move": "Idle"
+      }
+    },
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        2
+      ],
+      "values": {
+        "desired": [
+          0.0,
+          0.0
+        ],
+        "move": "Idle"
+      }
+    },
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        3
+      ],
+      "values": {
+        "desired": [
+          0.0,
+          0.0
+        ],
+        "move": "Idle"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "FormationRequest",
+          "payload": {}
+        }
+      ],
+      "observations": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "pose": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "replies": [
+        {
+          "name": "NavReply",
+          "payload": {
+            "target": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "result": {
+              "ok": "Accepted"
+            }
+          }
+        },
+        {
+          "name": "NavReply",
+          "payload": {
+            "target": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "result": {
+              "ok": "Accepted"
+            }
+          }
+        },
+        {
+          "name": "NavReply",
+          "payload": {
+            "target": [
+              "world",
+              -1,
+              "genesis",
+              3
+            ],
+            "result": {
+              "err": "NoPath"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "commands": 3,
+    "values": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "field": "move",
+        "value": "Accepted"
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          2
+        ],
+        "field": "move",
+        "value": "Accepted"
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          3
+        ],
+        "field": "move",
+        "value": "Blocked"
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "field": "desired",
+        "value": [
+          -1.0,
+          0.0
+        ]
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          2
+        ],
+        "field": "desired",
+        "value": [
+          0.0,
+          -1.0
+        ]
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          3
+        ],
+        "field": "desired",
+        "value": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "capabilities": [
+    "Nav.moveTo@1"
+  ]
+}

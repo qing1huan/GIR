@@ -1,0 +1,176 @@
+{
+  "id": "PT14",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "x": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "Reward": {
+          "record": {}
+        }
+      },
+      "handlers": [],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "reward",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "reward",
+          "event": "Reward",
+          "priority": 0,
+          "body": [
+            {
+              "op": "add",
+              "entity": {
+                "op": "literal",
+                "type": "EntityID",
+                "value": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ]
+              },
+              "field": "x",
+              "value": {
+                "op": "literal",
+                "type": "int",
+                "value": 3
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "a",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "a",
+          "event": "Go",
+          "priority": 0,
+          "body": [
+            {
+              "op": "write",
+              "entity": {
+                "op": "literal",
+                "type": "EntityID",
+                "value": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ]
+              },
+              "field": "x",
+              "value": {
+                "op": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "op": "spawn",
+              "name": "d",
+              "values": {
+                "x": {
+                  "op": "literal",
+                  "type": "int",
+                  "value": 1
+                }
+              }
+            },
+            {
+              "op": "draw",
+              "name": "n",
+              "bound": {
+                "op": "literal",
+                "type": "int",
+                "value": 10
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "b",
+          "event": "Go",
+          "priority": 0,
+          "body": [
+            {
+              "op": "write",
+              "entity": {
+                "op": "literal",
+                "type": "EntityID",
+                "value": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ]
+              },
+              "field": "x",
+              "value": {
+                "op": "literal",
+                "type": "int",
+                "value": 2
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "x": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Reward",
+          "payload": {}
+        },
+        {
+          "name": "Go",
+          "payload": {}
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "ABORTED",
+    "error": "WriteConflict",
+    "rollback": true
+  }
+}

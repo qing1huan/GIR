@@ -1,0 +1,330 @@
+{
+  "id": "PT11",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "hp": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "ordered_add",
+          "clamp": {
+            "min": 0,
+            "max_field": "max"
+          },
+          "notify": true
+        },
+        "max": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "exclusive",
+          "range": [
+            0,
+            100
+          ]
+        },
+        "life": {
+          "type": {
+            "enum": [
+              "Alive",
+              "Dead"
+            ]
+          },
+          "authority": "IR",
+          "policy": "exclusive"
+        },
+        "gold": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "ordered_add"
+        },
+        "qty": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        },
+        "Damage": {
+          "record": {}
+        },
+        "Died": {
+          "record": {
+            "entity": "EntityID"
+          }
+        },
+        "DropReady": {
+          "record": {
+            "drop": "EntityID"
+          }
+        },
+        "Pickup": {
+          "record": {
+            "drop": "EntityID"
+          }
+        },
+        "Picked": {
+          "record": {
+            "drop": "EntityID"
+          }
+        }
+      },
+      "handlers": [
+        {
+          "id": "damage",
+          "event": "Damage",
+          "priority": 0,
+          "body": [
+            {
+              "op": "add",
+              "entity": {
+                "op": "literal",
+                "type": "EntityID",
+                "value": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              },
+              "field": "hp",
+              "value": {
+                "op": "literal",
+                "type": "int",
+                "value": -5
+              }
+            }
+          ]
+        },
+        {
+          "id": "loot",
+          "event": "Died",
+          "priority": 0,
+          "body": [
+            {
+              "op": "spawn",
+              "name": "d",
+              "values": {
+                "qty": {
+                  "op": "literal",
+                  "type": "int",
+                  "value": 5
+                }
+              }
+            },
+            {
+              "op": "emit",
+              "event": "DropReady",
+              "payload": {
+                "op": "record",
+                "items": {
+                  "drop": {
+                    "op": "var",
+                    "name": "d"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "ready",
+          "event": "DropReady",
+          "priority": 0,
+          "body": [
+            {
+              "op": "emit",
+              "event": "Pickup",
+              "payload": {
+                "op": "record",
+                "items": {
+                  "drop": {
+                    "op": "var",
+                    "name": "drop"
+                  }
+                }
+              }
+            },
+            {
+              "op": "emit",
+              "event": "Pickup",
+              "payload": {
+                "op": "record",
+                "items": {
+                  "drop": {
+                    "op": "var",
+                    "name": "drop"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "pickup",
+          "event": "Pickup",
+          "priority": 0,
+          "body": [
+            {
+              "op": "if",
+              "condition": {
+                "op": "is_some",
+                "value": {
+                  "op": "resolve",
+                  "entity": {
+                    "op": "var",
+                    "name": "drop"
+                  }
+                }
+              },
+              "then": [
+                {
+                  "op": "add",
+                  "entity": {
+                    "op": "literal",
+                    "type": "EntityID",
+                    "value": [
+                      "world",
+                      -1,
+                      "genesis",
+                      0
+                    ]
+                  },
+                  "field": "gold",
+                  "value": {
+                    "op": "require",
+                    "value": {
+                      "op": "read",
+                      "entity": {
+                        "op": "var",
+                        "name": "drop"
+                      },
+                      "field": "qty"
+                    }
+                  }
+                },
+                {
+                  "op": "despawn",
+                  "entity": {
+                    "op": "var",
+                    "name": "drop"
+                  }
+                },
+                {
+                  "op": "emit",
+                  "event": "Picked",
+                  "payload": {
+                    "op": "record",
+                    "items": {
+                      "drop": {
+                        "op": "var",
+                        "name": "drop"
+                      }
+                    }
+                  }
+                }
+              ],
+              "else": []
+            }
+          ]
+        }
+      ],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "health",
+        "library": "Health@1",
+        "hp_field": "hp",
+        "life_field": "life"
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "gold": 0
+      }
+    },
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        1
+      ],
+      "values": {
+        "hp": 2,
+        "max": 2,
+        "life": "Alive"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Damage",
+          "payload": {}
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "entity_count": 2,
+    "microsteps": 8,
+    "values": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "field": "gold",
+        "value": 5
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "field": "hp",
+        "value": 0
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "field": "life",
+        "value": "Dead"
+      }
+    ],
+    "events": {
+      "Died": 1,
+      "Picked": 1
+    }
+  }
+}

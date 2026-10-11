@@ -1,0 +1,70 @@
+command: python -m unittest discover -s headless_v01/tests -t . -v
+Actually invoked by verify using unittest loader/TextTestRunner with the same suite; no model execution.
+test_ast_depth_malformed_and_forged_annotations (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_ast_depth_malformed_and_forged_annotations) ... ok
+test_budget_units_effects_access_commands_and_live (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_budget_units_effects_access_commands_and_live) ... ok
+test_clamp_cannot_hide_base_overflow_and_snapshot_config_mismatch (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_clamp_cannot_hide_base_overflow_and_snapshot_config_mismatch) ... ok
+test_default_event_cycle_has_bounded_uids (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_default_event_cycle_has_bounded_uids) ... ok
+test_dynamic_alias_and_container_cell_conflict (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_dynamic_alias_and_container_cell_conflict) ... ok
+test_entity_stale_service_reply_resolve_none (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_entity_stale_service_reply_resolve_none) ... ok
+test_failed_intermediate_write_and_two_deletes (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_failed_intermediate_write_and_two_deletes) ... ok
+test_map_structural_eq_list_order_and_queued_copy (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_map_structural_eq_list_order_and_queued_copy) ... ok
+test_new_max_clamp_and_scoped_loop_accumulator (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_new_max_clamp_and_scoped_loop_accumulator) ... ok
+test_observation_epoch_same_for_later_microstep (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_observation_epoch_same_for_later_microstep) ... ok
+test_retry_cannot_replace_failed_admitted_input (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_retry_cannot_replace_failed_admitted_input) ... ok
+test_rng_known_vector_and_replay_tamper (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_rng_known_vector_and_replay_tamper) ... ok
+test_value_nodes_bytes_map_len_and_structural_eq (headless_v01.tests.test_boundaries.AdditionalBoundaries.test_value_nodes_bytes_map_len_and_structural_eq) ... ok
+test_abort_resume_requires_same_input_retry_and_driver_persists (headless_v01.tests.test_cli.CommandLineTests.test_abort_resume_requires_same_input_retry_and_driver_persists) ... ok
+test_malformed_is_structured_error (headless_v01.tests.test_cli.CommandLineTests.test_malformed_is_structured_error) ... ok
+test_run_replay_inspect (headless_v01.tests.test_cli.CommandLineTests.test_run_replay_inspect) ... ok
+test_step_delayed_reply_restore_and_segment_replay (headless_v01.tests.test_cli.CommandLineTests.test_step_delayed_reply_restore_and_segment_replay) ... ok
+test_A11_patch_validate_revision_connect_activate_and_new_version_rollback (headless_v01.tests.test_closure.EditingClosure.test_A11_patch_validate_revision_connect_activate_and_new_version_rollback) ... ok
+test_A11_shared_field_impact_pending_migration_and_overflow_atomic (headless_v01.tests.test_closure.EditingClosure.test_A11_shared_field_impact_pending_migration_and_overflow_atomic) ... ok
+test_A11_unknown_impact_create_delete_and_uncommitted_rollback (headless_v01.tests.test_closure.EditingClosure.test_A11_unknown_impact_create_delete_and_uncommitted_rollback) ... ok
+test_A11_unknown_port_type_control_and_atomic_failure (headless_v01.tests.test_closure.EditingClosure.test_A11_unknown_port_type_control_and_atomic_failure) ... ok
+test_A10_cumulative_migration_budget_and_namespace_abort_restore (headless_v01.tests.test_closure.LifecycleClosure.test_A10_cumulative_migration_budget_and_namespace_abort_restore) ... ok
+test_A10_partial_migration_err_hidden_read_and_budget_rollback (headless_v01.tests.test_closure.LifecycleClosure.test_A10_partial_migration_err_hidden_read_and_budget_rollback) ... ok
+test_A10_preserve_quest_versions_dedup_save_and_replay (headless_v01.tests.test_closure.LifecycleClosure.test_A10_preserve_quest_versions_dedup_save_and_replay) ... ok
+test_A10_rebase_explicit_timing_pending_and_failure_atomic (headless_v01.tests.test_closure.LifecycleClosure.test_A10_rebase_explicit_timing_pending_and_failure_atomic) ... ok
+test_A10_restart_cancels_timer_no_reward_and_bad_abi_rejected (headless_v01.tests.test_closure.LifecycleClosure.test_A10_restart_cancels_timer_no_reward_and_bad_abi_rejected) ... ok
+test_A08_cost_preserving_constant_fold_and_budget_fault (headless_v01.tests.test_closure.LoweringClosure.test_A08_cost_preserving_constant_fold_and_budget_fault) ... ok
+test_A08_override_reexpand_conflict_preserves_manual (headless_v01.tests.test_closure.LoweringClosure.test_A08_override_reexpand_conflict_preserves_manual) ... ok
+test_A08_reorder_mutations_detect_semantic_difference_and_origin (headless_v01.tests.test_closure.LoweringClosure.test_A08_reorder_mutations_detect_semantic_difference_and_origin) ... ok
+test_A05_nearest_predicate_tie_stale_and_replay (headless_v01.tests.test_closure.QueryClosure.test_A05_nearest_predicate_tie_stale_and_replay) ... ok
+test_A05_predicate_reads_snapshot_not_own_overlay (headless_v01.tests.test_closure.QueryClosure.test_A05_predicate_reads_snapshot_not_own_overlay) ... ok
+test_A05_query_and_nearest_error_rollback (headless_v01.tests.test_closure.QueryClosure.test_A05_query_and_nearest_error_rollback) ... ok
+test_A09_missing_version_pure_extension_budget_and_rollback (headless_v01.tests.test_closure.ServiceClosure.test_A09_missing_version_pure_extension_budget_and_rollback) ... ok
+test_A09_mock_failure_delayed_ack_restore_and_changed_provider_replay (headless_v01.tests.test_closure.ServiceClosure.test_A09_mock_failure_delayed_ack_restore_and_changed_provider_replay) ... ok
+test_A01_types_numeric_and_depth (headless_v01.tests.test_contract.ContractTests.test_A01_types_numeric_and_depth) ... ok
+test_A01_unknown_ast_and_static_types (headless_v01.tests.test_contract.ContractTests.test_A01_unknown_ast_and_static_types) ... ok
+test_A02_special_keys_copy_and_order (headless_v01.tests.test_contract.ContractTests.test_A02_special_keys_copy_and_order) ... ok
+test_A03_authority_and_explicit_logs (headless_v01.tests.test_contract.ContractTests.test_A03_authority_and_explicit_logs) ... ok
+test_A04_atomicity_rng_spawn_future_commands_retry (headless_v01.tests.test_contract.ContractTests.test_A04_atomicity_rng_spawn_future_commands_retry) ... ok
+test_A05_own_reads_other_job_and_invalid (headless_v01.tests.test_contract.ContractTests.test_A05_own_reads_other_job_and_invalid) ... ok
+test_A05_snapshot_delete_spawn_and_alias (headless_v01.tests.test_contract.ContractTests.test_A05_snapshot_delete_spawn_and_alias) ... ok
+test_A06_clamp_once_health_library (headless_v01.tests.test_contract.ContractTests.test_A06_clamp_once_health_library) ... ok
+test_A06_exclusive_add_priority_tie_invalid_loser (headless_v01.tests.test_contract.ContractTests.test_A06_exclusive_add_priority_tie_invalid_loser) ... ok
+test_A06_float_fold_and_numeric_overflow (headless_v01.tests.test_contract.ContractTests.test_A06_float_fold_and_numeric_overflow) ... ok
+test_A07_event_cycle_budget_and_no_truncation (headless_v01.tests.test_contract.ContractTests.test_A07_event_cycle_budget_and_no_truncation) ... ok
+test_A07_finite_loops (headless_v01.tests.test_contract.ContractTests.test_A07_finite_loops) ... ok
+test_A07_root_order_bfs_future_and_event_ids (headless_v01.tests.test_contract.ContractTests.test_A07_root_order_bfs_future_and_event_ids) ... ok
+test_A08_door_lowering_core_plan_and_source (headless_v01.tests.test_contract.ContractTests.test_A08_door_lowering_core_plan_and_source) ... ok
+test_A09_delayed_failure_response_snapshot_restore_replay (headless_v01.tests.test_contract.ContractTests.test_A09_delayed_failure_response_snapshot_restore_replay) ... ok
+test_A09_pure_extension_no_hidden_world (headless_v01.tests.test_contract.ContractTests.test_A09_pure_extension_no_hidden_world) ... ok
+test_A09_query_missing_epoch_and_command_conflict (headless_v01.tests.test_contract.ContractTests.test_A09_query_missing_epoch_and_command_conflict) ... ok
+test_PT01 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT01) ... ok
+test_PT02 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02) ... ok
+test_PT02_invalid (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02_invalid) ... ok
+test_PT02_overflow (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02_overflow) ... ok
+test_PT09 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09) ... ok
+test_PT09_full (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09_full) ... ok
+test_PT09_insufficient (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09_insufficient) ... ok
+test_PT11 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT11) ... ok
+test_PT12 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT12) ... ok
+test_PT13 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT13) ... ok
+test_PT14 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT14) ... ok
+test_PT15 (headless_v01.tests.test_end_to_end.EndToEndTests.test_PT15) ... ok
+
+----------------------------------------------------------------------
+Ran 63 tests in 0.926s
+
+OK

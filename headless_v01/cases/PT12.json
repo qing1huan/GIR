@@ -1,0 +1,248 @@
+{
+  "id": "PT12",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "position": {
+          "type": "vec2",
+          "authority": "IR",
+          "policy": "exclusive"
+        },
+        "a": {
+          "type": "EntityID",
+          "authority": "IR",
+          "policy": "exclusive"
+        },
+        "b": {
+          "type": "EntityID",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        }
+      },
+      "handlers": [],
+      "services": {
+        "Backend.createStaticRoom@1": {
+          "kind": "command",
+          "input": {
+            "record": {
+              "target": "EntityID",
+              "point": "vec2"
+            }
+          },
+          "determinism": "BackendSemantic",
+          "cost": 1,
+          "delivery": "idempotent",
+          "resource_field": "target"
+        }
+      },
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "rooms",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "rooms",
+          "event": "Go",
+          "priority": 0,
+          "body": [
+            {
+              "op": "let",
+              "name": "points",
+              "value": {
+                "op": "literal",
+                "type": {
+                  "list": "vec2"
+                },
+                "value": [
+                  [
+                    0.0,
+                    0.0
+                  ],
+                  [
+                    4.0,
+                    0.0
+                  ],
+                  [
+                    4.0,
+                    4.0
+                  ]
+                ]
+              }
+            },
+            {
+              "op": "let",
+              "name": "ids",
+              "value": {
+                "op": "literal",
+                "type": {
+                  "list": "EntityID"
+                },
+                "value": []
+              }
+            },
+            {
+              "op": "repeat",
+              "name": "i",
+              "count": {
+                "op": "literal",
+                "type": "int",
+                "value": 3
+              },
+              "max": 3,
+              "body": [
+                {
+                  "op": "spawn",
+                  "name": "room",
+                  "values": {
+                    "position": {
+                      "op": "at",
+                      "value": {
+                        "op": "var",
+                        "name": "points"
+                      },
+                      "index": {
+                        "op": "var",
+                        "name": "i"
+                      }
+                    }
+                  }
+                },
+                {
+                  "op": "let",
+                  "name": "ids",
+                  "value": {
+                    "op": "append",
+                    "value": {
+                      "op": "var",
+                      "name": "ids"
+                    },
+                    "item": {
+                      "op": "var",
+                      "name": "room"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "op": "repeat",
+              "name": "i",
+              "count": {
+                "op": "literal",
+                "type": "int",
+                "value": 2
+              },
+              "max": 2,
+              "body": [
+                {
+                  "op": "spawn",
+                  "name": "link",
+                  "values": {
+                    "a": {
+                      "op": "at",
+                      "value": {
+                        "op": "var",
+                        "name": "ids"
+                      },
+                      "index": {
+                        "op": "var",
+                        "name": "i"
+                      }
+                    },
+                    "b": {
+                      "op": "at",
+                      "value": {
+                        "op": "var",
+                        "name": "ids"
+                      },
+                      "index": {
+                        "op": "add",
+                        "a": {
+                          "op": "var",
+                          "name": "i"
+                        },
+                        "b": {
+                          "op": "literal",
+                          "type": "int",
+                          "value": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "op": "foreach",
+              "name": "room",
+              "items": {
+                "op": "var",
+                "name": "ids"
+              },
+              "max": 3,
+              "body": [
+                {
+                  "op": "command",
+                  "service": "Backend.createStaticRoom@1",
+                  "args": {
+                    "op": "record",
+                    "items": {
+                      "target": {
+                        "op": "var",
+                        "name": "room"
+                      },
+                      "point": {
+                        "op": "require",
+                        "value": {
+                          "op": "read",
+                          "entity": {
+                            "op": "var",
+                            "name": "room"
+                          },
+                          "field": "position"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Go",
+          "payload": {}
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "COMMITTED",
+    "entity_count": 5,
+    "commands": 3,
+    "reachable_rooms": 3
+  },
+  "capabilities": [
+    "Backend.createStaticRoom@1"
+  ]
+}

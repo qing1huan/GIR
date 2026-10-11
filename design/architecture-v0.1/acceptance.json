@@ -1,0 +1,162 @@
+{
+  "kind": "future_acceptance_conditions",
+  "contract_version": "0.1-candidate",
+  "entries": [
+    {
+      "id": "A01",
+      "topic": "类型/数值边界",
+      "case_ids": [
+        "PT02",
+        "PT04",
+        "PT07",
+        "PT09"
+      ],
+      "fixture_requirement": "安全int端点/端点+1、嵌套option、缺/多record成员、value/type深度上限及+1",
+      "future_executable_oracle": "合法值round-trip相等；非法值TypeError/NumericOverflow/BudgetExceeded；不靠clamp掩盖溢出",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A02",
+      "topic": "值/特殊键/排序",
+      "case_ids": [
+        "PT02",
+        "PT07",
+        "PT09"
+      ],
+      "fixture_requirement": "__proto__/constructor/$f64/空串/点号/Unicode键；enqueue后改本地嵌套副本；相同map不同插入序",
+      "future_executable_oracle": "user值不变；无原型副作用/传输混淆；map_keys按codepoint；结构相等与array顺序明确",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A03",
+      "topic": "权威/显式读写",
+      "case_ids": [
+        "PT03",
+        "PT13"
+      ],
+      "fixture_requirement": "写Backend Pose；库与extension内隐藏世界读；显式Move command；动态query读集合",
+      "future_executable_oracle": "非法AuthorityViolation；合法日志列resolved reads/effects/commands/source；无双权威",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A04",
+      "topic": "根事务/回滚",
+      "case_ids": [
+        "PT09",
+        "PT14",
+        "PT15"
+      ],
+      "fixture_requirement": "前微步成功craft/RNG/spawn，后微步故障；重试相同input",
+      "future_executable_oracle": "状态/RNG/ID/未来队列/input cursor/outbox恢复S0；commands0；attempt日志保留；重试ID与原预订一致",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A05",
+      "topic": "快照/alias/实体生命周期",
+      "case_ids": [
+        "PT01",
+        "PT06",
+        "PT10"
+      ],
+      "fixture_requirement": "query后delete/spawn；own writes；otherJob writes；失效服务target；等距nearest",
+      "future_executable_oracle": "query列表不变；own overlay可读；其他Job同步不可读；None/require错误明确；后续微步看到暂存新状态",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A06",
+      "topic": "冲突/add/clamp/死亡",
+      "case_ids": [
+        "PT04",
+        "PT11",
+        "PT14"
+      ],
+      "fixture_requirement": "exclusive多set/多add；显式priority tie；ordered float fold及-2/+1 hp；非法败者",
+      "future_executable_oracle": "默认冲突Abort；tie冲突；规定顺序float1；hp0且death1；所有非法效果拒绝，不能被覆盖/loser隐藏",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A07",
+      "topic": "事件/时间/预算",
+      "case_ids": [
+        "PT03",
+        "PT05",
+        "PT15"
+      ],
+      "fixture_requirement": "roots分类、BFS emit+FieldChanged、due future、queue=limit和+1、event循环",
+      "future_executable_oracle": "所有序号稳定；截止时点正确；limit+1 AbortTick，不截结果/丢事件/自动延期；所有隐式事件计cost",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A08",
+      "topic": "三层lowering/source map",
+      "case_ids": [
+        "PT01",
+        "PT04",
+        "PT09",
+        "PT12"
+      ],
+      "fixture_requirement": "标准库展开Core，优化Plan；故意重排float/RNG/观察；CoreOverride再展开",
+      "future_executable_oracle": "状态/事件/命令/错误相同；差异捕获到originChain；CoreOverride显式冲突，不覆盖人工修改",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A09",
+      "topic": "服务/extension/精确回放",
+      "case_ids": [
+        "PT03",
+        "PT06",
+        "PT13"
+      ],
+      "fixture_requirement": "固定响应journal、改变物理Backend、缺cap版本、失败Ack；有界纯extension及越界副作用",
+      "future_executable_oracle": "同journal逻辑exact；不声称新Backend物理exact；cap缺失明确；非法隐藏World访问拒绝；command失败不回滚已提交tick",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A10",
+      "topic": "定义版本/存档迁移",
+      "case_ids": [
+        "PT08"
+      ],
+      "fixture_requirement": "preserve旧Q1/新Q2；Burn5 elapsed2→8的明确rebase；restart取消timer；缺包/schema/ABI变更",
+      "future_executable_oracle": "preserve目标2不变；rebase remaining6且nextPulse按显式映射；迁移失败全保留旧；restart无额外奖励；加载不兼容拒绝",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A11",
+      "topic": "Semantic Editing API",
+      "case_ids": [
+        "PT04",
+        "PT08"
+      ],
+      "fixture_requirement": "无效port/未知node/revision错/有环控制；合法原子patch；未知依赖impact；rollback",
+      "future_executable_oracle": "失败不半改；合法delta/source/migration明确；unknown扩大tests；rollback只丢未提交patch，已发布恢复产生新版本",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    },
+    {
+      "id": "A12",
+      "topic": "公平对照/adapter等价",
+      "case_ids": [
+        "PT01",
+        "PT03",
+        "PT11",
+        "PT13"
+      ],
+      "fixture_requirement": "同需求/状态/input/service oracle，对JS/TS、IR、Vitric Rule+JS adapter执行相同corpus",
+      "future_executable_oracle": "比较规范状态、事件、command、错误；差异定位adapter并修复；工具API条件单测；不能用参考工程通过率当AI率",
+      "status": "NOT_IMPLEMENTED_NOT_RUN",
+      "actual_command": null
+    }
+  ],
+  "implementation_runs": 0
+}

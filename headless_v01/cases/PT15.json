@@ -1,0 +1,103 @@
+{
+  "id": "PT15",
+  "development_set": true,
+  "holdout_eligible": false,
+  "program": {
+    "version": "semantic-v0.1",
+    "base": {
+      "version": "core-v0.1",
+      "fields": {
+        "x": {
+          "type": "int",
+          "authority": "IR",
+          "policy": "exclusive"
+        }
+      },
+      "events": {
+        "Go": {
+          "record": {}
+        },
+        "Tick": {
+          "record": {}
+        }
+      },
+      "handlers": [],
+      "services": {},
+      "extensions": {}
+    },
+    "nodes": [
+      {
+        "id": "ping",
+        "library": "CoreOverride",
+        "handler": {
+          "id": "ping",
+          "event": "Go",
+          "priority": 0,
+          "body": [
+            {
+              "op": "add",
+              "entity": {
+                "op": "literal",
+                "type": "EntityID",
+                "value": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ]
+              },
+              "field": "x",
+              "value": {
+                "op": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "op": "emit",
+              "event": "Go",
+              "payload": {
+                "op": "literal",
+                "type": {
+                  "record": {}
+                },
+                "value": {}
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "initial": [
+    {
+      "id": [
+        "world",
+        -1,
+        "genesis",
+        0
+      ],
+      "values": {
+        "x": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "inputs": [
+        {
+          "name": "Go",
+          "payload": {}
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "status": "ABORTED",
+    "error": "BudgetExceeded",
+    "rollback": true
+  },
+  "budgets": {
+    "microsteps": 4
+  }
+}

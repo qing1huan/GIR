@@ -1,0 +1,243 @@
+{
+  "kind": "PUBLIC_MIGRATION_ALLOWLIST",
+  "source_reference_commit": "f1176ecda2cd8170bbe822e927c7ab610a4cd65f",
+  "tested_source_text_digest": "875bea7dbd654bf815604b40f470552bbc6bc4beb02816cafab64161ca046962",
+  "publication_method": "New commit whose only parent is the existing public target branch; no original workspace history",
+  "sanitization": "Only verify.py report metadata differs from the reference Python source; no runtime/test/case logic change. Migration README is rewritten.",
+  "preserved_remote_paths": [
+    "README.md",
+    "docs/AI_GameIR_Cloud_Dot_Experiment_Plan.docx"
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 40,
+      "sha256": "3543d3274975b1c8ee49106bd7bc08ce5e92b120b0d48ccf5cacb5ecd423e0a9"
+    },
+    {
+      "path": "MIGRATION.md",
+      "bytes": 2452,
+      "sha256": "3a33af2b4f4a48bad9fdcea1db3bb2ba3006888e96a2182e099c96e9477443f6"
+    },
+    {
+      "path": "design/architecture-v0.1/acceptance.json",
+      "bytes": 6214,
+      "sha256": "592c1ec4100dd4c898295e40de1f7671aef407141a5e23856cbfcb07e456630b"
+    },
+    {
+      "path": "headless_v01/.gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793"
+    },
+    {
+      "path": "headless_v01/README.md",
+      "bytes": 2332,
+      "sha256": "f8a662b28dbec90be3122c455b91b6e60f0a99a50661173bb8ccba80b1184950"
+    },
+    {
+      "path": "headless_v01/__init__.py",
+      "bytes": 60,
+      "sha256": "441deee2536bc59d8f99ff33f242b29334985bfb2d1d3166af0d13576f3ea4ef"
+    },
+    {
+      "path": "headless_v01/__main__.py",
+      "bytes": 4105,
+      "sha256": "9c2b8a86c6b43c3bc479bed1e961f5d564e46900922a6cea3773ce433728cbac"
+    },
+    {
+      "path": "headless_v01/cases/PT01.json",
+      "bytes": 2609,
+      "sha256": "0979a78f2d263f313974233fa3a9ebc8a1e31d827702a3b8dd9d1fefc090456a"
+    },
+    {
+      "path": "headless_v01/cases/PT02-invalid.json",
+      "bytes": 8141,
+      "sha256": "a8465a807dacbcb5a80ffd99e512b95da14aa5fd2653eb3b45ac88de3c04e2e0"
+    },
+    {
+      "path": "headless_v01/cases/PT02-overflow.json",
+      "bytes": 8039,
+      "sha256": "3f652bce6c1cf9a8292134e47962a1348f00933fa421eaf48d1f9b945d51b321"
+    },
+    {
+      "path": "headless_v01/cases/PT02.json",
+      "bytes": 8631,
+      "sha256": "3d65e5c6b42b75cd2d79ea3afbbded40b84dc99edf52c4785293be3ff1024532"
+    },
+    {
+      "path": "headless_v01/cases/PT09-full.json",
+      "bytes": 9877,
+      "sha256": "d26536c30a02534ad3d7a4e3c2eddad17fbf786b5f8321734f975125fa8c540a"
+    },
+    {
+      "path": "headless_v01/cases/PT09-insufficient.json",
+      "bytes": 9892,
+      "sha256": "b81155cc8eb1970529af01553b073b0d70e052467557cd73d25f5ee23f9498c2"
+    },
+    {
+      "path": "headless_v01/cases/PT09.json",
+      "bytes": 9867,
+      "sha256": "86f8a63d55371bd97407d46fbba023f97a223645b1b4143a9eb8282a701baac2"
+    },
+    {
+      "path": "headless_v01/cases/PT11.json",
+      "bytes": 6888,
+      "sha256": "85a7d46444eadf99e4d0ac1db13c527821c33ea3faaaba41b4df04dc16e35148"
+    },
+    {
+      "path": "headless_v01/cases/PT12.json",
+      "bytes": 6170,
+      "sha256": "5f7e050918bc83b7272ef0978af5c8438fd6ed677f7b5fff7cc3c883ebf8e8c2"
+    },
+    {
+      "path": "headless_v01/cases/PT13.json",
+      "bytes": 11738,
+      "sha256": "854244beda087de969ccf83f738bc44b1894c1e8ea9b33b96c5e89bbae14116b"
+    },
+    {
+      "path": "headless_v01/cases/PT14.json",
+      "bytes": 3558,
+      "sha256": "24fc768539357fc560eac6758348f7be2ae7653b6a2fac6f706c9451082d083d"
+    },
+    {
+      "path": "headless_v01/cases/PT15.json",
+      "bytes": 1894,
+      "sha256": "673eb36cdf95b632b2f104356c78ae72c56b575cca0a46ae3637819ef0e334be"
+    },
+    {
+      "path": "headless_v01/compiler.py",
+      "bytes": 27696,
+      "sha256": "233fb3a6c968a5f19cf34b30cb9621dcc407f67de69a0099db0a9eb3a2cc2d17"
+    },
+    {
+      "path": "headless_v01/coverage.py",
+      "bytes": 7221,
+      "sha256": "6255d3fc250ef11f6b566f7c3460911b36b197e706bc8b779e522a89b7130222"
+    },
+    {
+      "path": "headless_v01/editing.py",
+      "bytes": 10704,
+      "sha256": "7215462ef7d0434bdff4493890e68426ffc13050b205646f6ef40cb914b8744e"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/acceptance-results.csv",
+      "bytes": 17452,
+      "sha256": "8410fc99a3b1755d637413747facb7aa310a38f68eac2f236e94002ddd59760e"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/acceptance-results.json",
+      "bytes": 20901,
+      "sha256": "b17ddac6e8829395a7a4411b951af699d55e051107c556ed8c5d621c7ee7ce91"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/coverage-audit.csv",
+      "bytes": 8106,
+      "sha256": "3cb1c19cae4ec166b28f897486eacf00e37a53b7151fab3b0f9994efc7e8cbd3"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/coverage-audit.json",
+      "bytes": 18654,
+      "sha256": "0e636dc058ebd5aba506e4192d50b07344dbc1c798f80e8fb7f2c23c4f918e55"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/development-cases.csv",
+      "bytes": 1447,
+      "sha256": "baa956471dafe68c85f07dc990d0efa9347d6d1b3bfb084ee7aaa9668902ce68"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/development-cases.json",
+      "bytes": 4028,
+      "sha256": "82abf91234f1d37c26849ba91dfed9dd3ecf309bc76cc5e5a18bb7600d689784"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/publication-audit.json",
+      "bytes": 1206,
+      "sha256": "d559f8728d5d2bafb756340159d02ebfff0766b75d904c7955ba1f1e4ebc3d9e"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/summary.json",
+      "bytes": 1369,
+      "sha256": "0d4613c65d783a4d7091089b9a5c153961da45a8c35b2647e5822f6d0a0b0ede"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/tests.json",
+      "bytes": 10141,
+      "sha256": "4e0a2c668be8543f7730f6fc8f65aaa7e6a5103cf41d309a26291efb838677b7"
+    },
+    {
+      "path": "headless_v01/evidence/public-release/unit-tests.log",
+      "bytes": 9285,
+      "sha256": "c1c855decfb63f95dcb124912c2297295e38f6fa9c230946e81e0d48499ff2f1"
+    },
+    {
+      "path": "headless_v01/examples.py",
+      "bytes": 11988,
+      "sha256": "e670528f022d79d64874c9119edac4267c2a4ccb77b1ff19f53df7f5a52e2b67"
+    },
+    {
+      "path": "headless_v01/lifecycle.py",
+      "bytes": 18561,
+      "sha256": "57f6c8526211a524c5deed9839520aa7d81637138ff691865466d91d395c37eb"
+    },
+    {
+      "path": "headless_v01/plan_checks.py",
+      "bytes": 1425,
+      "sha256": "d7d928308439a4702b8914efb948af7e733fc85ed22902fbf8b38ade1bd56d71"
+    },
+    {
+      "path": "headless_v01/runtime.py",
+      "bytes": 36851,
+      "sha256": "212ea64d40a666b22902000f7ae1b4bef47cfb4e4f7af35ef0c3489912d8f9f5"
+    },
+    {
+      "path": "headless_v01/services.py",
+      "bytes": 3027,
+      "sha256": "74393de6a10deb1342e471f42f9fbdadb8e4e0b220ba9c70f939cda59299e890"
+    },
+    {
+      "path": "headless_v01/tests/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "headless_v01/tests/fixtures.py",
+      "bytes": 2628,
+      "sha256": "071df83e03604b3142a08ec116e2a08efc22ed94bc030f3b52310803025faa6b"
+    },
+    {
+      "path": "headless_v01/tests/test_boundaries.py",
+      "bytes": 12306,
+      "sha256": "2cf962cf5455c3b3da8b7a5a90746ec5b8a7caf073e31c40e4790cf863a2daf0"
+    },
+    {
+      "path": "headless_v01/tests/test_cli.py",
+      "bytes": 3825,
+      "sha256": "6f64d8ac5717d6daf8e57b8e4bccfd6c889e5565b18d0bcd52162f0c489a5fd9"
+    },
+    {
+      "path": "headless_v01/tests/test_closure.py",
+      "bytes": 27483,
+      "sha256": "639263bae413e8fcac0d8b7dd2c0101ae6665f29f2c940776b09d4d3a3127a4a"
+    },
+    {
+      "path": "headless_v01/tests/test_contract.py",
+      "bytes": 20893,
+      "sha256": "0bccd01278377078cce7e30f0f79587558ded1410f222eaac6a4394bd76de6f8"
+    },
+    {
+      "path": "headless_v01/tests/test_end_to_end.py",
+      "bytes": 2976,
+      "sha256": "8b4421d34766391368a0934c6b07901d755b3fa74de33d15d32273c9d801a783"
+    },
+    {
+      "path": "headless_v01/types.py",
+      "bytes": 6200,
+      "sha256": "c4d188990b34157229c87f65bb36eff432fee4f9d6119c95dc6969592737a10f"
+    },
+    {
+      "path": "headless_v01/verify.py",
+      "bytes": 11145,
+      "sha256": "d2db70c4712f18e756b48a2a5c3f917df9e86e36bfcd2319593c3426c28bfee7"
+    }
+  ]
+}

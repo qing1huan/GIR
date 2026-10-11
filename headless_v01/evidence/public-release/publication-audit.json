@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "scope": "EXPLICIT_ALLOWLIST_ONLY",
+  "audited_utc": "2026-10-11T01:16:15.353424+00:00",
+  "checked_files_before_manifest": 45,
+  "secret_and_private_data_pattern_matches": 0,
+  "patterns_checked": [
+    "private_key",
+    "github_token",
+    "openai_key",
+    "aws_access_id",
+    "credential_assignment",
+    "bearer_or_jwt",
+    "email",
+    "private_home_path",
+    "private_cloud_record"
+  ],
+  "reviewed_content": "Typed reference source, synthetic fixtures, fresh passing unit-test log and public engineering metrics only",
+  "original_source_reference_commit": "f1176ecda2cd8170bbe822e927c7ab610a4cd65f",
+  "reference_files_byte_identical": 32,
+  "metadata_only_modified_python_files": [
+    "headless_v01/verify.py"
+  ],
+  "migration_document_replaced": [
+    "headless_v01/README.md"
+  ],
+  "excluded_categories": [
+    "env files",
+    "credentials and keys",
+    "original Git history or bundles",
+    "private execution logs",
+    "model conversations",
+    "old reports with private execution background",
+    "original Library archive"
+  ],
+  "credential_env_files_accessed": false,
+  "original_history_uploaded": false,
+  "model_calls": 0,
+  "reset_cards_used": 0
+}

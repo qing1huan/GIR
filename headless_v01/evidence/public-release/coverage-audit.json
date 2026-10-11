@@ -1,0 +1,709 @@
+{
+  "kind": "ENGINEERING_CHECK_ACCOUNTING_ONLY",
+  "unique_method_count": 63,
+  "unique_first_slice_count": 46,
+  "unique_added_count": 17,
+  "kinds": {
+    "COMPILE_NEGATIVE": 4,
+    "RUNTIME_SEMANTIC": 41,
+    "TYPE_VALIDATION": 2,
+    "CLI_INTEGRATION": 4,
+    "END_TO_END": 12
+  },
+  "end_to_end_fixture_count_included_in_unique_methods": 12,
+  "extra_trace_generations": {
+    "count": 12,
+    "adds_unique_checks": 0
+  },
+  "extra_CLI_artifact_commands": {
+    "count": 7,
+    "adds_unique_checks": 0
+  },
+  "fixture_serialization_structure_checks": {
+    "count": 12,
+    "adds_semantic_checks": 0
+  },
+  "criterion_tags_overlap": true,
+  "criterion_counts_must_not_be_summed": true,
+  "editor_impact_test_labels": "selection metadata, not additional executed tests",
+  "actual_ai_runs": 0,
+  "actual_gameplay_coverage": null,
+  "tests": [
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_ast_depth_malformed_and_forged_annotations",
+      "status": "PASS",
+      "kind": "COMPILE_NEGATIVE",
+      "criteria": [
+        "A01",
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_budget_units_effects_access_commands_and_live",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A07",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_clamp_cannot_hide_base_overflow_and_snapshot_config_mismatch",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A01",
+        "A06",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_default_event_cycle_has_bounded_uids",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_dynamic_alias_and_container_cell_conflict",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A05",
+        "A06"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_entity_stale_service_reply_resolve_none",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A05",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_failed_intermediate_write_and_two_deletes",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A01",
+        "A05",
+        "A06"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_map_structural_eq_list_order_and_queued_copy",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A02"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_new_max_clamp_and_scoped_loop_accumulator",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A06",
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_observation_epoch_same_for_later_microstep",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A05",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_retry_cannot_replace_failed_admitted_input",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_rng_known_vector_and_replay_tamper",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_boundaries.AdditionalBoundaries.test_value_nodes_bytes_map_len_and_structural_eq",
+      "status": "PASS",
+      "kind": "TYPE_VALIDATION",
+      "criteria": [
+        "A01",
+        "A02"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_cli.CommandLineTests.test_abort_resume_requires_same_input_retry_and_driver_persists",
+      "status": "PASS",
+      "kind": "CLI_INTEGRATION",
+      "criteria": [
+        "A04",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_cli.CommandLineTests.test_malformed_is_structured_error",
+      "status": "PASS",
+      "kind": "CLI_INTEGRATION",
+      "criteria": [
+        "A01"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_cli.CommandLineTests.test_run_replay_inspect",
+      "status": "PASS",
+      "kind": "CLI_INTEGRATION",
+      "criteria": [
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_cli.CommandLineTests.test_step_delayed_reply_restore_and_segment_replay",
+      "status": "PASS",
+      "kind": "CLI_INTEGRATION",
+      "criteria": [
+        "A09",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_closure.EditingClosure.test_A11_patch_validate_revision_connect_activate_and_new_version_rollback",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A11"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.EditingClosure.test_A11_shared_field_impact_pending_migration_and_overflow_atomic",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A10",
+        "A11"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.EditingClosure.test_A11_unknown_impact_create_delete_and_uncommitted_rollback",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A11"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.EditingClosure.test_A11_unknown_port_type_control_and_atomic_failure",
+      "status": "PASS",
+      "kind": "COMPILE_NEGATIVE",
+      "criteria": [
+        "A11"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LifecycleClosure.test_A10_cumulative_migration_budget_and_namespace_abort_restore",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A07",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LifecycleClosure.test_A10_partial_migration_err_hidden_read_and_budget_rollback",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LifecycleClosure.test_A10_preserve_quest_versions_dedup_save_and_replay",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LifecycleClosure.test_A10_rebase_explicit_timing_pending_and_failure_atomic",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LifecycleClosure.test_A10_restart_cancels_timer_no_reward_and_bad_abi_rejected",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LoweringClosure.test_A08_cost_preserving_constant_fold_and_budget_fault",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A07",
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LoweringClosure.test_A08_override_reexpand_conflict_preserves_manual",
+      "status": "PASS",
+      "kind": "COMPILE_NEGATIVE",
+      "criteria": [
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.LoweringClosure.test_A08_reorder_mutations_detect_semantic_difference_and_origin",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.QueryClosure.test_A05_nearest_predicate_tie_stale_and_replay",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A05",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.QueryClosure.test_A05_predicate_reads_snapshot_not_own_overlay",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A05"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.QueryClosure.test_A05_query_and_nearest_error_rollback",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A01",
+        "A04",
+        "A05"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.ServiceClosure.test_A09_missing_version_pure_extension_budget_and_rollback",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A04",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_closure.ServiceClosure.test_A09_mock_failure_delayed_ack_restore_and_changed_provider_replay",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": false
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A01_types_numeric_and_depth",
+      "status": "PASS",
+      "kind": "TYPE_VALIDATION",
+      "criteria": [
+        "A01"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A01_unknown_ast_and_static_types",
+      "status": "PASS",
+      "kind": "COMPILE_NEGATIVE",
+      "criteria": [
+        "A01",
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A02_special_keys_copy_and_order",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A02"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A03_authority_and_explicit_logs",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A04_atomicity_rng_spawn_future_commands_retry",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A05_own_reads_other_job_and_invalid",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A05"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A05_snapshot_delete_spawn_and_alias",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A05"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A06_clamp_once_health_library",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A06",
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A06_exclusive_add_priority_tie_invalid_loser",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A06"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A06_float_fold_and_numeric_overflow",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A01",
+        "A06"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A07_event_cycle_budget_and_no_truncation",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A04",
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A07_finite_loops",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A07_root_order_bfs_future_and_event_ids",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A07"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A08_door_lowering_core_plan_and_source",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A08"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A09_delayed_failure_response_snapshot_restore_replay",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A09",
+        "A10"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A09_pure_extension_no_hidden_world",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_contract.ContractTests.test_A09_query_missing_epoch_and_command_conflict",
+      "status": "PASS",
+      "kind": "RUNTIME_SEMANTIC",
+      "criteria": [
+        "A03",
+        "A09"
+      ],
+      "fixture": null,
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT01",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A05",
+        "A08"
+      ],
+      "fixture": "PT01",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A01",
+        "A02"
+      ],
+      "fixture": "PT02",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02_invalid",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A01"
+      ],
+      "fixture": "PT02-invalid",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT02_overflow",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A01",
+        "A04"
+      ],
+      "fixture": "PT02-overflow",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A02",
+        "A04"
+      ],
+      "fixture": "PT09",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09_full",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A02"
+      ],
+      "fixture": "PT09-full",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT09_insufficient",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A02"
+      ],
+      "fixture": "PT09-insufficient",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT11",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A06",
+        "A07"
+      ],
+      "fixture": "PT11",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT12",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A08",
+        "A09"
+      ],
+      "fixture": "PT12",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT13",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A03",
+        "A09"
+      ],
+      "fixture": "PT13",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT14",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A04",
+        "A06"
+      ],
+      "fixture": "PT14",
+      "first_slice": true
+    },
+    {
+      "test": "headless_v01.tests.test_end_to_end.EndToEndTests.test_PT15",
+      "status": "PASS",
+      "kind": "END_TO_END",
+      "criteria": [
+        "A04",
+        "A07"
+      ],
+      "fixture": "PT15",
+      "first_slice": true
+    }
+  ]
+}
