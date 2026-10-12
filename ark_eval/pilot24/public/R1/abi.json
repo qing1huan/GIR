@@ -1,0 +1,70 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "credits": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "reserved": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "wallet": "EntityID",
+        "ticket": "EntityID",
+        "cancel": "bool"
+      }
+    },
+    "Reserved": {
+      "record": {
+        "wallet": "EntityID",
+        "ticket": "EntityID"
+      }
+    },
+    "Insufficient": {
+      "record": {
+        "wallet": "EntityID",
+        "ticket": "EntityID"
+      }
+    },
+    "Released": {
+      "record": {
+        "wallet": "EntityID",
+        "ticket": "EntityID"
+      }
+    },
+    "ReleaseDenied": {
+      "record": {
+        "wallet": "EntityID",
+        "ticket": "EntityID"
+      }
+    },
+    "CancelUnavailable": {
+      "record": {
+        "ticket": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

@@ -1,0 +1,858 @@
+{
+  "kind": "SANITIZED_PARTIAL_PILOT24_PROGRESS_NOT_TERMINAL_RECEIPT",
+  "observed_utc": "2026-10-12T16:43:54.116900+00:00",
+  "study_kind": "TWO_REPRESENTATION_NO_FEEDBACK_EXPLORATION_NOT_ABC",
+  "task_clusters": 6,
+  "generation_slots": 24,
+  "unique_source_hashes": 14,
+  "scenario_rows": 288,
+  "scenario_rows_are_not_independent_generations": true,
+  "local_execution_head": "73f05ab479a17781295016e94446fa32dbd1ca5a",
+  "local_execution_branch": "ark-js-phase3-20261011",
+  "execution_freeze": "ark_eval/pilot24_recovery.v5_1.freeze.json",
+  "freeze_sha256": "fc22a6b6b71ed2ea5d15db24922be12092a84440e617e9a95004baa03cc3d0f9",
+  "scope_digest": "63d2c9432483f0a9843eda05436a077a838ccd09493556e7ffcf99de68506628",
+  "previous_public_snapshot": "97328d4807192414766beacd35ad05b3fc19417f",
+  "fixed_288_counts": {
+    "PASS": 235,
+    "FAIL": 2,
+    "NOTRUN": 49,
+    "HARNESS_ERROR": 2
+  },
+  "forward51": {
+    "completed_durable_results": 14,
+    "reserved_unconfirmed": [],
+    "not_reserved": [
+      [
+        "M2-r2-gameir_text",
+        "R04"
+      ],
+      [
+        "M2-r2-js_callback",
+        "N01"
+      ],
+      [
+        "M2-r2-js_callback",
+        "N02"
+      ],
+      [
+        "M2-r2-js_callback",
+        "N03"
+      ],
+      [
+        "M2-r2-js_callback",
+        "N04"
+      ],
+      [
+        "M2-r2-js_callback",
+        "B01"
+      ],
+      [
+        "M2-r2-js_callback",
+        "B02"
+      ],
+      [
+        "M2-r2-js_callback",
+        "B03"
+      ],
+      [
+        "M2-r2-js_callback",
+        "B04"
+      ],
+      [
+        "M2-r2-js_callback",
+        "R01"
+      ],
+      [
+        "M2-r2-js_callback",
+        "R02"
+      ],
+      [
+        "M2-r2-js_callback",
+        "R03"
+      ],
+      [
+        "M2-r2-js_callback",
+        "R04"
+      ],
+      [
+        "M1-r2-js_callback",
+        "N01"
+      ],
+      [
+        "M1-r2-js_callback",
+        "N02"
+      ],
+      [
+        "M1-r2-js_callback",
+        "N03"
+      ],
+      [
+        "M1-r2-js_callback",
+        "N04"
+      ],
+      [
+        "M1-r2-js_callback",
+        "B01"
+      ],
+      [
+        "M1-r2-js_callback",
+        "B02"
+      ],
+      [
+        "M1-r2-js_callback",
+        "B03"
+      ],
+      [
+        "M1-r2-js_callback",
+        "B04"
+      ],
+      [
+        "M1-r2-js_callback",
+        "R01"
+      ],
+      [
+        "M1-r2-js_callback",
+        "R02"
+      ],
+      [
+        "M1-r2-js_callback",
+        "R03"
+      ],
+      [
+        "M1-r2-js_callback",
+        "R04"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "N01"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "N02"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "N03"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "N04"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "B01"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "B02"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "B03"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "B04"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "R01"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "R02"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "R03"
+      ],
+      [
+        "M1-r2-gameir_text",
+        "R04"
+      ]
+    ],
+    "terminal_receipt_validated": false,
+    "retry_or_resume_allowed": false,
+    "durable_result_fingerprints": [
+      {
+        "slot_id": "C1-r2-gameir_text",
+        "case_id": "R02",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-C1-r2-gameir_text-R02.json",
+        "sha256": "8381da0a736a8a438051d7a612a9591ee7ed0dea2e74337836d01fbcbdc98d68",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "C1-r2-gameir_text",
+        "case_id": "R03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-C1-r2-gameir_text-R03.json",
+        "sha256": "40e06bc6321be0871a6c61846b0229f0c4be417d935855c0ae191664141e1dc2",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "C1-r2-gameir_text",
+        "case_id": "R04",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-C1-r2-gameir_text-R04.json",
+        "sha256": "5baa7286c5e8c29d5bae6d8e5f80fad436f2e4e9a31f468b6b2d60a3e90b1807",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "N01",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-N01.json",
+        "sha256": "04504565c5e994390925ee09654449c7cc3a44fec083692b02c63f5494957e9e",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "N02",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-N02.json",
+        "sha256": "a63bcdf4548fd7cf7f5f9f5bf22a8e14cbe9b687c08b342efef23061c46753c1",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "N03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-N03.json",
+        "sha256": "5484875bed8ac1a88bcd0a5795ffd775a638c240868ae37186b2a7c127e3a10a",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "N04",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-N04.json",
+        "sha256": "d1bd4f660a1cd7537e6fdcf4067de2f37c58245898ce63961c5135a08ba07157",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B01",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B01.json",
+        "sha256": "75f6f8dfdfb089b93a687ce32b110ffd087175dbaa336245d75a14ddb23f14a6",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B02",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B02.json",
+        "sha256": "17c4b3e398bb481125394f7556f0178c1b69537b00f52bf4c51d71ba3a5bac91",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B03.json",
+        "sha256": "8854a7a373f48b84de85ca3ffb3d29be0a29febcd016f0da2005220abcd0fca3",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B04",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B04.json",
+        "sha256": "7de89edb829a554c38ccc2c9016fb016e66e683c82b08118fb5d1abed14509aa",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R01",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R01.json",
+        "sha256": "911397fde6cd9b311074b4de7e0dbf77afbd1d4303c768915be1929094a2c747",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R02",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R02.json",
+        "sha256": "ce13be0db251734a0f0585b35de292bc7ffec46d4ea2bf2147c0ebf0556185ad",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R03.json",
+        "sha256": "e68b82fafce9a769adae5066e732f1ee93b3a5d040fdd583aa42ae45e1c6a25e",
+        "completion_event_present": true
+      }
+    ]
+  },
+  "arms": {
+    "gameir_text": {
+      "generation_slots": 12,
+      "unique_source_hashes": 7,
+      "case_counts": {
+        "PASS": 117,
+        "FAIL": 2,
+        "NOTRUN": 25,
+        "HARNESS_ERROR": 0
+      },
+      "slot_outcomes": {
+        "SCENARIOS_ALL_PASS": 8,
+        "CANDIDATE_SYNTAX_REJECTION": 1,
+        "CANDIDATE_BEHAVIOR_FAILURE": 1,
+        "SCORING_PENDING": 2
+      },
+      "known_collection_usage": {
+        "prompt_tokens": 32734,
+        "completion_tokens": 16679,
+        "total_tokens": 49413
+      }
+    },
+    "js_callback": {
+      "generation_slots": 12,
+      "unique_source_hashes": 7,
+      "case_counts": {
+        "PASS": 118,
+        "FAIL": 0,
+        "NOTRUN": 24,
+        "HARNESS_ERROR": 2
+      },
+      "slot_outcomes": {
+        "SCENARIOS_ALL_PASS": 8,
+        "HARNESS_OUTCOME_UNKNOWN": 2,
+        "SCORING_PENDING": 2
+      },
+      "known_collection_usage": {
+        "prompt_tokens": 20200,
+        "completion_tokens": 2412,
+        "total_tokens": 22612
+      }
+    }
+  },
+  "slots": [
+    {
+      "slot_id": "M1-r1-gameir_text",
+      "task_id": "M1",
+      "representation": "gameir_text",
+      "source_sha256": "a6a212bd004f5a0d021741131014f4cba84fef2ca98fcbfdee0f295de5a90010",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2791,
+        "completion_tokens": 1358,
+        "total_tokens": 4149
+      }
+    },
+    {
+      "slot_id": "M1-r1-js_callback",
+      "task_id": "M1",
+      "representation": "js_callback",
+      "source_sha256": "6e575a145886e79bf86e35235d2c89ee1c7c2c3476c73e6c5ec7fba6bf0a0bab",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 193,
+        "total_tokens": 1910
+      }
+    },
+    {
+      "slot_id": "M2-r1-js_callback",
+      "task_id": "M2",
+      "representation": "js_callback",
+      "source_sha256": "a8497bc77f3d8957719f9d626e41d1ff917ef95b4cd3090bd12a40fca6d97a7c",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1664,
+        "completion_tokens": 227,
+        "total_tokens": 1891
+      }
+    },
+    {
+      "slot_id": "M2-r1-gameir_text",
+      "task_id": "M2",
+      "representation": "gameir_text",
+      "source_sha256": "9318965d46dc86f6f4948975f53caa9505f310e81d66ee8758e2b952849f176c",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2517,
+        "completion_tokens": 1103,
+        "total_tokens": 3620
+      }
+    },
+    {
+      "slot_id": "C1-r1-gameir_text",
+      "task_id": "C1",
+      "representation": "gameir_text",
+      "source_sha256": "b97a552630cce53659159968cc6152e66ab0b8409c4ecbb0eb2ece0fd6932328",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2793,
+        "completion_tokens": 1273,
+        "total_tokens": 4066
+      }
+    },
+    {
+      "slot_id": "C1-r1-js_callback",
+      "task_id": "C1",
+      "representation": "js_callback",
+      "source_sha256": "2289068d63bb6a747be7a951c7bd170d3f38d541c0c8b530f83160844d9e20de",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 171,
+        "total_tokens": 1888
+      }
+    },
+    {
+      "slot_id": "C2-r1-js_callback",
+      "task_id": "C2",
+      "representation": "js_callback",
+      "source_sha256": "e4ca231ecdeee80153a37e69b7cdb1f31d67c57c6027fb0e0bae11b21fcd690a",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1623,
+        "completion_tokens": 199,
+        "total_tokens": 1822
+      }
+    },
+    {
+      "slot_id": "C2-r1-gameir_text",
+      "task_id": "C2",
+      "representation": "gameir_text",
+      "source_sha256": "6718000dc0cd20b38188286931bf214f148b4a41a0b33d2fa651752bc5c69615",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2692,
+        "completion_tokens": 1585,
+        "total_tokens": 4277
+      }
+    },
+    {
+      "slot_id": "R1-r1-gameir_text",
+      "task_id": "R1",
+      "representation": "gameir_text",
+      "source_sha256": "778e89544fc240d3a3fb8590772e0548ca858f8c2f7cf5242b30e7aa0f1eea4f",
+      "counts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "NOTRUN": 12,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "CANDIDATE_SYNTAX_REJECTION",
+      "usage": {
+        "prompt_tokens": 3024,
+        "completion_tokens": 1895,
+        "total_tokens": 4919
+      }
+    },
+    {
+      "slot_id": "R1-r1-js_callback",
+      "task_id": "R1",
+      "representation": "js_callback",
+      "source_sha256": "714b0f76113c2338459e809a2abcdb5b33e839366446f5205dfec0f0272831dc",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1797,
+        "completion_tokens": 269,
+        "total_tokens": 2066
+      }
+    },
+    {
+      "slot_id": "R2-r1-js_callback",
+      "task_id": "R2",
+      "representation": "js_callback",
+      "source_sha256": "6a083325897537c8bf82f3ffd4723fc80f762c91c4d23da3b1deaa77ef344eeb",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1582,
+        "completion_tokens": 148,
+        "total_tokens": 1730
+      }
+    },
+    {
+      "slot_id": "R2-r1-gameir_text",
+      "task_id": "R2",
+      "representation": "gameir_text",
+      "source_sha256": "ee9a5da5a1e74eed7865cc26838923f3c7c1cc22eb0f1e544687f5dd2fb8fd74",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2550,
+        "completion_tokens": 1107,
+        "total_tokens": 3657
+      }
+    },
+    {
+      "slot_id": "R2-r2-gameir_text",
+      "task_id": "R2",
+      "representation": "gameir_text",
+      "source_sha256": "ee9a5da5a1e74eed7865cc26838923f3c7c1cc22eb0f1e544687f5dd2fb8fd74",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2550,
+        "completion_tokens": 1107,
+        "total_tokens": 3657
+      }
+    },
+    {
+      "slot_id": "R2-r2-js_callback",
+      "task_id": "R2",
+      "representation": "js_callback",
+      "source_sha256": "6a083325897537c8bf82f3ffd4723fc80f762c91c4d23da3b1deaa77ef344eeb",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1582,
+        "completion_tokens": 148,
+        "total_tokens": 1730
+      }
+    },
+    {
+      "slot_id": "R1-r2-js_callback",
+      "task_id": "R1",
+      "representation": "js_callback",
+      "source_sha256": "714b0f76113c2338459e809a2abcdb5b33e839366446f5205dfec0f0272831dc",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 1797,
+        "completion_tokens": 269,
+        "total_tokens": 2066
+      }
+    },
+    {
+      "slot_id": "R1-r2-gameir_text",
+      "task_id": "R1",
+      "representation": "gameir_text",
+      "source_sha256": "43ccdbd71d2c79419a20893bb62ae62ea0ce7e3266234f5d8a37e5c91effe38c",
+      "counts": {
+        "PASS": 10,
+        "FAIL": 2,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "CANDIDATE_BEHAVIOR_FAILURE",
+      "usage": {
+        "prompt_tokens": 3024,
+        "completion_tokens": 1932,
+        "total_tokens": 4956
+      }
+    },
+    {
+      "slot_id": "C2-r2-gameir_text",
+      "task_id": "C2",
+      "representation": "gameir_text",
+      "source_sha256": "6718000dc0cd20b38188286931bf214f148b4a41a0b33d2fa651752bc5c69615",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2692,
+        "completion_tokens": 1585,
+        "total_tokens": 4277
+      }
+    },
+    {
+      "slot_id": "C2-r2-js_callback",
+      "task_id": "C2",
+      "representation": "js_callback",
+      "source_sha256": "6d85937835f63a7e404bbcfcba5524173754e52d0b4a8f20320e0995a2aeb676",
+      "counts": {
+        "PASS": 11,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 1
+      },
+      "outcome": "HARNESS_OUTCOME_UNKNOWN",
+      "usage": {
+        "prompt_tokens": 1623,
+        "completion_tokens": 197,
+        "total_tokens": 1820
+      }
+    },
+    {
+      "slot_id": "C1-r2-js_callback",
+      "task_id": "C1",
+      "representation": "js_callback",
+      "source_sha256": "2289068d63bb6a747be7a951c7bd170d3f38d541c0c8b530f83160844d9e20de",
+      "counts": {
+        "PASS": 11,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 1
+      },
+      "outcome": "HARNESS_OUTCOME_UNKNOWN",
+      "usage": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 171,
+        "total_tokens": 1888
+      }
+    },
+    {
+      "slot_id": "C1-r2-gameir_text",
+      "task_id": "C1",
+      "representation": "gameir_text",
+      "source_sha256": "b97a552630cce53659159968cc6152e66ab0b8409c4ecbb0eb2ece0fd6932328",
+      "counts": {
+        "PASS": 12,
+        "FAIL": 0,
+        "NOTRUN": 0,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCENARIOS_ALL_PASS",
+      "usage": {
+        "prompt_tokens": 2793,
+        "completion_tokens": 1273,
+        "total_tokens": 4066
+      }
+    },
+    {
+      "slot_id": "M2-r2-gameir_text",
+      "task_id": "M2",
+      "representation": "gameir_text",
+      "source_sha256": "9318965d46dc86f6f4948975f53caa9505f310e81d66ee8758e2b952849f176c",
+      "counts": {
+        "PASS": 11,
+        "FAIL": 0,
+        "NOTRUN": 1,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCORING_PENDING",
+      "usage": {
+        "prompt_tokens": 2517,
+        "completion_tokens": 1103,
+        "total_tokens": 3620
+      }
+    },
+    {
+      "slot_id": "M2-r2-js_callback",
+      "task_id": "M2",
+      "representation": "js_callback",
+      "source_sha256": "a8497bc77f3d8957719f9d626e41d1ff917ef95b4cd3090bd12a40fca6d97a7c",
+      "counts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "NOTRUN": 12,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCORING_PENDING",
+      "usage": {
+        "prompt_tokens": 1664,
+        "completion_tokens": 227,
+        "total_tokens": 1891
+      }
+    },
+    {
+      "slot_id": "M1-r2-js_callback",
+      "task_id": "M1",
+      "representation": "js_callback",
+      "source_sha256": "6e575a145886e79bf86e35235d2c89ee1c7c2c3476c73e6c5ec7fba6bf0a0bab",
+      "counts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "NOTRUN": 12,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCORING_PENDING",
+      "usage": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 193,
+        "total_tokens": 1910
+      }
+    },
+    {
+      "slot_id": "M1-r2-gameir_text",
+      "task_id": "M1",
+      "representation": "gameir_text",
+      "source_sha256": "a6a212bd004f5a0d021741131014f4cba84fef2ca98fcbfdee0f295de5a90010",
+      "counts": {
+        "PASS": 0,
+        "FAIL": 0,
+        "NOTRUN": 12,
+        "HARNESS_ERROR": 0
+      },
+      "outcome": "SCORING_PENDING",
+      "usage": {
+        "prompt_tokens": 2791,
+        "completion_tokens": 1358,
+        "total_tokens": 4149
+      }
+    }
+  ],
+  "historical_unknowns": [
+    [
+      "C2-r2-js_callback",
+      "N02"
+    ],
+    [
+      "C1-r2-js_callback",
+      "R04"
+    ]
+  ],
+  "candidate_behavior_failures": [
+    [
+      "R1-r2-gameir_text",
+      "N02"
+    ],
+    [
+      "R1-r2-gameir_text",
+      "B03"
+    ]
+  ],
+  "candidate_syntax_notrun": {
+    "slot_id": "R1-r1-gameir_text",
+    "scenario_rows": 12,
+    "original_source_unmodified": true
+  },
+  "integrity_checks": {
+    "raw_172_files": {
+      "files": 172,
+      "matched": 172,
+      "drift": []
+    },
+    "immutable_1509_files": {
+      "files": 1509,
+      "matched": 1509,
+      "drift": []
+    },
+    "previous_production_127_files": {
+      "files": 127,
+      "matched": 127,
+      "drift": []
+    },
+    "current_v5_1_bindings": {
+      "files": 30,
+      "matched": 30,
+      "drift": []
+    }
+  },
+  "historical_runtime_bindings": {
+    "files": 74,
+    "matched": 70,
+    "mismatched_paths": [
+      "ark_eval/candidate_eval.py",
+      "ark_eval/js_runner.py",
+      "ark_eval/js_verify.py",
+      "ark_eval/node_backend.py"
+    ]
+  },
+  "observed_result_continuity": {
+    "kind": "READ_ONLY_OBSERVED_RESULT_CONTINUITY",
+    "status": "PASS",
+    "snapshots_checked": 16,
+    "distinct_durable_rows": 14,
+    "candidate_executions": 0,
+    "new_model_calls": 0
+  },
+  "local_evidence": {
+    "validated_snapshot": {
+      "path": "results/pilot24-forward51-file-observation-20261012-001/snapshot-20261012T164354-120659.json",
+      "sha256": "c6bf205f8b8e184ed286abd18d3e31dc091af1ac990396e2962cd8bdab30c9b6"
+    },
+    "full_file_audit": {
+      "path": "results/pilot24-takeover-readonly-audit-20261012-001/report-publication-20261012T164533-235.json",
+      "sha256": "2409e60fe89321ee2a56b283e93afa98fba14b45b5bd0c0922790fc72413af86"
+    },
+    "score_material": {
+      "path": "results/pilot24-takeover-readonly-audit-20261012-001/score-material-235-001.json",
+      "sha256": "960815114512562da9a2dcac5dd512f063cf655e3df95cf8c1f328248b817ecf"
+    }
+  },
+  "current_process_liveness": "UNKNOWN_NO_QUERY_AFTER_ACCESS_DENIED",
+  "candidate_executions_by_followup": 0,
+  "new_model_calls_by_followup": 0,
+  "known_collection_tokens": 72025,
+  "currency_cost": null,
+  "engineering_or_control_tests_counted_as_scoring_rows": false,
+  "a_b_c_experiment_completed": false,
+  "runtime_code_changed_for_this_publication": false,
+  "unuploaded_original_local_development_commits": 39,
+  "previous_published_takeover_snapshot": "60da52fc57a063e0bc36b72f45b00daec2378dfb"
+}

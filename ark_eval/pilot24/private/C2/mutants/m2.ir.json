@@ -1,0 +1,294 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "hp": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "shield": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "immune": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "target": "EntityID",
+    "amount": "int"
+   }
+  },
+  "Hit": {
+   "record": {
+    "target": "EntityID"
+   }
+  },
+  "Died": {
+   "record": {
+    "target": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "is_some",
+      "value": {
+       "op": "resolve",
+       "entity": {
+        "op": "var",
+        "name": "target"
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "gt",
+        "a": {
+         "op": "var",
+         "name": "amount"
+        },
+        "b": {
+         "op": "literal",
+         "type": "int",
+         "value": 0
+        }
+       },
+       "then": [
+        {
+         "op": "let",
+         "name": "hp",
+         "value": {
+          "op": "require",
+          "value": {
+           "op": "read",
+           "entity": {
+            "op": "var",
+            "name": "target"
+           },
+           "field": "hp"
+          }
+         }
+        },
+        {
+         "op": "if",
+         "condition": {
+          "op": "gt",
+          "a": {
+           "op": "var",
+           "name": "hp"
+          },
+          "b": {
+           "op": "literal",
+           "type": "int",
+           "value": 0
+          }
+         },
+         "then": [
+          {
+           "op": "if",
+           "condition": {
+            "op": "not",
+            "value": {
+             "op": "require",
+             "value": {
+              "op": "read",
+              "entity": {
+               "op": "var",
+               "name": "target"
+              },
+              "field": "immune"
+             }
+            }
+           },
+           "then": [
+            {
+             "op": "let",
+             "name": "shield",
+             "value": {
+              "op": "require",
+              "value": {
+               "op": "read",
+               "entity": {
+                "op": "var",
+                "name": "target"
+               },
+               "field": "shield"
+              }
+             }
+            },
+            {
+             "op": "let",
+             "name": "absorbed",
+             "value": {
+              "op": "select",
+              "condition": {
+               "op": "ge",
+               "a": {
+                "op": "var",
+                "name": "shield"
+               },
+               "b": {
+                "op": "var",
+                "name": "amount"
+               }
+              },
+              "then": {
+               "op": "var",
+               "name": "amount"
+              },
+              "else": {
+               "op": "var",
+               "name": "shield"
+              }
+             }
+            },
+            {
+             "op": "let",
+             "name": "damage",
+             "value": {
+              "op": "sub",
+              "a": {
+               "op": "var",
+               "name": "amount"
+              },
+              "b": {
+               "op": "var",
+               "name": "absorbed"
+              }
+             }
+            },
+            {
+             "op": "let",
+             "name": "nextShield",
+             "value": {
+              "op": "sub",
+              "a": {
+               "op": "var",
+               "name": "shield"
+              },
+              "b": {
+               "op": "var",
+               "name": "absorbed"
+              }
+             }
+            },
+            {
+             "op": "let",
+             "name": "nextHp",
+             "value": {
+              "op": "var",
+              "name": "hp"
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "target"
+             },
+             "field": "shield",
+             "value": {
+              "op": "var",
+              "name": "nextShield"
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "target"
+             },
+             "field": "hp",
+             "value": {
+              "op": "var",
+              "name": "nextHp"
+             }
+            },
+            {
+             "op": "emit",
+             "event": "Hit",
+             "payload": {
+              "op": "record",
+              "items": {
+               "target": {
+                "op": "var",
+                "name": "target"
+               }
+              }
+             }
+            },
+            {
+             "op": "if",
+             "condition": {
+              "op": "eq",
+              "a": {
+               "op": "var",
+               "name": "nextHp"
+              },
+              "b": {
+               "op": "literal",
+               "type": "int",
+               "value": 0
+              }
+             },
+             "then": [
+              {
+               "op": "emit",
+               "event": "Died",
+               "payload": {
+                "op": "record",
+                "items": {
+                 "target": {
+                  "op": "var",
+                  "name": "target"
+                 }
+                }
+               }
+              }
+             ],
+             "else": []
+            }
+           ],
+           "else": []
+          }
+         ],
+         "else": []
+        }
+       ],
+       "else": []
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

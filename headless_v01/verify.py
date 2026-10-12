@@ -96,7 +96,7 @@ def main():
         "A09": ("NOT RUN", "Recorded services plus scripted delayed failed Ack, no resend on restore, provider-free replay, capability version and pure extension budget subchecks PASS", "Physical Backend change and real adapter capability validation not run; scripted mock does not satisfy the full original fixture"),
         "A10": ("PASS", "Typed instance namespaces; preserve Q1/Q2, explicit Burn rebase remaining6/nextPulse and pending events, Err/overflow/cumulative budget atomic rollback, restart cancellation, missing package/schema/ABI reject", ""),
         "A11": ("PASS", "Draft create/replace/delete/connect/query; typed event ports, revision guard, invalid control reject; conservative unknown impact; atomic boundary activation; draft discard and published restore as new revision", ""),
-        "A12": ("NOT RUN", "No AI attribution; Core/Plan dispatch consistency only", "JS/TS/Vitric adapters and fair representation/tool evaluation absent"),
+        "A12": ("NOT RUN", "No AI attribution; Core/Plan dispatch consistency; reviewed isolated JS pilot evidence is separate", "Fair matched-budget model evaluation, TS and original Vitric baseline remain absent; JS reference correctness does not satisfy A12"),
     }
     original = {entry["id"]: entry for entry in json.loads((ROOT/"design/architecture-v0.1/acceptance.json").read_text())["entries"]}
     matrix = []

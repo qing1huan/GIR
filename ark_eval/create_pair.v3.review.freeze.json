@@ -1,0 +1,977 @@
+{
+  "schema": "gir-create-pair-review-freeze@3",
+  "scope": "POST_OBSERVATION_DEVELOPMENT_CREATE_CONTRACT_REVIEW_NOT_HOLDOUT",
+  "previous_protocol_digest": "a4d8a8ca3702954a170765597f84671a5fc2b45eb3e79d5754d9b5861f76bed8",
+  "task_id": "P-C02-create",
+  "model": "deepseek-v4-1-flash-260910",
+  "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions",
+  "order": [
+    "gameir_text",
+    "js_callback"
+  ],
+  "independent_sessions": true,
+  "budget_per_arm": {
+    "prompt_units": 24000,
+    "output_tokens": 4096,
+    "attempts": 1,
+    "repairs": 0,
+    "tool_calls": 0
+  },
+  "maximum_pair_output_tokens": 8192,
+  "maximum_pair_attempts": 2,
+  "HTTPS_socket_timeout_seconds_per_arm": 120,
+  "source_bytes_limit": 16384,
+  "host_operations_per_tick": 128,
+  "oracle_case_count_per_arm": 26,
+  "oracle": "FIXED_EVALUATOR_OWNED_NOT_SENT_TO_MODEL",
+  "oracle_holdout": false,
+  "seeds": [
+    1,
+    123
+  ],
+  "artifact_hashes": {
+    "headless_v01/compiler.py": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485",
+    "headless_v01/runtime.py": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c",
+    "headless_v01/types.py": "9333d248be5a00940ca12c3b77c7366c5a16622cf26070ee67a978f8aa16b394",
+    "headless_v01/services.py": "2e230af777ec3253092cc5f7fc6f71722e57c7fcffa7cf25de3a1fa2407bc7c1",
+    "headless_v01/plan_checks.py": "4a34b65a35960ee8db9011d282cee83f16275a3bac5ab5b7cb20e3815b3fafdf",
+    "ark_eval/adapter.py": "cab8912b73aaf4eeada1c670d8f06ca5d65820ae66871041e7d92a31aa82b955",
+    "ark_eval/budget.py": "915bf0c58dac97ec39138d9bd1c075baea9600e05049176a2c1c8865b2539369",
+    "ark_eval/tasks.py": "12e2fdbf28e80819f3eb9d182de5ce5b65875320fbe3562c6f9790531ef6d7f2",
+    "ark_eval/callback_contract.py": "f4c7139c83aad4d0a7e6cbf8c26afc3cd3179762c1879f699bee56f7b5615bc4",
+    "ark_eval/host.py": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a",
+    "ark_eval/oracle.py": "a6f0872e2db6061a5dc89ef1303aad8aeccb79d39fc5afcfd83e1605943e6c7c",
+    "ark_eval/final_tests.json": "ec6d50f8905a78a39c9722a5d258a182bbe59bcc56d166cbf80e4c016ba9d475",
+    "ark_eval/build_corpus.py": "b742700ca970bbbcae6f41bcc3cb1a8ae91bb6faca26345c26b41a7efa21b9ee",
+    "ark_eval/container_profile.py": "7e0bbc81ca564e1f6adde2e4f6e0cdb2b314cf3bc992a79b8483780b3e4de600",
+    "ark_eval/node_worker.mjs": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e",
+    "ark_eval/node_supervisor.sh": "a3d37f149331bf888a49d414297df6f86812dcfeab51c933d372eefab9bcfd95",
+    "ark_eval/node_backend.py": "06f8a4317cbc69dd00f564c32735d1529a1f31983156364043f0c1d7aaddd3c3",
+    "ark_eval/js_runner.py": "c2e55762cbcd3121ea7b7216c5aec3cd42836c2e0b37a5b8773cbb3032d1e75d",
+    "ark_eval/node_image_lock.json": "a9f57c981c3ef5797cea56bb140c09c59dce3d4f6dd20e5aef7ae0b61377e34c",
+    "ark_eval/manual_probe.py": "aab9e7e491252a2ff9168a15a93d788b66c29d6b0380ffc2702feb454ca5bd1b",
+    "ark_eval/create_pair.py": "be4cf3d9118023f651b29e7e6606e2cb05f771d28ee192b52101b85ab9949336",
+    "ark_eval/manual_pair.py": "fb52b33eff547df0662a395c6e9e4bab377f16095c77fbf601a4c545a96ffa2e",
+    "ark_eval/create_pair.v1.freeze.json": "ec2be6b554ebf8e133d1ff975525832d5fc91ed873176ca209b38daf14ce5f9b",
+    "ark_eval/contract_v3.py": "d2d6bd1de02a9b6cac44b5b2216b1e6ba58b711edb8d7eeda9739a06bd775ca9",
+    "ark_eval/tests/test_contract_v3.py": "2fe59edab6d17294b30e7a9b7e1ffb14ded9c92b0c14142b1c2437b92c5c6bd2",
+    "ark_eval/create_pair.freeze.json": "00db9bd22e189b0799578d0cc0a78db0fdcca3fb2160eb29c5e9f7334c45cbe7"
+  },
+  "request_digests": {
+    "gameir_text": "65e3ca3c3349e6de3b722757699d42d38d380351876d59199376568f0b316983",
+    "js_callback": "aa9dbd87bb5580758e1276568dff5c8ecb9167cf0a8d5aa11e6e9ca5ac1c26c9"
+  },
+  "starter_digests": {
+    "gameir_text": "c0f06ab2b069cdd1d97451ae5172d15a6fd002586224b49385c0c6724d49231d",
+    "js_callback": "6e0d6e292c5478e6659a9eda4f9d0403e459a702a268117577e665c38fd421d1"
+  },
+  "common_information_digest": "6fc52011bdd7564ddc59d82ef6fcb8f6106e646c1b820bc2e47cee1e868ed70f",
+  "public_arms": [
+    {
+      "representation": "gameir_text",
+      "messages": [
+        {
+          "role": "system",
+          "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] resolve/read 是宿主访问，顺序、次数和错误时机有意义。布尔 and/&& 从左到右短路；if 只求值选中分支。先计算参数再执行调用；不要为了预先验证而读取本来应跳过的实体/字段。遵守共同业务说明的逐步检查顺序。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。"
+        },
+        {
+          "role": "user",
+          "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] literal:{type,value} -> type；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] var:{name} -> 绑定类型；读取已绑定的局部变量；未声明变量无效。\n[resolve] resolve:{entity} -> option<EntityID>；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] is_some:{value:option<T>} -> bool；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] read:{entity:EntityID,field} -> option<T>；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] require:{value:option<T>} -> T；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] not:{value:bool} -> bool；bool -> bool；不能将 option 或 int 隐式转换成 bool。\n[and] and:{a:bool,b:bool} -> bool；bool × bool -> bool；先左后右，左侧 false 时不求值右侧。\n[ge] ge:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a >= b。\n[le] le:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a <= b。\n[sub] sub:{a:int,b:int} -> int；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] record:{items:{字段:表达式}} -> record<字段类型>；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] let:{name,value}；同名重新绑定须保持类型；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] if:{condition:bool,then:[语句],else:[语句]}；else 可省略，等同 []；condition 必须为 bool；只执行选中的分支；语句列表从前到后执行。\n[write] write:{entity:EntityID,field,value:T}；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] emit:{event,payload:record表达式}；已声明事件名 × 匹配类型的 record；记录 emit 意图，成功事件合并后才进入队列。\n只输出完整 core-v0.1 JSON；每 AST 节点有 op，参数只能是该 op 列出的键。handler id=open,event=Open,priority=0。保留共同 manifest；仅补空 handler 的 body。不使用 return 或未列出的 op。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\n[{\"name\":\"cell\",\"op\":\"let\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},{\"condition\":{\"op\":\"is_some\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}},\"else\":[],\"op\":\"if\",\"then\":[{\"name\":\"value\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}}}]}]\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"}}\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\n{\"a\":{\"op\":\"literal\",\"type\":\"bool\",\"value\":false},\"b\":{\"op\":\"is_some\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},\"op\":\"and\"}\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\n{\"entity\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"},\"field\":\"score\",\"op\":\"read\"}\n[N02 NEGATIVE_FRAGMENT] 不能以 option 的 truthiness 代替存在性/解包后的 bool；JS 对象 truthiness 并不会被 JS 语法解析器拒绝，但违反本契约的类型用法。\n{\"condition\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"},\"else\":[],\"op\":\"if\",\"then\":[]}\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}}\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\n{\"op\":\"return\"}\n起始程序（只有同等空 handler/function 包装，无业务实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[{\"body\":[],\"event\":\"Open\",\"id\":\"open\",\"priority\":0}],\"services\":{},\"version\":\"core-v0.1\"}"
+        }
+      ],
+      "starter": "{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[{\"body\":[],\"event\":\"Open\",\"id\":\"open\",\"priority\":0}],\"services\":{},\"version\":\"core-v0.1\"}",
+      "request_body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] resolve/read 是宿主访问，顺序、次数和错误时机有意义。布尔 and/&& 从左到右短路；if 只求值选中分支。先计算参数再执行调用；不要为了预先验证而读取本来应跳过的实体/字段。遵守共同业务说明的逐步检查顺序。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。"
+          },
+          {
+            "role": "user",
+            "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] literal:{type,value} -> type；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] var:{name} -> 绑定类型；读取已绑定的局部变量；未声明变量无效。\n[resolve] resolve:{entity} -> option<EntityID>；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] is_some:{value:option<T>} -> bool；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] read:{entity:EntityID,field} -> option<T>；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] require:{value:option<T>} -> T；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] not:{value:bool} -> bool；bool -> bool；不能将 option 或 int 隐式转换成 bool。\n[and] and:{a:bool,b:bool} -> bool；bool × bool -> bool；先左后右，左侧 false 时不求值右侧。\n[ge] ge:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a >= b。\n[le] le:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a <= b。\n[sub] sub:{a:int,b:int} -> int；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] record:{items:{字段:表达式}} -> record<字段类型>；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] let:{name,value}；同名重新绑定须保持类型；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] if:{condition:bool,then:[语句],else:[语句]}；else 可省略，等同 []；condition 必须为 bool；只执行选中的分支；语句列表从前到后执行。\n[write] write:{entity:EntityID,field,value:T}；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] emit:{event,payload:record表达式}；已声明事件名 × 匹配类型的 record；记录 emit 意图，成功事件合并后才进入队列。\n只输出完整 core-v0.1 JSON；每 AST 节点有 op，参数只能是该 op 列出的键。handler id=open,event=Open,priority=0。保留共同 manifest；仅补空 handler 的 body。不使用 return 或未列出的 op。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\n[{\"name\":\"cell\",\"op\":\"let\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},{\"condition\":{\"op\":\"is_some\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}},\"else\":[],\"op\":\"if\",\"then\":[{\"name\":\"value\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}}}]}]\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"}}\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\n{\"a\":{\"op\":\"literal\",\"type\":\"bool\",\"value\":false},\"b\":{\"op\":\"is_some\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},\"op\":\"and\"}\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\n{\"entity\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"},\"field\":\"score\",\"op\":\"read\"}\n[N02 NEGATIVE_FRAGMENT] 不能以 option 的 truthiness 代替存在性/解包后的 bool；JS 对象 truthiness 并不会被 JS 语法解析器拒绝，但违反本契约的类型用法。\n{\"condition\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"},\"else\":[],\"op\":\"if\",\"then\":[]}\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}}\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\n{\"op\":\"return\"}\n起始程序（只有同等空 handler/function 包装，无业务实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[{\"body\":[],\"event\":\"Open\",\"id\":\"open\",\"priority\":0}],\"services\":{},\"version\":\"core-v0.1\"}"
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "request_digest": "65e3ca3c3349e6de3b722757699d42d38d380351876d59199376568f0b316983",
+      "prompt_units_estimate": 9943
+    },
+    {
+      "representation": "js_callback",
+      "messages": [
+        {
+          "role": "system",
+          "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] resolve/read 是宿主访问，顺序、次数和错误时机有意义。布尔 and/&& 从左到右短路；if 只求值选中分支。先计算参数再执行调用；不要为了预先验证而读取本来应跳过的实体/字段。遵守共同业务说明的逐步检查顺序。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。"
+        },
+        {
+          "role": "user",
+          "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] 类型正确的普通字面值；EntityID 使用给定事件参数；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] 读取已声明的普通局部变量；读取已绑定的局部变量；未声明变量无效。\n[resolve] ctx.resolve(entity) -> {some:EntityID}|{none:true}；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] 'some' in option -> bool；ctx.exists(entity) 是 is_some(resolve(entity)) 的便利调用；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] ctx.read(entity,field) -> {some:T}|{none:true}；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] ctx.require(option) -> T；none 抛 InvalidEntity；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] !value；value 必须已是 bool，不能用 option 对象或 int 的 truthiness；bool -> bool；不能将 option 或 int 隐式转换成 bool。\n[and] a && b；两侧应为 bool，左侧 false 时右侧不执行；bool × bool -> bool；先左后右，左侧 false 时不求值右侧。\n[ge] a >= b；两侧为 int；本任务 int × int -> bool，比较 a >= b。\n[le] a <= b；两侧为 int；本任务 int × int -> bool，比较 a <= b。\n[sub] ctx.sub(a,b) -> int；使用宿主 checked 减法而不是普通 JS 减法；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] 普通对象字面量 {字段:值} -> 事件 payload record；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] 普通 const/let 局部绑定；不得保留可变全局状态；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] 普通 if/else；使用 bool 条件并按源代码顺序调用同步 ctx；condition 必须为 bool；只执行选中的分支；语句列表从前到后执行。\n[write] ctx.write(entity,field,value)；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] ctx.emit(event,payload)；已声明事件名 × 匹配类型的 record；记录 emit 意图，成功事件合并后才进入队列。\n只输出 export function onOpen(ctx, {player, door}) {...}。只用上述 ctx.resolve/exists/read/require/sub/write/emit 与普通局部变量、对象、bool 条件/比较。不导入依赖、catch 宿主错误、保存可变全局变量或返回值；接口同步，不创建异步任务。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\nconst cell = ctx.read(target, 'score');\nif ('some' in cell) { const value = ctx.require(cell); }\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\nctx.require(ctx.resolve(target))\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\nfalse && ('some' in ctx.read(target, 'score'))\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\nctx.read(ctx.resolve(target), 'score')\n[N02 NEGATIVE_FRAGMENT] 不能以 option 的 truthiness 代替存在性/解包后的 bool；JS 对象 truthiness 并不会被 JS 语法解析器拒绝，但违反本契约的类型用法。\nif (ctx.read(target, 'score')) { /* wrong option truthiness */ }\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\nctx.require(ctx.read(target, 'score'))\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\nreturn 7;\n起始程序（只有同等空 handler/function 包装，无业务实现）：\nexport function onOpen(ctx, {player, door}) {\n  // TODO\n}\n"
+        }
+      ],
+      "starter": "export function onOpen(ctx, {player, door}) {\n  // TODO\n}\n",
+      "request_body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] resolve/read 是宿主访问，顺序、次数和错误时机有意义。布尔 and/&& 从左到右短路；if 只求值选中分支。先计算参数再执行调用；不要为了预先验证而读取本来应跳过的实体/字段。遵守共同业务说明的逐步检查顺序。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。"
+          },
+          {
+            "role": "user",
+            "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] 类型正确的普通字面值；EntityID 使用给定事件参数；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] 读取已声明的普通局部变量；读取已绑定的局部变量；未声明变量无效。\n[resolve] ctx.resolve(entity) -> {some:EntityID}|{none:true}；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] 'some' in option -> bool；ctx.exists(entity) 是 is_some(resolve(entity)) 的便利调用；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] ctx.read(entity,field) -> {some:T}|{none:true}；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] ctx.require(option) -> T；none 抛 InvalidEntity；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] !value；value 必须已是 bool，不能用 option 对象或 int 的 truthiness；bool -> bool；不能将 option 或 int 隐式转换成 bool。\n[and] a && b；两侧应为 bool，左侧 false 时右侧不执行；bool × bool -> bool；先左后右，左侧 false 时不求值右侧。\n[ge] a >= b；两侧为 int；本任务 int × int -> bool，比较 a >= b。\n[le] a <= b；两侧为 int；本任务 int × int -> bool，比较 a <= b。\n[sub] ctx.sub(a,b) -> int；使用宿主 checked 减法而不是普通 JS 减法；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] 普通对象字面量 {字段:值} -> 事件 payload record；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] 普通 const/let 局部绑定；不得保留可变全局状态；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] 普通 if/else；使用 bool 条件并按源代码顺序调用同步 ctx；condition 必须为 bool；只执行选中的分支；语句列表从前到后执行。\n[write] ctx.write(entity,field,value)；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] ctx.emit(event,payload)；已声明事件名 × 匹配类型的 record；记录 emit 意图，成功事件合并后才进入队列。\n只输出 export function onOpen(ctx, {player, door}) {...}。只用上述 ctx.resolve/exists/read/require/sub/write/emit 与普通局部变量、对象、bool 条件/比较。不导入依赖、catch 宿主错误、保存可变全局变量或返回值；接口同步，不创建异步任务。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\nconst cell = ctx.read(target, 'score');\nif ('some' in cell) { const value = ctx.require(cell); }\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\nctx.require(ctx.resolve(target))\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\nfalse && ('some' in ctx.read(target, 'score'))\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\nctx.read(ctx.resolve(target), 'score')\n[N02 NEGATIVE_FRAGMENT] 不能以 option 的 truthiness 代替存在性/解包后的 bool；JS 对象 truthiness 并不会被 JS 语法解析器拒绝，但违反本契约的类型用法。\nif (ctx.read(target, 'score')) { /* wrong option truthiness */ }\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\nctx.require(ctx.read(target, 'score'))\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\nreturn 7;\n起始程序（只有同等空 handler/function 包装，无业务实现）：\nexport function onOpen(ctx, {player, door}) {\n  // TODO\n}\n"
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "request_digest": "aa9dbd87bb5580758e1276568dff5c8ecb9167cf0a8d5aa11e6e9ca5ac1c26c9",
+      "prompt_units_estimate": 9382
+    }
+  ],
+  "repair_budget": 0,
+  "feedback_to_model": "NONE",
+  "input_token_accounting": "MATCHED_24000_PROMPT_UNITS_CEILING_NOT_VERIFIED_TOKENIZER",
+  "provider_usage": "REPORTED_TOTAL_COMPLETION_TOKENS_NO_INFERRED_REASONING_SPLIT",
+  "thinking_parameters": {
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "thinking_support": {
+    "official_source": "https://www.volcengine.com/docs/ark/deep-thinking",
+    "evidence": "OFFICIAL_INDEXED_MODEL_SPECIFIC_EXCERPT_ENABLED_DEFAULT_AND_DISABLED",
+    "Plan_compatibility": "UNVERIFIED_PENDING_USER_LOCAL_REQUEST",
+    "nonempty_reasoning_response": "HALT_THINKING_MISMATCH_NO_DEFAULT_FALLBACK"
+  },
+  "model_revision_claim": "EXACT_REPORTED_IDENTIFIER_ONLY_NOT_WEIGHTS_ATTESTATION",
+  "candidate_execution": "BLOCKED_PENDING_SOURCE_REVIEW_AND_FRESH_OS_ISOLATION_CHECK",
+  "runtime_semantics": "EXISTING_SHARED_HOST_IR_AND_JS_FIXED_ORACLE",
+  "ir_architecture_frozen": false,
+  "TS": "DEFERRED",
+  "Vitric": "ORIGINAL_BASELINE_ABSENT",
+  "review_status": "AWAITING_PARENT_FAIRNESS_REVIEW",
+  "send_enabled": false,
+  "activation_path": "NONE_EXISTING_MANUAL_PAIR_REJECTS_V3",
+  "revision_provenance": {
+    "observed_development_pair": "pair002",
+    "reason": "Clarify contract after one unsupported-return submission; not independent holdout evidence.",
+    "original_candidates_changed": false,
+    "original_scores_changed": false,
+    "compiler_or_runtime_changed": false,
+    "new_model_calls": 0
+  },
+  "api_rows": [
+    {
+      "op": "literal",
+      "phase": "expr",
+      "args": [
+        "type",
+        "value"
+      ],
+      "meaning": "指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。",
+      "IR": "literal:{type,value} -> type",
+      "JS": "类型正确的普通字面值；EntityID 使用给定事件参数",
+      "sources": [
+        "headless_v01/compiler.py:210",
+        "headless_v01/types.py:81"
+      ]
+    },
+    {
+      "op": "var",
+      "phase": "expr",
+      "args": [
+        "name"
+      ],
+      "meaning": "读取已绑定的局部变量；未声明变量无效。",
+      "IR": "var:{name} -> 绑定类型",
+      "JS": "读取已声明的普通局部变量",
+      "sources": [
+        "headless_v01/compiler.py:212"
+      ]
+    },
+    {
+      "op": "resolve",
+      "phase": "expr",
+      "args": [
+        "entity"
+      ],
+      "meaning": "EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。",
+      "IR": "resolve:{entity} -> option<EntityID>",
+      "JS": "ctx.resolve(entity) -> {some:EntityID}|{none:true}",
+      "sources": [
+        "headless_v01/compiler.py:215",
+        "headless_v01/runtime.py:366",
+        "ark_eval/node_worker.mjs:29"
+      ]
+    },
+    {
+      "op": "is_some",
+      "phase": "expr",
+      "args": [
+        "value"
+      ],
+      "meaning": "检查 option 是否存在，结果为 bool；检查不等于解包。",
+      "IR": "is_some:{value:option<T>} -> bool",
+      "JS": "'some' in option -> bool；ctx.exists(entity) 是 is_some(resolve(entity)) 的便利调用",
+      "sources": [
+        "headless_v01/compiler.py:223",
+        "headless_v01/runtime.py:445",
+        "ark_eval/node_worker.mjs:30"
+      ]
+    },
+    {
+      "op": "read",
+      "phase": "expr",
+      "args": [
+        "entity",
+        "field"
+      ],
+      "meaning": "EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。",
+      "IR": "read:{entity:EntityID,field} -> option<T>",
+      "JS": "ctx.read(entity,field) -> {some:T}|{none:true}",
+      "sources": [
+        "headless_v01/compiler.py:215",
+        "headless_v01/runtime.py:371",
+        "ark_eval/host.py:35"
+      ]
+    },
+    {
+      "op": "require",
+      "phase": "expr",
+      "args": [
+        "value"
+      ],
+      "meaning": "option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。",
+      "IR": "require:{value:option<T>} -> T",
+      "JS": "ctx.require(option) -> T；none 抛 InvalidEntity",
+      "sources": [
+        "headless_v01/compiler.py:223",
+        "headless_v01/runtime.py:441",
+        "ark_eval/host.py:51"
+      ]
+    },
+    {
+      "op": "not",
+      "phase": "expr",
+      "args": [
+        "value"
+      ],
+      "meaning": "bool -> bool；不能将 option 或 int 隐式转换成 bool。",
+      "IR": "not:{value:bool} -> bool",
+      "JS": "!value；value 必须已是 bool，不能用 option 对象或 int 的 truthiness",
+      "sources": [
+        "headless_v01/compiler.py:229",
+        "headless_v01/runtime.py:449"
+      ]
+    },
+    {
+      "op": "and",
+      "phase": "expr",
+      "args": [
+        "a",
+        "b"
+      ],
+      "meaning": "bool × bool -> bool；先左后右，左侧 false 时不求值右侧。",
+      "IR": "and:{a:bool,b:bool} -> bool",
+      "JS": "a && b；两侧应为 bool，左侧 false 时右侧不执行",
+      "sources": [
+        "headless_v01/compiler.py:247",
+        "headless_v01/runtime.py:451"
+      ]
+    },
+    {
+      "op": "ge",
+      "phase": "expr",
+      "args": [
+        "a",
+        "b"
+      ],
+      "meaning": "本任务 int × int -> bool，比较 a >= b。",
+      "IR": "ge:{a:int,b:int} -> bool",
+      "JS": "a >= b；两侧为 int",
+      "sources": [
+        "headless_v01/compiler.py:236"
+      ]
+    },
+    {
+      "op": "le",
+      "phase": "expr",
+      "args": [
+        "a",
+        "b"
+      ],
+      "meaning": "本任务 int × int -> bool，比较 a <= b。",
+      "IR": "le:{a:int,b:int} -> bool",
+      "JS": "a <= b；两侧为 int",
+      "sources": [
+        "headless_v01/compiler.py:236"
+      ]
+    },
+    {
+      "op": "sub",
+      "phase": "expr",
+      "args": [
+        "a",
+        "b"
+      ],
+      "meaning": "本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。",
+      "IR": "sub:{a:int,b:int} -> int",
+      "JS": "ctx.sub(a,b) -> int；使用宿主 checked 减法而不是普通 JS 减法",
+      "sources": [
+        "headless_v01/compiler.py:236",
+        "headless_v01/runtime.py:381",
+        "headless_v01/types.py:91",
+        "ark_eval/node_worker.mjs:33"
+      ]
+    },
+    {
+      "op": "record",
+      "phase": "expr",
+      "args": [
+        "items"
+      ],
+      "meaning": "构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。",
+      "IR": "record:{items:{字段:表达式}} -> record<字段类型>",
+      "JS": "普通对象字面量 {字段:值} -> 事件 payload record",
+      "sources": [
+        "headless_v01/compiler.py:271",
+        "headless_v01/runtime.py:134",
+        "ark_eval/host.py:61"
+      ]
+    },
+    {
+      "op": "let",
+      "phase": "stmt",
+      "args": [
+        "name",
+        "value"
+      ],
+      "meaning": "绑定类型明确的局部变量；新分支内的名字不在分支外可见。",
+      "IR": "let:{name,value}；同名重新绑定须保持类型",
+      "JS": "普通 const/let 局部绑定；不得保留可变全局状态",
+      "sources": [
+        "headless_v01/compiler.py:315",
+        "headless_v01/compiler.py:327",
+        "headless_v01/runtime.py:594"
+      ]
+    },
+    {
+      "op": "if",
+      "phase": "stmt",
+      "args": [
+        "condition",
+        "then",
+        "else"
+      ],
+      "meaning": "condition 必须为 bool；只执行选中的分支；语句列表从前到后执行。",
+      "IR": "if:{condition:bool,then:[语句],else:[语句]}；else 可省略，等同 []",
+      "JS": "普通 if/else；使用 bool 条件并按源代码顺序调用同步 ctx",
+      "sources": [
+        "headless_v01/compiler.py:325",
+        "headless_v01/runtime.py:543"
+      ]
+    },
+    {
+      "op": "write",
+      "phase": "stmt",
+      "args": [
+        "entity",
+        "field",
+        "value"
+      ],
+      "meaning": "EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。",
+      "IR": "write:{entity:EntityID,field,value:T}",
+      "JS": "ctx.write(entity,field,value)",
+      "sources": [
+        "headless_v01/compiler.py:319",
+        "headless_v01/runtime.py:385",
+        "ark_eval/host.py:37"
+      ]
+    },
+    {
+      "op": "emit",
+      "phase": "stmt",
+      "args": [
+        "event",
+        "payload"
+      ],
+      "meaning": "已声明事件名 × 匹配类型的 record；记录 emit 意图，成功事件合并后才进入队列。",
+      "IR": "emit:{event,payload:record表达式}",
+      "JS": "ctx.emit(event,payload)",
+      "sources": [
+        "headless_v01/compiler.py:343",
+        "headless_v01/runtime.py:403",
+        "headless_v01/runtime.py:325",
+        "ark_eval/host.py:61"
+      ]
+    }
+  ],
+  "semantic_facts": [
+    {
+      "id": "C01",
+      "title": "范围",
+      "text_both_arms": "本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。",
+      "sources": [
+        "ark_eval/create_pair.py:50",
+        "ark_eval/tasks.py:17",
+        "ark_eval/tasks.py:32"
+      ]
+    },
+    {
+      "id": "C02",
+      "title": "类型和 option",
+      "text_both_arms": "EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。",
+      "sources": [
+        "headless_v01/compiler.py:215",
+        "headless_v01/compiler.py:223",
+        "headless_v01/types.py:81",
+        "headless_v01/runtime.py:366"
+      ]
+    },
+    {
+      "id": "C03",
+      "title": "控制流",
+      "text_both_arms": "业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。",
+      "sources": [
+        "headless_v01/compiler.py:309",
+        "headless_v01/runtime.py:543",
+        "ark_eval/node_worker.mjs:51",
+        "headless_v01/runtime.py:152"
+      ]
+    },
+    {
+      "id": "C04",
+      "title": "顺序和求值",
+      "text_both_arms": "resolve/read 是宿主访问，顺序、次数和错误时机有意义。布尔 and/&& 从左到右短路；if 只求值选中分支。先计算参数再执行调用；不要为了预先验证而读取本来应跳过的实体/字段。遵守共同业务说明的逐步检查顺序。",
+      "sources": [
+        "headless_v01/runtime.py:435",
+        "headless_v01/runtime.py:451",
+        "headless_v01/runtime.py:543",
+        "ark_eval/node_worker.mjs:28",
+        "ark_eval/callback_contract.py:16"
+      ]
+    },
+    {
+      "id": "C05",
+      "title": "错误",
+      "text_both_arms": "resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。",
+      "sources": [
+        "headless_v01/runtime.py:366",
+        "headless_v01/runtime.py:385",
+        "headless_v01/runtime.py:441",
+        "headless_v01/runtime.py:63",
+        "headless_v01/types.py:91",
+        "ark_eval/host.py:51",
+        "ark_eval/node_worker.mjs:55"
+      ]
+    },
+    {
+      "id": "C06",
+      "title": "状态和副作用",
+      "text_both_arms": "每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。",
+      "sources": [
+        "headless_v01/runtime.py:256",
+        "headless_v01/runtime.py:385",
+        "headless_v01/runtime.py:403",
+        "headless_v01/runtime.py:293",
+        "headless_v01/runtime.py:152",
+        "ark_eval/host.py:61"
+      ]
+    },
+    {
+      "id": "C07",
+      "title": "预算和计量",
+      "text_both_arms": "共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。",
+      "sources": [
+        "headless_v01/runtime.py:360",
+        "headless_v01/runtime.py:381",
+        "ark_eval/host.py:80",
+        "ark_eval/callback_contract.py:12",
+        "ark_eval/node_worker.mjs:30"
+      ]
+    }
+  ],
+  "independent_examples": [
+    {
+      "id": "P01",
+      "kind": "POSITIVE_FRAGMENT",
+      "meaning": "Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。",
+      "IR": [
+        {
+          "op": "let",
+          "name": "cell",
+          "value": {
+            "op": "read",
+            "entity": {
+              "op": "var",
+              "name": "target"
+            },
+            "field": "score"
+          }
+        },
+        {
+          "op": "if",
+          "condition": {
+            "op": "is_some",
+            "value": {
+              "op": "var",
+              "name": "cell"
+            }
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "value",
+              "value": {
+                "op": "require",
+                "value": {
+                  "op": "var",
+                  "name": "cell"
+                }
+              }
+            }
+          ],
+          "else": []
+        }
+      ],
+      "JS": "const cell = ctx.read(target, 'score');\nif ('some' in cell) { const value = ctx.require(cell); }",
+      "expectation": "Existing cell -> int local value; missing cell -> normal finish without require."
+    },
+    {
+      "id": "P02",
+      "kind": "POSITIVE_FRAGMENT",
+      "meaning": "明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。",
+      "IR": {
+        "op": "require",
+        "value": {
+          "op": "resolve",
+          "entity": {
+            "op": "var",
+            "name": "target"
+          }
+        }
+      },
+      "JS": "ctx.require(ctx.resolve(target))",
+      "expectation": "EntityID or InvalidEntity; no writes."
+    },
+    {
+      "id": "P03",
+      "kind": "POSITIVE_FRAGMENT",
+      "meaning": "false 左侧使右侧 read 完全不发生。",
+      "IR": {
+        "op": "and",
+        "a": {
+          "op": "literal",
+          "type": "bool",
+          "value": false
+        },
+        "b": {
+          "op": "is_some",
+          "value": {
+            "op": "read",
+            "entity": {
+              "op": "var",
+              "name": "target"
+            },
+            "field": "score"
+          }
+        }
+      },
+      "JS": "false && ('some' in ctx.read(target, 'score'))",
+      "expectation": "false; zero read operations."
+    },
+    {
+      "id": "N01",
+      "kind": "NEGATIVE_FRAGMENT",
+      "meaning": "把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。",
+      "IR": {
+        "op": "read",
+        "entity": {
+          "op": "resolve",
+          "entity": {
+            "op": "var",
+            "name": "target"
+          }
+        },
+        "field": "score"
+      },
+      "JS": "ctx.read(ctx.resolve(target), 'score')",
+      "expectation": "IR TypeError at compile; JS TypeError at ctx entity validation."
+    },
+    {
+      "id": "N02",
+      "kind": "NEGATIVE_FRAGMENT",
+      "meaning": "不能以 option 的 truthiness 代替存在性/解包后的 bool；JS 对象 truthiness 并不会被 JS 语法解析器拒绝，但违反本契约的类型用法。",
+      "IR": {
+        "op": "if",
+        "condition": {
+          "op": "read",
+          "entity": {
+            "op": "var",
+            "name": "target"
+          },
+          "field": "score"
+        },
+        "then": [],
+        "else": []
+      },
+      "JS": "if (ctx.read(target, 'score')) { /* wrong option truthiness */ }",
+      "expectation": "IR TypeError at compile; JS syntactically valid but logically wrong, not a promised runtime TypeError."
+    },
+    {
+      "id": "N03",
+      "kind": "NEGATIVE_FRAGMENT",
+      "meaning": "缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。",
+      "IR": {
+        "op": "require",
+        "value": {
+          "op": "read",
+          "entity": {
+            "op": "var",
+            "name": "target"
+          },
+          "field": "score"
+        }
+      },
+      "JS": "ctx.require(ctx.read(target, 'score'))",
+      "expectation": "Missing score -> InvalidEntity; whole tick rollback."
+    },
+    {
+      "id": "N04",
+      "kind": "NEGATIVE_FRAGMENT",
+      "meaning": "IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。",
+      "IR": {
+        "op": "return"
+      },
+      "JS": "return 7;",
+      "expectation": "IR unsupported op -> parse rejection; JS non-undefined return -> callback JS_EXCEPTION."
+    }
+  ],
+  "source_manifest": {
+    "ark_eval/callback_contract.py:12": {
+      "file": "ark_eval/callback_contract.py",
+      "line": 12,
+      "source_line": "HOST_LIMIT = 128",
+      "file_digest": "f4c7139c83aad4d0a7e6cbf8c26afc3cd3179762c1879f699bee56f7b5615bc4"
+    },
+    "ark_eval/callback_contract.py:16": {
+      "file": "ark_eval/callback_contract.py",
+      "line": 16,
+      "source_line": "按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。",
+      "file_digest": "f4c7139c83aad4d0a7e6cbf8c26afc3cd3179762c1879f699bee56f7b5615bc4"
+    },
+    "ark_eval/create_pair.py:50": {
+      "file": "ark_eval/create_pair.py",
+      "line": 50,
+      "source_line": "def public_arms():",
+      "file_digest": "be4cf3d9118023f651b29e7e6606e2cb05f771d28ee192b52101b85ab9949336"
+    },
+    "ark_eval/host.py:35": {
+      "file": "ark_eval/host.py",
+      "line": 35,
+      "source_line": "        if \"entity\" in args: validate_value(\"EntityID\", args[\"entity\"])",
+      "file_digest": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a"
+    },
+    "ark_eval/host.py:37": {
+      "file": "ark_eval/host.py",
+      "line": 37,
+      "source_line": "        if op in {\"read\", \"write\", \"add\"}:",
+      "file_digest": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a"
+    },
+    "ark_eval/host.py:51": {
+      "file": "ark_eval/host.py",
+      "line": 51,
+      "source_line": "        if op == \"require\":",
+      "file_digest": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a"
+    },
+    "ark_eval/host.py:61": {
+      "file": "ark_eval/host.py",
+      "line": 61,
+      "source_line": "        if op in {\"emit\", \"schedule\"}:",
+      "file_digest": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a"
+    },
+    "ark_eval/host.py:80": {
+      "file": "ark_eval/host.py",
+      "line": 80,
+      "source_line": "    def receive(self, raw):",
+      "file_digest": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a"
+    },
+    "ark_eval/node_worker.mjs:28": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 28,
+      "source_line": "const api = Object.freeze({",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/node_worker.mjs:29": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 29,
+      "source_line": "  resolve:entity => request('call', {op:'resolve', args:{entity}}),",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/node_worker.mjs:30": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 30,
+      "source_line": "  exists:entity => 'some' in request('call', {op:'resolve', args:{entity}}),",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/node_worker.mjs:33": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 33,
+      "source_line": "  sub:(a,b) => request('call', {op:'int_sub', args:{a,b}}),",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/node_worker.mjs:51": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 51,
+      "source_line": "    if (Object.keys(module.namespace).join() !== 'onOpen' || typeof module.namespace.onOpen !== 'function') throw Error('EXPORT');",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/node_worker.mjs:55": {
+      "file": "ark_eval/node_worker.mjs",
+      "line": 55,
+      "source_line": "  } catch (_) { request('fault', {code:'JS_EXCEPTION'}); }",
+      "file_digest": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e"
+    },
+    "ark_eval/tasks.py:17": {
+      "file": "ark_eval/tasks.py",
+      "line": 17,
+      "source_line": "SHARED_API = \"\"\"共同世界 ABI：core-v0.1；keys:int,range[0,10],IR/exclusive；open:bool,IR/exclusive。",
+      "file_digest": "12e2fdbf28e80819f3eb9d182de5ce5b65875320fbe3562c6f9790531ef6d7f2"
+    },
+    "ark_eval/tasks.py:32": {
+      "file": "ark_eval/tasks.py",
+      "line": 32,
+      "source_line": "def base_program():",
+      "file_digest": "12e2fdbf28e80819f3eb9d182de5ce5b65875320fbe3562c6f9790531ef6d7f2"
+    },
+    "headless_v01/compiler.py:210": {
+      "file": "headless_v01/compiler.py",
+      "line": 210,
+      "source_line": "        if op == \"literal\":",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:212": {
+      "file": "headless_v01/compiler.py",
+      "line": 212,
+      "source_line": "        elif op == \"var\":",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:215": {
+      "file": "headless_v01/compiler.py",
+      "line": 215,
+      "source_line": "        elif op in {\"read\", \"observe\", \"resolve\"}:",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:223": {
+      "file": "headless_v01/compiler.py",
+      "line": 223,
+      "source_line": "        elif op in {\"require\", \"is_some\", \"some\"}:",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:229": {
+      "file": "headless_v01/compiler.py",
+      "line": 229,
+      "source_line": "        elif op == \"not\": require_type(e(\"value\"), \"bool\"); t = \"bool\"",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:236": {
+      "file": "headless_v01/compiler.py",
+      "line": 236,
+      "source_line": "        elif op in {\"add\", \"sub\", \"mul\", \"div\", \"eq\", \"lt\", \"le\", \"gt\", \"ge\", \"and\", \"or\", \"contains\", \"concat\"}:",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:247": {
+      "file": "headless_v01/compiler.py",
+      "line": 247,
+      "source_line": "                if op in {\"and\", \"or\"}: require_type(a, \"bool\"); t = \"bool\"",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:271": {
+      "file": "headless_v01/compiler.py",
+      "line": 271,
+      "source_line": "        elif op == \"record\": t = {\"record\": {name: expr(child, env, pure) for name, child in n[\"items\"].items()}}",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:309": {
+      "file": "headless_v01/compiler.py",
+      "line": 309,
+      "source_line": "            keys = {\"let\": {\"name\", \"value\"}, \"write\": {\"entity\", \"field\", \"value\"}, \"add\": {\"entity\", \"field\", \"value\"},",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:315": {
+      "file": "headless_v01/compiler.py",
+      "line": 315,
+      "source_line": "            if op == \"let\":",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:319": {
+      "file": "headless_v01/compiler.py",
+      "line": 319,
+      "source_line": "            elif op in {\"write\", \"add\"}:",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:325": {
+      "file": "headless_v01/compiler.py",
+      "line": 325,
+      "source_line": "            elif op in {\"assert\", \"if\"}:",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:327": {
+      "file": "headless_v01/compiler.py",
+      "line": 327,
+      "source_line": "                if op == \"if\": statements(n[\"then\"], dict(env)); statements(n.get(\"else\", []), dict(env))",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/compiler.py:343": {
+      "file": "headless_v01/compiler.py",
+      "line": 343,
+      "source_line": "                if n[\"event\"] not in events or n[\"event\"] == \"Tick\" or n[\"event\"].startswith(\"FieldChanged:\"):",
+      "file_digest": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485"
+    },
+    "headless_v01/runtime.py:134": {
+      "file": "headless_v01/runtime.py",
+      "line": 134,
+      "source_line": "    def check_event(self, event, internal=False):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:152": {
+      "file": "headless_v01/runtime.py",
+      "line": 152,
+      "source_line": "    def step(self, inputs=None, observations=None, replies=None, observation_events=None, query_responses=None, control=None):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:256": {
+      "file": "headless_v01/runtime.py",
+      "line": 256,
+      "source_line": "            sm = copy.deepcopy(self.world); effects = []",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:293": {
+      "file": "headless_v01/runtime.py",
+      "line": 293,
+      "source_line": "        for (entity, field), intents in sorted(cells.items()):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:325": {
+      "file": "headless_v01/runtime.py",
+      "line": 325,
+      "source_line": "        emissions, notifications = [], []",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:360": {
+      "file": "headless_v01/runtime.py",
+      "line": 360,
+      "source_line": "    def host_operation(self, op):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:366": {
+      "file": "headless_v01/runtime.py",
+      "line": 366,
+      "source_line": "    def host_resolve(self, id_):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:371": {
+      "file": "headless_v01/runtime.py",
+      "line": 371,
+      "source_line": "    def host_read(self, id_, field, observe=False):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:381": {
+      "file": "headless_v01/runtime.py",
+      "line": 381,
+      "source_line": "    def host_int_sub(self, a, b):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:385": {
+      "file": "headless_v01/runtime.py",
+      "line": 385,
+      "source_line": "    def host_write(self, node, id_, field, value):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:403": {
+      "file": "headless_v01/runtime.py",
+      "line": 403,
+      "source_line": "    def host_emit(self, node, name, payload, delay=None):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:435": {
+      "file": "headless_v01/runtime.py",
+      "line": 435,
+      "source_line": "        elif op in {\"read\", \"observe\", \"resolve\"}:",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:441": {
+      "file": "headless_v01/runtime.py",
+      "line": 441,
+      "source_line": "        elif op == \"require\":",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:445": {
+      "file": "headless_v01/runtime.py",
+      "line": 445,
+      "source_line": "        elif op == \"is_some\": value = \"some\" in e(\"value\")",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:449": {
+      "file": "headless_v01/runtime.py",
+      "line": 449,
+      "source_line": "        elif op == \"not\": value = not e(\"value\")",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:451": {
+      "file": "headless_v01/runtime.py",
+      "line": 451,
+      "source_line": "        elif op in {\"and\", \"or\"}:",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:543": {
+      "file": "headless_v01/runtime.py",
+      "line": 543,
+      "source_line": "    def execute(self, body, env):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:594": {
+      "file": "headless_v01/runtime.py",
+      "line": 594,
+      "source_line": "    def scoped(self, body, env, bindings=None):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/runtime.py:63": {
+      "file": "headless_v01/runtime.py",
+      "line": 63,
+      "source_line": "    def check_invariant(self, values, field, value):",
+      "file_digest": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c"
+    },
+    "headless_v01/types.py:81": {
+      "file": "headless_v01/types.py",
+      "line": 81,
+      "source_line": "def validate_value(type_, value, limits=None):",
+      "file_digest": "9333d248be5a00940ca12c3b77c7366c5a16622cf26070ee67a978f8aa16b394"
+    },
+    "headless_v01/types.py:91": {
+      "file": "headless_v01/types.py",
+      "line": 91,
+      "source_line": "            if t == \"int\":",
+      "file_digest": "9333d248be5a00940ca12c3b77c7366c5a16622cf26070ee67a978f8aa16b394"
+    }
+  },
+  "consistency": {
+    "IR_documented_operations": 16,
+    "JS_documented_ctx_methods": 7,
+    "IR_compiler_shape_check": "PASS",
+    "JS_ctx_wire_shape_check": "PASS",
+    "semantic_checks": "SEE_EVALUATOR_AUTHORED_UNIT_TESTS_NOT_MODEL_EXECUTION"
+  },
+  "fairness_status": "STRUCTURAL_PARITY_CHECKED_CAUSAL_FAIRNESS_PENDING_PARENT_REVIEW",
+  "generated_candidates": "NONE_V3_NOT_SENT"
+}

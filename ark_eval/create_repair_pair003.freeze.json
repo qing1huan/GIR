@@ -1,0 +1,240 @@
+{
+  "schema": "gir-create-repair-freeze@1",
+  "human_send_enabled": true,
+  "agent_send_authorized": false,
+  "source_evaluation_authorized": false,
+  "proposal": {
+    "schema": "gir-pair003-repair-proposal@2",
+    "status": "FIXED_OFFLINE_REQUESTS_USER_LOCAL_SEND_ONLY",
+    "trial": "ONE_POST_OBSERVATION_CREATE_PAIR_NOT_HOLDOUT_OR_AI_ADVANTAGE",
+    "parent_generation_protocol_digest": "cfbea3fe7322e4923882141ab6d2bba0282fa2f0439b2c1cfba7a79fd76158bb",
+    "original_candidate_sha256": {
+      "gameir_text": "9cd7ea46ba86790a5413c78e5bd5846c538b75cfb65f6713c5596a47f1e87b42",
+      "js_callback": "b682f563d87f28ce68064407ed7ab4094a7b1ee1881621fc3d248eb97ec85440"
+    },
+    "original_results_sha256": "4039c10d2b4514891586a8cc59e4e4112671ee651cf25afb15e84de277317fc9",
+    "model": "deepseek-v4-1-flash-260910",
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions",
+    "thinking": {
+      "type": "disabled"
+    },
+    "sessions": "Continue each own original context independently; no cross-arm information.",
+    "system_stage_instruction": "[本轮阶段说明] 本请求是原生成后的独立单轮修复：每臂仅追加一次请求、输出上限4096 tokens，无工具、无重试、无进一步修复。允许后续消息提供两类已观测错误的有限诊断。原生成轮记录保持尝试1/修复0；本轮追加修复1。原业务需求、运行语义、ABI和源码格式要求不变。不提供参考解、具体测试输入/期望、对侧候选或修补代码。",
+    "system_stage_replacements": [
+      [
+        "宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。",
+        "宿主操作上限128/tick；原生成轮每臂尝试1、修复0、工具0；本独立修复轮每臂追加一次修复请求、无工具/重试/后续修复；仅反馈已观察的有限错误类别，不反馈具体测试输入、期望或参考解。"
+      ],
+      [
+        "输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。",
+        "输出预算每臂4096 tokens，源码UTF-8上限16384bytes；本修复轮不调用工具、不请求更多修复。"
+      ]
+    ],
+    "original_archived_messages_modified": false,
+    "incremental_budget_per_arm": {
+      "prompt_byte_units_ceiling": 24000,
+      "max_output_tokens": 4096,
+      "repair_requests": 1,
+      "retries": 0,
+      "tool_calls": 0,
+      "further_repairs": 0,
+      "feedback_utf8_bytes_ceiling": 2048,
+      "feedback_categories": 2,
+      "diagnostic_message_utf8_bytes_ceiling": 512
+    },
+    "cumulative_generation_plus_repair_caps_per_arm": {
+      "requests": 2,
+      "repairs": 1,
+      "max_output_tokens": 8192
+    },
+    "token_accounting": {
+      "status": "COMMON_BYTE_ESTIMATE_CAP_PLUS_SEPARATE_REPORTED_TOKEN_USAGE",
+      "byte_units_are_not_tokens": true,
+      "actual_usage_may_differ": true,
+      "padding_added": false,
+      "provider_input_token_limit_claimed": false,
+      "exact_tokenizer_required": false,
+      "policy": "Each request must fit the common 24000 byte+message-overhead estimate cap. Record actual provider input/output tokens separately; no comparison of input tokens against byte units, no padding, no assertion of equal actual tokens. Output max_tokens is 4096. Missing usage or output-token overrun halts the pair; unknown usage retains the reservation."
+    },
+    "evaluation": {
+      "runtime_semantics": "Unchanged shared engine and original fixed oracle",
+      "case_count_per_arm": 26,
+      "reuse_each_generated_source_across_original_seeds": [
+        1,
+        123
+      ],
+      "hidden_test_or_reference_solution_in_messages": false,
+      "original_oracle_changed": false,
+      "metrics": "Report original and repaired source/compile/gameplay/contract separately, including FAIL/NOTRUN/NOT_CHECKED.",
+      "generated_source_execution": "New hash needs separate static review, scope approval and fresh actual isolation; old pair003 scope does not authorize it.",
+      "invalid_source": "Do not strip fences or manually repair; record failure without source execution."
+    },
+    "stop_conditions": [
+      "Plan quota/auth/route/model mismatch or unknown usage",
+      "Either arm fails transport or accounting",
+      "Isolation or source binding failure"
+    ],
+    "no_fallback": {
+      "paid_route": false,
+      "purchase_or_upgrade": false,
+      "reset_cards": 0
+    },
+    "arms": [
+      {
+        "representation": "gameir_text",
+        "original_source_sha256": "9cd7ea46ba86790a5413c78e5bd5846c538b75cfb65f6713c5596a47f1e87b42",
+        "request_digest": "028cceeb6344deda5cb63915e97021c79fb504240eca4120087ee6989435fe93",
+        "request_body": {
+          "model": "deepseek-v4-1-flash-260910",
+          "messages": [
+            {
+              "role": "system",
+              "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n确认 player 与 door 都存在；任一不存在则正常结束且无事件。resolve 查询本身不会因实体缺失抛错。\n双方存在后取得 door.open；已开门则正常结束。不得提前 require 玩家 keys，让已开门但缺 keys 的正常路径抛错。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时扣 cost、打开门并发出一次 Opened(door)。推荐依次 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)；不要求逐项相同的调用轨迹，最终状态、事件与错误语义必须满足要求。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；原生成轮每臂尝试1、修复0、工具0；本独立修复轮每臂追加一次修复请求、无工具/重试/后续修复；仅反馈已观察的有限错误类别，不反馈具体测试输入、期望或参考解。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；本修复轮不调用工具、不请求更多修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] and/&& 从左到右短路，if 只执行选中分支；IR 条件须为 bool，JS 保留原生 truthiness。硬要求是错误/效果的因果时机：不得因提前 require 或业务写入，让本应正常结束的缺实体/已开门路径抛错或产生效果。预算内冗余但无害的 resolve/read 仅记录成本，不因调用形式或次数不同判玩法失败；推荐调用顺序不是逐项相同轨迹的硬要求。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。\n[C08 输入绑定与保留事件] IR handler 启动时，事件 payload 字段自动成为同名初始变量；Open 的 player、door 均为 EntityID，可用 var 直接引用，无须先 let。JS 的同名输入来自 onOpen(ctx,{player,door}) 参数。Probe 示例的 target 也来自示例 payload。两组都不能主动 emit Tick 或 FieldChanged: 前缀保留事件。\n\n[本轮阶段说明] 本请求是原生成后的独立单轮修复：每臂仅追加一次请求、输出上限4096 tokens，无工具、无重试、无进一步修复。允许后续消息提供两类已观测错误的有限诊断。原生成轮记录保持尝试1/修复0；本轮追加修复1。原业务需求、运行语义、ABI和源码格式要求不变。不提供参考解、具体测试输入/期望、对侧候选或修补代码。"
+            },
+            {
+              "role": "user",
+              "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] literal:{type,value} -> type；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] var:{name} -> 绑定类型；读取已绑定的局部变量；未声明变量无效。\n[resolve] resolve:{entity} -> option<EntityID>；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] is_some:{value:option<T>} -> bool；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] read:{entity:EntityID,field} -> option<T>；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] require:{value:option<T>} -> T；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] not:{value:bool} -> bool；逻辑否定：IR 输入须为 bool；JS 原生 truthiness 可得到 bool。option 对象真假不能表示 some/none。\n[and] and:{a:bool,b:bool} -> bool；从左到右短路：IR bool×bool->bool，左侧 false 时跳过右侧；JS && 按 truthiness 短路并返回操作数。\n[ge] ge:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a >= b。\n[le] le:{a:int,b:int} -> bool；本任务 int × int -> bool，比较 a <= b。\n[sub] sub:{a:int,b:int} -> int；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] record:{items:{字段:表达式}} -> record<字段类型>；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] let:{name,value}；同名重新绑定须保持类型；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] if:{condition:bool,then:[语句],else:[语句]}；else 可省略，等同 []；只执行选中分支，语句按源代码顺序执行；IR condition 须为 bool；JS 条件保留原生 truthiness。\n[write] write:{entity:EntityID,field,value:T}；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] emit:{event,payload:record表达式}；已声明且非保留事件 × 匹配类型的 record；不能主动发出 Tick 或 FieldChanged: 前缀事件。记录意图，成功事件合并后才进入队列。\n只输出完整 core-v0.1 JSON；每 AST 节点有 op，参数只能是该 op 列出的键。添加 handler id=open,event=Open,priority=0,body=[语句]；保留共同字段/事件 ABI。player 与 door 是事件 payload 自动绑定的初始变量。不使用 return 或未列出的 op。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\n[{\"name\":\"cell\",\"op\":\"let\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},{\"condition\":{\"op\":\"is_some\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}},\"else\":[],\"op\":\"if\",\"then\":[{\"name\":\"value\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"name\":\"cell\",\"op\":\"var\"}}}]}]\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"}}\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\n{\"a\":{\"op\":\"literal\",\"type\":\"bool\",\"value\":false},\"b\":{\"op\":\"is_some\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}},\"op\":\"and\"}\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\n{\"entity\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"op\":\"resolve\"},\"field\":\"score\",\"op\":\"read\"}\n[N02 NEGATIVE_FRAGMENT] option 对象不能表示是否存在：JS 的 some/none 对象均为 truthy，用对象真假判断存在性会产生逻辑错误；这不是 JS 语法禁令，int truthiness 仍允许。IR option 不能作为 bool 条件。\n{\"condition\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"},\"else\":[],\"op\":\"if\",\"then\":[]}\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\n{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"read\"}}\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\n{\"op\":\"return\"}\n起始程序（与 v2 完全相同；保持各自原有输出格式，无业务实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}"
+            },
+            {
+              "role": "assistant",
+              "content": "{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[{\"id\":\"open\",\"event\":\"Open\",\"priority\":0,\"body\":[{\"name\":\"p\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"player\",\"op\":\"var\"},\"op\":\"resolve\"}}},{\"name\":\"d\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"door\",\"op\":\"var\"},\"op\":\"resolve\"}}},{\"name\":\"isOpen\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"d\",\"op\":\"var\"},\"field\":\"open\",\"op\":\"read\"}}},{\"condition\":{\"op\":\"not\",\"value\":{\"name\":\"isOpen\",\"op\":\"var\"}},\"else\":[],\"op\":\"if\",\"then\":[{\"name\":\"k\",\"op\":\"let\",\"value\":{\"op\":\"require\",\"value\":{\"entity\":{\"name\":\"p\",\"op\":\"var\"},\"field\":\"keys\",\"op\":\"read\"}}},{\"condition\":{\"a\":{\"name\":\"k\",\"op\":\"var\"},\"b\":{\"op\":\"literal\",\"type\":\"int\",\"value\":1},\"op\":\"ge\"},\"else\":[{\"op\":\"emit\",\"event\":\"MissingKey\",\"payload\":{\"op\":\"record\",\"items\":{\"player\":{\"name\":\"p\",\"op\":\"var\"}}}}],\"op\":\"if\",\"then\":[{\"op\":\"write\",\"entity\":{\"name\":\"p\",\"op\":\"var\"},\"field\":\"keys\",\"value\":{\"a\":{\"name\":\"k\",\"op\":\"var\"},\"b\":{\"op\":\"literal\",\"type\":\"int\",\"value\":1},\"op\":\"sub\"}},{\"op\":\"write\",\"entity\":{\"name\":\"d\",\"op\":\"var\"},\"field\":\"open\",\"value\":{\"op\":\"literal\",\"type\":\"bool\",\"value\":true}},{\"op\":\"emit\",\"event\":\"Opened\",\"payload\":{\"op\":\"record\",\"items\":{\"door\":{\"name\":\"d\",\"op\":\"var\"}}}}]}]}]}],\"services\":{},\"version\":\"core-v0.1\"}"
+            },
+            {
+              "role": "user",
+              "content": "{\"common_instruction\":\"这是独立记录的一轮修复机会：本轮只允许一次输出，无工具、无重试、无额外修复。原生成轮的尝试1/修复0保持原账；仅本轮追加修复1。除这一预算说明外，原需求、信息、接口、输出格式和运行语义不变。请返回修复后的完整原生源文本，不要解释、Markdown或围栏。下面仅给两类诊断；NOT_CHECKED/NOTRUN不代表通过。只使用原公开需求核查分支；不会提供固定测试输入、期望状态、参考解、另一方源代码或修复代码。\",\"diagnostics\":[{\"category\":\"format_and_source_abi\",\"status\":\"PASS\",\"message\":\"原完整JSON通过静态编译与源接口审查。\"},{\"category\":\"branch_error_semantics\",\"status\":\"FAIL\",\"message\":\"原固定测试中，缺失实体分支出现InvalidEntity并使后续步骤RuntimeHalted；公开需求要求缺失实体正常结束。\"}]}"
+            }
+          ],
+          "max_tokens": 4096,
+          "temperature": 0,
+          "stream": false,
+          "thinking": {
+            "type": "disabled"
+          }
+        },
+        "prompt_byte_units": 14626,
+        "feedback_utf8_bytes": 918,
+        "feedback": {
+          "common_instruction": "这是独立记录的一轮修复机会：本轮只允许一次输出，无工具、无重试、无额外修复。原生成轮的尝试1/修复0保持原账；仅本轮追加修复1。除这一预算说明外，原需求、信息、接口、输出格式和运行语义不变。请返回修复后的完整原生源文本，不要解释、Markdown或围栏。下面仅给两类诊断；NOT_CHECKED/NOTRUN不代表通过。只使用原公开需求核查分支；不会提供固定测试输入、期望状态、参考解、另一方源代码或修复代码。",
+          "diagnostics": [
+            {
+              "category": "format_and_source_abi",
+              "status": "PASS",
+              "message": "原完整JSON通过静态编译与源接口审查。"
+            },
+            {
+              "category": "branch_error_semantics",
+              "status": "FAIL",
+              "message": "原固定测试中，缺失实体分支出现InvalidEntity并使后续步骤RuntimeHalted；公开需求要求缺失实体正常结束。"
+            }
+          ]
+        },
+        "status": "DRAFT_NOT_SENT"
+      },
+      {
+        "representation": "js_callback",
+        "original_source_sha256": "b682f563d87f28ce68064407ed7ab4094a7b1ee1881621fc3d248eb97ec85440",
+        "request_digest": "b5b301d60595ba86f8775c31c91f690a3ca649289dd7ea16d302d392bb6596ba",
+        "request_body": {
+          "model": "deepseek-v4-1-flash-260910",
+          "messages": [
+            {
+              "role": "system",
+              "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n确认 player 与 door 都存在；任一不存在则正常结束且无事件。resolve 查询本身不会因实体缺失抛错。\n双方存在后取得 door.open；已开门则正常结束。不得提前 require 玩家 keys，让已开门但缺 keys 的正常路径抛错。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时扣 cost、打开门并发出一次 Opened(door)。推荐依次 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)；不要求逐项相同的调用轨迹，最终状态、事件与错误语义必须满足要求。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；原生成轮每臂尝试1、修复0、工具0；本独立修复轮每臂追加一次修复请求、无工具/重试/后续修复；仅反馈已观察的有限错误类别，不反馈具体测试输入、期望或参考解。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；本修复轮不调用工具、不请求更多修复。\n\n契约澄清（两组逐字相同，以下类型/时机适用于上述任务）：\n[C01 范围] 本次任务级 API 是下面列出的闭合集；引擎其它操作不在本试验范围。不创建服务、扩展、计时器、网络、文件、导入或工具；不得修改共同字段/事件 ABI。\n[C02 类型和 option] EntityID 是 [world_epoch,tick,job,ordinal]。option<T> 表示 some(T) 或 none；option 不是 T。存在性检查不会解包；read/write 必须拿 EntityID，数值操作必须拿 int；some(false) 和 some(0) 都是存在值。\n[C03 控制流] 业务说明的“返回”表示结束当前 handler、没有后续调用或事件。IR 不存在 return op：将剩余处理放进满足条件的 if 分支，空分支无操作；handler 语句列表结束即正常结束。JS 允许不带值的 return 或自然到达函数末尾；不得返回值或 Promise。两种结束均不撤销已执行的 write/emit 意图，错误才触发回滚。\n[C04 顺序和求值] and/&& 从左到右短路，if 只执行选中分支；IR 条件须为 bool，JS 保留原生 truthiness。硬要求是错误/效果的因果时机：不得因提前 require 或业务写入，让本应正常结束的缺实体/已开门路径抛错或产生效果。预算内冗余但无害的 resolve/read 仅记录成本，不因调用形式或次数不同判玩法失败；推荐调用顺序不是逐项相同轨迹的硬要求。\n[C05 错误] resolve/read 的 none 本身不是错误；require(none) 当场抛 InvalidEntity，不表示 false/0。write 不存在的实体抛 InvalidEntity；字段值类型错误为 TypeError，safe-int 越界为 NumericOverflow，超范围写为 InvariantViolation。无效的语法/类型可在 IR 编译时拒绝；JS 语法或普通 JS 异常由回调故障处理，不宣称两组拒绝阶段相同。不得捕获或吞掉宿主错误。\n[C06 状态和副作用] 每事件各 handler 从同一快照读取并叠加自身 write；其它 handler 的写入在事件合并前不可见。write 当场检查值与范围、更新自身 overlay 并记录意图；emit 当场校验 payload 并记录意图。事件完成后合并意图，再调度发出的事件；exclusive 字段由不同 handler 写入发生冲突。任何错误/冲突回滚整个 tick 的状态及已排队意图，错误尝试仍记录审计。\n[C07 预算和计量] 共同宿主上限 128 次/tick；resolve、read、checked sub、write、emit 计入该上限，require/存在性判断不是额外宿主操作。JS 的 ctx 调用另有 32 请求/handler 与 256 请求/tick 的协议限制（包含 done；exists 调用一次 resolve）；IR AST 成本与 JS 计算/协议成本分别报告，不宣称两者完全相等。\n[C08 输入绑定与保留事件] IR handler 启动时，事件 payload 字段自动成为同名初始变量；Open 的 player、door 均为 EntityID，可用 var 直接引用，无须先 let。JS 的同名输入来自 onOpen(ctx,{player,door}) 参数。Probe 示例的 target 也来自示例 payload。两组都不能主动 emit Tick 或 FieldChanged: 前缀保留事件。\n\n[本轮阶段说明] 本请求是原生成后的独立单轮修复：每臂仅追加一次请求、输出上限4096 tokens，无工具、无重试、无进一步修复。允许后续消息提供两类已观测错误的有限诊断。原生成轮记录保持尝试1/修复0；本轮追加修复1。原业务需求、运行语义、ABI和源码格式要求不变。不提供参考解、具体测试输入/期望、对侧候选或修补代码。"
+            },
+            {
+              "role": "user",
+              "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n\n本试验任务级 API（闭合；每行给出类型与行为）：\n[literal] 类型正确的普通字面值；EntityID 使用给定事件参数；指定 bool/int/EntityID 值；int 是 safe-int，bool 不是 int。\n[var] 读取已声明的普通局部变量；读取已绑定的局部变量；未声明变量无效。\n[resolve] ctx.resolve(entity) -> {some:EntityID}|{none:true}；EntityID -> option<EntityID>；存在是 some，缺失是 none；不改变状态。\n[is_some] 'some' in option -> bool；ctx.exists(entity) 是 is_some(resolve(entity)) 的便利调用；检查 option 是否存在，结果为 bool；检查不等于解包。\n[read] ctx.read(entity,field) -> {some:T}|{none:true}；EntityID × 已声明字段 -> option<字段类型>；实体或该 cell 缺失返回 none。\n[require] ctx.require(option) -> T；none 抛 InvalidEntity；option<T> -> T；some 解包，none 抛 InvalidEntity；与真假判断无关。\n[not] !value；保留原生 JS 语义，允许 int truthiness；逻辑否定：IR 输入须为 bool；JS 原生 truthiness 可得到 bool。option 对象真假不能表示 some/none。\n[and] a && b；保留原生 JS truthiness，不强制两个操作数为 bool；从左到右短路：IR bool×bool->bool，左侧 false 时跳过右侧；JS && 按 truthiness 短路并返回操作数。\n[ge] a >= b；两侧为 int；本任务 int × int -> bool，比较 a >= b。\n[le] a <= b；两侧为 int；本任务 int × int -> bool，比较 a <= b。\n[sub] ctx.sub(a,b) -> int；使用宿主 checked 减法而不是普通 JS 减法；本任务 int × int -> int；safe-int 减法，越界 NumericOverflow。\n[record] 普通对象字面量 {字段:值} -> 事件 payload record；构造字段到表达式值的 record；事件 payload 必须匹配声明的字段与类型。\n[let] 普通 const/let 局部绑定；不得保留可变全局状态；绑定类型明确的局部变量；新分支内的名字不在分支外可见。\n[if] 普通 if/else；允许原生条件语义，包括 int truthiness；只执行选中分支，语句按源代码顺序执行；IR condition 须为 bool；JS 条件保留原生 truthiness。\n[write] ctx.write(entity,field,value)；EntityID × 已声明 IR 字段 × 该字段类型；写自己的 overlay 并记录 write 意图。\n[emit] ctx.emit(event,payload)；已声明且非保留事件 × 匹配类型的 record；不能主动发出 Tick 或 FieldChanged: 前缀事件。记录意图，成功事件合并后才进入队列。\n只输出 export function onOpen(ctx, {player, door}) {...}。只用上述 ctx.resolve/exists/read/require/sub/write/emit 与普通局部变量、对象、原生 JS 条件/比较；允许 int truthiness。不导入依赖、catch 宿主错误、保存可变全局变量或返回值；接口同步，不创建异步任务。\n两组都只输出本表示，不加 Markdown、解释、测试、自定义服务/扩展。\n独立最小正反例（Probe/score 与本任务无关；仅为片段，不能作为开门实现）：\n[P01 POSITIVE_FRAGMENT] Probe:{target:EntityID}，score:int/IR/exclusive。仅查看可选 cell；不存在时空分支，存在时得到 int；不写状态、不发事件。\nconst cell = ctx.read(target, 'score');\nif ('some' in cell) { const value = ctx.require(cell); }\n[P02 POSITIVE_FRAGMENT] 明确需要实体时，先将 resolve 的 option 解包成 EntityID；不存在时必须抛 InvalidEntity，而不是跳过。\nctx.require(ctx.resolve(target))\n[P03 POSITIVE_FRAGMENT] false 左侧使右侧 read 完全不发生。\nfalse && ('some' in ctx.read(target, 'score'))\n[N01 NEGATIVE_FRAGMENT] 把 resolve 的 option 直接当 EntityID 传给 read 无效；须先检查/解包或使用类型正确的原 EntityID。\nctx.read(ctx.resolve(target), 'score')\n[N02 NEGATIVE_FRAGMENT] option 对象不能表示是否存在：JS 的 some/none 对象均为 truthy，用对象真假判断存在性会产生逻辑错误；这不是 JS 语法禁令，int truthiness 仍允许。IR option 不能作为 bool 条件。\nif (ctx.read(target, 'score')) { /* wrong option truthiness */ }\n[N03 NEGATIVE_FRAGMENT] 缺失 cell 时 require(read(...)) 抛 InvalidEntity；不是返回默认 0，也不是正常结束。\nctx.require(ctx.read(target, 'score'))\n[N04 NEGATIVE_FRAGMENT] IR 没有 return 语句；JS 回调不允许返回非 undefined 值。正常提前结束方式见 C03，两种语法并不相同。\nreturn 7;\n起始程序（与 v2 完全相同；保持各自原有输出格式，无业务实现）：\nexport function onOpen(ctx, {player, door}) {\n  // TODO\n}\n"
+            },
+            {
+              "role": "assistant",
+              "content": "```js\nexport function onOpen(ctx, {player, door}) {\n  const p = ctx.resolve(player);\n  const d = ctx.resolve(door);\n  if ('some' in p && 'some' in d) {\n    const pe = ctx.require(p);\n    const de = ctx.require(d);\n    const openCell = ctx.read(de, 'open');\n    if ('some' in openCell) {\n      const isOpen = ctx.require(openCell);\n      if (!isOpen) {\n        const keysCell = ctx.read(pe, 'keys');\n        const keys = ctx.require(keysCell);\n        if (keys >= 1) {\n          ctx.write(pe, 'keys', ctx.sub(keys, 1));\n          ctx.write(de, 'open', true);\n          ctx.emit('Opened', {door: de});\n        } else {\n          ctx.emit('MissingKey', {player: pe});\n        }\n      }\n    }\n  }\n}\n```"
+            },
+            {
+              "role": "user",
+              "content": "{\"common_instruction\":\"这是独立记录的一轮修复机会：本轮只允许一次输出，无工具、无重试、无额外修复。原生成轮的尝试1/修复0保持原账；仅本轮追加修复1。除这一预算说明外，原需求、信息、接口、输出格式和运行语义不变。请返回修复后的完整原生源文本，不要解释、Markdown或围栏。下面仅给两类诊断；NOT_CHECKED/NOTRUN不代表通过。只使用原公开需求核查分支；不会提供固定测试输入、期望状态、参考解、另一方源代码或修复代码。\",\"diagnostics\":[{\"category\":\"format_and_source_abi\",\"status\":\"FAIL\",\"message\":\"原文解析后的导出列表为空，结果EXPORTS_REJECTED；原文含Markdown围栏，不符合完整原生模块输出格式。\"},{\"category\":\"branch_error_semantics\",\"status\":\"NOT_CHECKED\",\"message\":\"原JS未求值、未调用；玩法NOTRUN。分支语义尚未完整验证，请根据原公开需求核查。\"}]}"
+            }
+          ],
+          "max_tokens": 4096,
+          "temperature": 0,
+          "stream": false,
+          "thinking": {
+            "type": "disabled"
+          }
+        },
+        "prompt_byte_units": 13220,
+        "feedback_utf8_bytes": 978,
+        "feedback": {
+          "common_instruction": "这是独立记录的一轮修复机会：本轮只允许一次输出，无工具、无重试、无额外修复。原生成轮的尝试1/修复0保持原账；仅本轮追加修复1。除这一预算说明外，原需求、信息、接口、输出格式和运行语义不变。请返回修复后的完整原生源文本，不要解释、Markdown或围栏。下面仅给两类诊断；NOT_CHECKED/NOTRUN不代表通过。只使用原公开需求核查分支；不会提供固定测试输入、期望状态、参考解、另一方源代码或修复代码。",
+          "diagnostics": [
+            {
+              "category": "format_and_source_abi",
+              "status": "FAIL",
+              "message": "原文解析后的导出列表为空，结果EXPORTS_REJECTED；原文含Markdown围栏，不符合完整原生模块输出格式。"
+            },
+            {
+              "category": "branch_error_semantics",
+              "status": "NOT_CHECKED",
+              "message": "原JS未求值、未调用；玩法NOTRUN。分支语义尚未完整验证，请根据原公开需求核查。"
+            }
+          ]
+        },
+        "status": "DRAFT_NOT_SENT"
+      }
+    ],
+    "additional_model_calls": 0,
+    "authenticated_requests": 0,
+    "candidate_executions": 0,
+    "architecture": "IR not frozen; historical Vitric baseline absent; TS deferred; A12 incomplete",
+    "feedback_policy_review": "PASS_FOR_LIMITED_DEVELOPMENT_TRIAL",
+    "review_gates": [
+      "User-local Plan status confirmation and SEND_REPAIR confirmation; never agent credential handling"
+    ],
+    "proposal_digest": "853aeac71e0b28d1b7aa8a3c624c330e35c2b61c367f0a89e5827a33dabc029e"
+  },
+  "artifact_hashes": {
+    "ark_eval/adapter.py": "4222613cd19bd9651341060327a7f31a62e75b55ca824c9296d8d162e9f5fc51",
+    "ark_eval/bridge.py": "aaa0141d3c84dcf2f9e7bc3f61d80ec29ebdaa225513e360c30fa9fbe3681aaa",
+    "ark_eval/budget.py": "ead316e14ca04296f890beb935cf65304395657c30ea648a7510f3e8d44cdd91",
+    "ark_eval/build_corpus.py": "ba82e314607fb9d7e3a2d81a9aacf6bf196ddfc6970f0460a5d9152c51ba3a7b",
+    "ark_eval/callback_contract.py": "9003ab24e267ec1ce9d0538bd5b20a25a14e100c5374d1354ac2044fb6db010d",
+    "ark_eval/candidate_eval.py": "99b5eaaee9a60fe00d69ead32871da91e521049a0286c62a6f7b53734ee03f8b",
+    "ark_eval/candidate_parse_backend.py": "d61fb93b9530bf4d078d7faf58bbd49a65fa96352b8f9a63f2c465be2ce62b04",
+    "ark_eval/candidate_parser.mjs": "a5947eb9936a5362d23083879b4b52108d483d65daa40246b3181a37792bfe4b",
+    "ark_eval/candidate_review.py": "0b68c0634999b57a3981462de1ff68a8278af32ae2b4ffa12a69f9873562dadc",
+    "ark_eval/candidate_runner.py": "b5964ea881a6b34c1accc4e8b34a368bf5b13d62b93cfc21f875999581fde766",
+    "ark_eval/container_profile.py": "392754e23b26f106b2c490cf788aa9a82c4979253492a863e0d9aa414e44b34b",
+    "ark_eval/contract_assessment.py": "1771c356325ae3394693e3b5b6ff17615a9cf38d8dfc9fc2077568fd8122c3fd",
+    "ark_eval/contract_v3.py": "b9f196c8dff708039c10b42676823f9b614451052a8b3e93586248e3c6dea5c6",
+    "ark_eval/create_pair.freeze.json": "95d2e29cd3098144e48f4b9fda54a088c9e2441211911578a03d3cc0092d8bb1",
+    "ark_eval/create_pair.py": "2a7081ff1daa44492345ecd5726d68246cebf4a2cd3d8c6473ed4aff88be6ddf",
+    "ark_eval/create_pair.v1.freeze.json": "ba214ac61673da0bda7e6743806e534f5d699e0d5a071b9a18ff44407c941975",
+    "ark_eval/create_pair.v3.review.freeze.json": "3ab23e77af3c2cd5cf4b76b0d7d8a981aaca05d46ba146acc33ac1e70063d5e2",
+    "ark_eval/create_pair.v3_1.review.freeze.json": "86a7c25964dd35053eb1f300466bb2af671e2c00694520284adf9061ab60a4a2",
+    "ark_eval/final_tests.json": "44094106690268ef826fb1170329dc66290434717a771b69f70e0b67c0bd184e",
+    "ark_eval/host.py": "6013f2b50f6b67116c243095eb09245c4dad3a96669449ff903610521f8292ac",
+    "ark_eval/js_runner.py": "6587765c8d2799a8694fdaa5d064b7ded8a048cb2bcbfac9271b7b56e0909143",
+    "ark_eval/js_verify.py": "69a865183e1a5a5abc8e502195c23ff100638f2c05b046b001d358cbd93ca6ef",
+    "ark_eval/manual_pair.py": "6d1681e6dfb7401cee362b9c11a34eed3c63038017253d8ae9c85ddcb94166cc",
+    "ark_eval/manual_probe.py": "df052186fda0f68a4644372a0113ce859ffce668d4fdb866004713c6b9e6e952",
+    "ark_eval/node_backend.py": "706d45d5d0ce8f630e18381525eefe5e9db08f9ac713fe4008674deacf0a474a",
+    "ark_eval/node_image_lock.json": "9b5a0ad90b67504bf2e625aa24dae586e64cf064baef766bd9856cd72511aa63",
+    "ark_eval/node_supervisor.sh": "321299ac4bc36c0eb2ff524f0d89a792becc4534b7844d24250f17fa82298f0d",
+    "ark_eval/node_worker.mjs": "4639b98d6c6e680fbd12279ad51aeb52c084f0885d7d6807ffbeffaefb9088c9",
+    "ark_eval/oracle.py": "fd87b1afb35b061b1c750212d2b11a714ef4d3a11e5cecf7cdb5e966d0e64d3a",
+    "ark_eval/pair003_eval.py": "fff510895d81d96ec3aaae4e3bb3f85bc3c6791e29fe1877d65dd3c7bb20e894",
+    "ark_eval/pair003_ir_backend.py": "840933877298ef5a15ff9a5353bb606b676ac085906b2fce59be5839f148f076",
+    "ark_eval/pair003_ir_shim.mjs": "892478cff0b11ab50aefd4700320ca2993a3cad4e59fe0efb2b6a97eca490e6d",
+    "ark_eval/pair003_ir_worker.py": "0f723779d1437b2e52d6c5b23cf528f7d69165f395b79128b9fef0bdff7df976",
+    "ark_eval/tasks.py": "5e04cf0dac9d03a683fc6aed3fb4a2e19c3d62d3a14b4138012589f0ca6be353",
+    "ark_eval/tests/test_contract_assessment.py": "f9430b6262ecda0bbcdac6a1180d919b263bb775916d13c27ec46d22ff6885eb",
+    "ark_eval/tests/test_contract_v3.py": "f888ed80829efea58fe4ee80870f2d7315dc8b3daeba8f2d5a5f22137b7d0130",
+    "ark_eval/tests/test_pair003_eval.py": "de28240abc8ada65e6b54b52c83912e912c39654b640a54cb40544def10e310e",
+    "headless_v01/compiler.py": "233fb3a6c968a5f19cf34b30cb9621dcc407f67de69a0099db0a9eb3a2cc2d17",
+    "headless_v01/plan_checks.py": "d7d928308439a4702b8914efb948af7e733fc85ed22902fbf8b38ade1bd56d71",
+    "headless_v01/runtime.py": "5a3a0b43248d719d2fc82d6282c35ad1a0642097076a8d02d73111a9ff710f1d",
+    "headless_v01/services.py": "74393de6a10deb1342e471f42f9fbdadb8e4e0b220ba9c70f939cda59299e890",
+    "headless_v01/types.py": "c4d188990b34157229c87f65bb36eff432fee4f9d6119c95dc6969592737a10f",
+    "ark_eval/pair003_repair_draft.py": "618604abbe4045b4dcf6a4236a894334b78d5254de67d3842ea513cead75ee85",
+    "ark_eval/tests/test_pair003_repair_draft.py": "80c4ba187b0b06cc24ee5d4bedfadf7ca88c2b625e9238159feb3c36a0570c10"
+  }
+}

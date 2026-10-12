@@ -1,0 +1,18 @@
+{
+  "schema": "gir-pilot24-collection-entry@1",
+  "material_digest": "5db1fbc7855755e0cae1c033294bee8a46c43192c669419da781350d4e2aefa1",
+  "material_freeze_sha256": "5c824595221dd2fd68d7d50d5d7a4fa7bc56474c514132c6b603723fc34eeab1",
+  "approval_id": "Sentinel_fd07ce9accfc8191af13a367c14ce6ff",
+  "confirmation": "SEND_PILOT24",
+  "artifact_sha256": {
+    "ark_eval/manual_pilot24.py": "b3bb7d28136de6202a2f7f54470565414fbde8942e85b169d2fcc5ce0b06c46a",
+    "ark_eval/tests/test_manual_pilot24.py": "e16ef369159a2c1a3c5c67ce98d347238abce6315857891f86c9e9b0b03e1721",
+    "docs/pilot24/USER_LOCAL.md": "0e84199e547e4a8b15cda46c2b3500b7b943fa82ce07d63dcb5ce600ee011a6f"
+  },
+  "agent_send_authorized": false,
+  "candidate_execution_authorized": false,
+  "maximum_requests": 24,
+  "maximum_output_tokens": 98304,
+  "claim_key": "material_digest_and_approval_id",
+  "automatic_resume": false
+}

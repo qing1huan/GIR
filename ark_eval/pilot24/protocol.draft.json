@@ -1,0 +1,761 @@
+{
+  "schema": "gir-pilot24-offline-preview@1",
+  "status": "OFFLINE_REVIEW_REQUIRED",
+  "send_enabled": false,
+  "candidate_execution_enabled": false,
+  "real_model_calls": 0,
+  "schedule_sha256": "3920bccfeb052167028688df6815d835fe22cdea56906203f112dcd70d309197",
+  "maximum_attempts": 24,
+  "repairs": 0,
+  "tool_calls": 0,
+  "automatic_retries": 0,
+  "maximum_output_tokens": 98304,
+  "arms": [
+    {
+      "task_id": "M1",
+      "representation": "gameir_text",
+      "public_request_id": "M1-gameir_text",
+      "request_digest": "8d119e3e819bc2aa275ffa4d1e77013b9ded07e61589339c3cb426a7f0c4022a",
+      "prompt_units_estimate": 11236,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# M1 多资源商店购买（多步修改）\n\n**ABI：** `Open:{buyer:EntityID,item:EntityID}`。字段 `coins:int[0,10]`、`tokens:int[0,10]`、`sold:bool`。输出 `Purchased:{buyer,item}`、`PurchaseDenied:{buyer,item}`，成员均EntityID。\n\n**等价v0 starter：** 先确认buyer/item均存在，否则正常无效果；require(item.sold)，已售则返回且不要求余额cell；未售require(buyer.coins)，coins≥2则扣2、sold=true、发Purchased一次，否则发PurchaseDenied。tokens字段已在ABI，但v0忽略。IR和JS都完整实现这些旧行为，成本用具名常量，不埋故障或TODO。\n\n**v1新规则：** 未售路径必须先取得coins和tokens两个必需值，再共同判定coins≥2且tokens≥1；成功同时扣2 coins和1 token、sold=true、发Purchased，否则只发PurchaseDenied。即使coins不足，缺tokens也属于I，因为两个余额均为本路径必需值。保留存在性、已售短路、coins不足正常拒绝、重复购买幂等。buyer=item允许，三个不同名字的cell正常更新。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"coins\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"tokens\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"sold\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    },\n    \"Purchased\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    },\n    \"PurchaseDenied\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"coins\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"tokens\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"sold\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"buyer\": \"EntityID\",\n    \"item\": \"EntityID\"\n   }\n  },\n  \"Purchased\": {\n   \"record\": {\n    \"buyer\": \"EntityID\",\n    \"item\": \"EntityID\"\n   }\n  },\n  \"PurchaseDenied\": {\n   \"record\": {\n    \"buyer\": \"EntityID\",\n    \"item\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"and\",\n      \"a\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"buyer\"\n        }\n       }\n      },\n      \"b\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"item\"\n        }\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"not\",\n        \"value\": {\n         \"op\": \"require\",\n         \"value\": {\n          \"op\": \"read\",\n          \"entity\": {\n           \"op\": \"var\",\n           \"name\": \"item\"\n          },\n          \"field\": \"sold\"\n         }\n        }\n       },\n       \"then\": [\n        {\n         \"op\": \"let\",\n         \"name\": \"cost\",\n         \"value\": {\n          \"op\": \"literal\",\n          \"type\": \"int\",\n          \"value\": 2\n         }\n        },\n        {\n         \"op\": \"let\",\n         \"name\": \"coins\",\n         \"value\": {\n          \"op\": \"require\",\n          \"value\": {\n           \"op\": \"read\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"buyer\"\n           },\n           \"field\": \"coins\"\n          }\n         }\n        },\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"ge\",\n          \"a\": {\n           \"op\": \"var\",\n           \"name\": \"coins\"\n          },\n          \"b\": {\n           \"op\": \"var\",\n           \"name\": \"cost\"\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"write\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"buyer\"\n           },\n           \"field\": \"coins\",\n           \"value\": {\n            \"op\": \"sub\",\n            \"a\": {\n             \"op\": \"var\",\n             \"name\": \"coins\"\n            },\n            \"b\": {\n             \"op\": \"var\",\n             \"name\": \"cost\"\n            }\n           }\n          },\n          {\n           \"op\": \"write\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"item\"\n           },\n           \"field\": \"sold\",\n           \"value\": {\n            \"op\": \"literal\",\n            \"type\": \"bool\",\n            \"value\": true\n           }\n          },\n          {\n           \"op\": \"emit\",\n           \"event\": \"Purchased\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"buyer\": {\n              \"op\": \"var\",\n              \"name\": \"buyer\"\n             },\n             \"item\": {\n              \"op\": \"var\",\n              \"name\": \"item\"\n             }\n            }\n           }\n          }\n         ],\n         \"else\": [\n          {\n           \"op\": \"emit\",\n           \"event\": \"PurchaseDenied\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"buyer\": {\n              \"op\": \"var\",\n              \"name\": \"buyer\"\n             },\n             \"item\": {\n              \"op\": \"var\",\n              \"name\": \"item\"\n             }\n            }\n           }\n          }\n         ]\n        }\n       ],\n       \"else\": []\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\M1\\requirements.md",
+        "public\\M1\\abi.json",
+        "public\\M1\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "M1",
+      "representation": "js_callback",
+      "public_request_id": "M1-js_callback",
+      "request_digest": "3cc72c727cf108c258e4abcdd669eafa4badbe34ec1dffc4546da14d65c095c1",
+      "prompt_units_estimate": 7422,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# M1 多资源商店购买（多步修改）\n\n**ABI：** `Open:{buyer:EntityID,item:EntityID}`。字段 `coins:int[0,10]`、`tokens:int[0,10]`、`sold:bool`。输出 `Purchased:{buyer,item}`、`PurchaseDenied:{buyer,item}`，成员均EntityID。\n\n**等价v0 starter：** 先确认buyer/item均存在，否则正常无效果；require(item.sold)，已售则返回且不要求余额cell；未售require(buyer.coins)，coins≥2则扣2、sold=true、发Purchased一次，否则发PurchaseDenied。tokens字段已在ABI，但v0忽略。IR和JS都完整实现这些旧行为，成本用具名常量，不埋故障或TODO。\n\n**v1新规则：** 未售路径必须先取得coins和tokens两个必需值，再共同判定coins≥2且tokens≥1；成功同时扣2 coins和1 token、sold=true、发Purchased，否则只发PurchaseDenied。即使coins不足，缺tokens也属于I，因为两个余额均为本路径必需值。保留存在性、已售短路、coins不足正常拒绝、重复购买幂等。buyer=item允许，三个不同名字的cell正常更新。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"coins\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"tokens\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"sold\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    },\n    \"Purchased\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    },\n    \"PurchaseDenied\": {\n      \"record\": {\n        \"buyer\": \"EntityID\",\n        \"item\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {buyer, item}) {\n  if (!ctx.exists(buyer) || !ctx.exists(item)) return;\n  if (ctx.require(ctx.read(item, 'sold'))) return;\n  const cost = 2;\n  const coins = ctx.require(ctx.read(buyer, 'coins'));\n  if (coins < cost) { ctx.emit('PurchaseDenied', {buyer, item}); return; }\n  ctx.write(buyer, 'coins', ctx.sub(coins, cost));\n  ctx.write(item, 'sold', true);\n  ctx.emit('Purchased', {buyer, item});\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\M1\\requirements.md",
+        "public\\M1\\abi.json",
+        "public\\M1\\starter.js"
+      ]
+    },
+    {
+      "task_id": "M2",
+      "representation": "gameir_text",
+      "public_request_id": "M2-gameir_text",
+      "request_digest": "1b89c365921d32d97b39f3cf4ebe2af183ae8fde58b9bd40849d7f6dc0283efe",
+      "prompt_units_estimate": 10300,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# M2 装备替换（多步修改）\n\n**ABI：** `Open:{oldGear:EntityID,newGear:EntityID}`。字段 `equipped:bool,locked:bool`。输出 `Equipped:{oldGear,newGear}`、`EquipDenied:{newGear}`。\n\n**等价v0 starter：** 两目标存在，否则无效果；EntityID相同则立即无效果，不要求任何cell。不同目标require(newGear.equipped)，已装备则返回；否则require(newGear.locked)，locked=true发EquipDenied；未锁定则newGear.equipped=true并发Equipped。v0只保证新装备激活，不读取/修改oldGear.equipped。\n\n**v1新规则：** 未锁定且新装备尚未激活时，另require(oldGear.equipped)。旧装备未激活只发EquipDenied；已激活则先取消oldGear.equipped、再激活newGear.equipped，并发Equipped一次。保留同实体no-op、新装备终态短路、锁定优先拒绝；locked=true时不需要oldGear.equipped，不能把缺cell变成错误。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"equipped\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"locked\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"oldGear\": \"EntityID\",\n        \"newGear\": \"EntityID\"\n      }\n    },\n    \"Equipped\": {\n      \"record\": {\n        \"oldGear\": \"EntityID\",\n        \"newGear\": \"EntityID\"\n      }\n    },\n    \"EquipDenied\": {\n      \"record\": {\n        \"newGear\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"equipped\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  },\n  \"locked\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"oldGear\": \"EntityID\",\n    \"newGear\": \"EntityID\"\n   }\n  },\n  \"Equipped\": {\n   \"record\": {\n    \"oldGear\": \"EntityID\",\n    \"newGear\": \"EntityID\"\n   }\n  },\n  \"EquipDenied\": {\n   \"record\": {\n    \"newGear\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"and\",\n      \"a\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"oldGear\"\n        }\n       }\n      },\n      \"b\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"newGear\"\n        }\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"not\",\n        \"value\": {\n         \"op\": \"eq\",\n         \"a\": {\n          \"op\": \"var\",\n          \"name\": \"oldGear\"\n         },\n         \"b\": {\n          \"op\": \"var\",\n          \"name\": \"newGear\"\n         }\n        }\n       },\n       \"then\": [\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"not\",\n          \"value\": {\n           \"op\": \"require\",\n           \"value\": {\n            \"op\": \"read\",\n            \"entity\": {\n             \"op\": \"var\",\n             \"name\": \"newGear\"\n            },\n            \"field\": \"equipped\"\n           }\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"if\",\n           \"condition\": {\n            \"op\": \"require\",\n            \"value\": {\n             \"op\": \"read\",\n             \"entity\": {\n              \"op\": \"var\",\n              \"name\": \"newGear\"\n             },\n             \"field\": \"locked\"\n            }\n           },\n           \"then\": [\n            {\n             \"op\": \"emit\",\n             \"event\": \"EquipDenied\",\n             \"payload\": {\n              \"op\": \"record\",\n              \"items\": {\n               \"newGear\": {\n                \"op\": \"var\",\n                \"name\": \"newGear\"\n               }\n              }\n             }\n            }\n           ],\n           \"else\": [\n            {\n             \"op\": \"write\",\n             \"entity\": {\n              \"op\": \"var\",\n              \"name\": \"newGear\"\n             },\n             \"field\": \"equipped\",\n             \"value\": {\n              \"op\": \"literal\",\n              \"type\": \"bool\",\n              \"value\": true\n             }\n            },\n            {\n             \"op\": \"emit\",\n             \"event\": \"Equipped\",\n             \"payload\": {\n              \"op\": \"record\",\n              \"items\": {\n               \"oldGear\": {\n                \"op\": \"var\",\n                \"name\": \"oldGear\"\n               },\n               \"newGear\": {\n                \"op\": \"var\",\n                \"name\": \"newGear\"\n               }\n              }\n             }\n            }\n           ]\n          }\n         ],\n         \"else\": []\n        }\n       ],\n       \"else\": []\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\M2\\requirements.md",
+        "public\\M2\\abi.json",
+        "public\\M2\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "M2",
+      "representation": "js_callback",
+      "public_request_id": "M2-js_callback",
+      "request_digest": "a1ab706ea0cc9b5d3f04e5e95827cb681b9b1c2fa8abe9a1e2d7de17d1794a6a",
+      "prompt_units_estimate": 7122,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# M2 装备替换（多步修改）\n\n**ABI：** `Open:{oldGear:EntityID,newGear:EntityID}`。字段 `equipped:bool,locked:bool`。输出 `Equipped:{oldGear,newGear}`、`EquipDenied:{newGear}`。\n\n**等价v0 starter：** 两目标存在，否则无效果；EntityID相同则立即无效果，不要求任何cell。不同目标require(newGear.equipped)，已装备则返回；否则require(newGear.locked)，locked=true发EquipDenied；未锁定则newGear.equipped=true并发Equipped。v0只保证新装备激活，不读取/修改oldGear.equipped。\n\n**v1新规则：** 未锁定且新装备尚未激活时，另require(oldGear.equipped)。旧装备未激活只发EquipDenied；已激活则先取消oldGear.equipped、再激活newGear.equipped，并发Equipped一次。保留同实体no-op、新装备终态短路、锁定优先拒绝；locked=true时不需要oldGear.equipped，不能把缺cell变成错误。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"equipped\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"locked\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"oldGear\": \"EntityID\",\n        \"newGear\": \"EntityID\"\n      }\n    },\n    \"Equipped\": {\n      \"record\": {\n        \"oldGear\": \"EntityID\",\n        \"newGear\": \"EntityID\"\n      }\n    },\n    \"EquipDenied\": {\n      \"record\": {\n        \"newGear\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {oldGear, newGear}) {\n  if (!ctx.exists(oldGear) || !ctx.exists(newGear)) return;\n  if (oldGear[0] === newGear[0] && oldGear[1] === newGear[1] && oldGear[2] === newGear[2] && oldGear[3] === newGear[3]) return;\n  if (ctx.require(ctx.read(newGear, 'equipped'))) return;\n  if (ctx.require(ctx.read(newGear, 'locked'))) { ctx.emit('EquipDenied', {newGear}); return; }\n  ctx.write(newGear, 'equipped', true);\n  ctx.emit('Equipped', {oldGear, newGear});\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\M2\\requirements.md",
+        "public\\M2\\abi.json",
+        "public\\M2\\starter.js"
+      ]
+    },
+    {
+      "task_id": "C1",
+      "representation": "gameir_text",
+      "public_request_id": "C1-gameir_text",
+      "request_digest": "3a9f507e9b9cbdcfa4cd3fdbf839afbdd7bc0e2299ba8ee40a2f14d763dd1adc",
+      "prompt_units_estimate": 11304,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# C1 任务领奖（跨规则约束）\n\n**ABI：** `Open:{player:EntityID,quest:EntityID}`。字段 `credits:int[0,10]`、`reward:int[1,3]`、`completed:bool,claimed:bool`。输出 `Rewarded:{player,quest}`、`RewardBlocked:{player,quest}`。\n\n**等价v0 starter：** 两目标存在；require(quest.completed)，false返回；true则require(player.credits)。credits<10时增加固定1并发Rewarded，否则发RewardBlocked。v0是可重复的小奖励，忽略claimed/reward；两臂使用同一checked整数加法语义。\n\n**v1新规则：** 存在性后先require(claimed)，true立即返回，不要求completed/reward/credits；false再require(completed)，未完成返回，不要求reward/credits；已完成则require(reward)与credits，两个值都取得后判定credits+reward≤10。超容量只发RewardBlocked且claimed仍false；可容纳则增加reward、claimed=true、发Rewarded一次。检查过的加法用现有sub组合表达；不是新增宿主操作。player=quest允许，四个不同名cell共存即可。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"credits\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"reward\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        1,\n        3\n      ]\n    },\n    \"completed\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"claimed\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    },\n    \"Rewarded\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    },\n    \"RewardBlocked\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"credits\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"reward\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    1,\n    3\n   ]\n  },\n  \"completed\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  },\n  \"claimed\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"player\": \"EntityID\",\n    \"quest\": \"EntityID\"\n   }\n  },\n  \"Rewarded\": {\n   \"record\": {\n    \"player\": \"EntityID\",\n    \"quest\": \"EntityID\"\n   }\n  },\n  \"RewardBlocked\": {\n   \"record\": {\n    \"player\": \"EntityID\",\n    \"quest\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"and\",\n      \"a\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"player\"\n        }\n       }\n      },\n      \"b\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"quest\"\n        }\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"require\",\n        \"value\": {\n         \"op\": \"read\",\n         \"entity\": {\n          \"op\": \"var\",\n          \"name\": \"quest\"\n         },\n         \"field\": \"completed\"\n        }\n       },\n       \"then\": [\n        {\n         \"op\": \"let\",\n         \"name\": \"credits\",\n         \"value\": {\n          \"op\": \"require\",\n          \"value\": {\n           \"op\": \"read\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"player\"\n           },\n           \"field\": \"credits\"\n          }\n         }\n        },\n        {\n         \"op\": \"let\",\n         \"name\": \"nextCredits\",\n         \"value\": {\n          \"op\": \"sub\",\n          \"a\": {\n           \"op\": \"var\",\n           \"name\": \"credits\"\n          },\n          \"b\": {\n           \"op\": \"sub\",\n           \"a\": {\n            \"op\": \"literal\",\n            \"type\": \"int\",\n            \"value\": 0\n           },\n           \"b\": {\n            \"op\": \"literal\",\n            \"type\": \"int\",\n            \"value\": 1\n           }\n          }\n         }\n        },\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"le\",\n          \"a\": {\n           \"op\": \"var\",\n           \"name\": \"nextCredits\"\n          },\n          \"b\": {\n           \"op\": \"literal\",\n           \"type\": \"int\",\n           \"value\": 10\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"write\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"player\"\n           },\n           \"field\": \"credits\",\n           \"value\": {\n            \"op\": \"var\",\n            \"name\": \"nextCredits\"\n           }\n          },\n          {\n           \"op\": \"emit\",\n           \"event\": \"Rewarded\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"player\": {\n              \"op\": \"var\",\n              \"name\": \"player\"\n             },\n             \"quest\": {\n              \"op\": \"var\",\n              \"name\": \"quest\"\n             }\n            }\n           }\n          }\n         ],\n         \"else\": [\n          {\n           \"op\": \"emit\",\n           \"event\": \"RewardBlocked\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"player\": {\n              \"op\": \"var\",\n              \"name\": \"player\"\n             },\n             \"quest\": {\n              \"op\": \"var\",\n              \"name\": \"quest\"\n             }\n            }\n           }\n          }\n         ]\n        }\n       ],\n       \"else\": []\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\C1\\requirements.md",
+        "public\\C1\\abi.json",
+        "public\\C1\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "C1",
+      "representation": "js_callback",
+      "public_request_id": "C1-js_callback",
+      "request_digest": "ce0727887ba4e8feaea6891048af999588c3444ae981950690de2af75681dfdf",
+      "prompt_units_estimate": 7529,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# C1 任务领奖（跨规则约束）\n\n**ABI：** `Open:{player:EntityID,quest:EntityID}`。字段 `credits:int[0,10]`、`reward:int[1,3]`、`completed:bool,claimed:bool`。输出 `Rewarded:{player,quest}`、`RewardBlocked:{player,quest}`。\n\n**等价v0 starter：** 两目标存在；require(quest.completed)，false返回；true则require(player.credits)。credits<10时增加固定1并发Rewarded，否则发RewardBlocked。v0是可重复的小奖励，忽略claimed/reward；两臂使用同一checked整数加法语义。\n\n**v1新规则：** 存在性后先require(claimed)，true立即返回，不要求completed/reward/credits；false再require(completed)，未完成返回，不要求reward/credits；已完成则require(reward)与credits，两个值都取得后判定credits+reward≤10。超容量只发RewardBlocked且claimed仍false；可容纳则增加reward、claimed=true、发Rewarded一次。检查过的加法用现有sub组合表达；不是新增宿主操作。player=quest允许，四个不同名cell共存即可。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"credits\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"reward\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        1,\n        3\n      ]\n    },\n    \"completed\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"claimed\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    },\n    \"Rewarded\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    },\n    \"RewardBlocked\": {\n      \"record\": {\n        \"player\": \"EntityID\",\n        \"quest\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {player, quest}) {\n  if (!ctx.exists(player) || !ctx.exists(quest)) return;\n  if (!ctx.require(ctx.read(quest, 'completed'))) return;\n  const credits = ctx.require(ctx.read(player, 'credits'));\n  if (credits >= 10) { ctx.emit('RewardBlocked', {player, quest}); return; }\n  const nextCredits = ctx.sub(credits, ctx.sub(0, 1));\n  ctx.write(player, 'credits', nextCredits);\n  ctx.emit('Rewarded', {player, quest});\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\C1\\requirements.md",
+        "public\\C1\\abi.json",
+        "public\\C1\\starter.js"
+      ]
+    },
+    {
+      "task_id": "C2",
+      "representation": "gameir_text",
+      "public_request_id": "C2-gameir_text",
+      "request_digest": "3fe1dc6b30850ec851050892ce046561daaaf4ffdc39093e23ec446fc0d0e1ca",
+      "prompt_units_estimate": 11019,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# C2 护盾与伤害结算（跨规则约束）\n\n**ABI：** `Open:{target:EntityID,amount:int}`，任务调用域amount=0..4。字段 `hp:int[0,10],shield:int[0,10],immune:bool`。输出 `Hit:{target}`、`Died:{target}`。\n\n**等价v0 starter：** target不存在或amount=0正常返回；然后require(hp)，hp=0返回；否则hp降至max(0,hp-amount)，发Hit，若降至0再发Died。不读取immune/shield。最大/最小用分支和checked sub表达，不依赖新API。\n\n**v1新规则：** 保留存在性、amount=0、hp=0优先级；hp>0时require(immune)，true返回且不要求shield；false时require(shield)。先用护盾吸收，剩余伤害才扣hp，均不低于0；随后按新值写shield与hp。只要进入这次有效伤害结算就发Hit（全被护盾吸收也发）；hp降至0时再发Died。amount=0不发Hit；已死亡不重复发Died。无需额外攻击者对象。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"hp\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"shield\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"immune\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"target\": \"EntityID\",\n        \"amount\": \"int\"\n      }\n    },\n    \"Hit\": {\n      \"record\": {\n        \"target\": \"EntityID\"\n      }\n    },\n    \"Died\": {\n      \"record\": {\n        \"target\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"hp\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"shield\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"immune\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"target\": \"EntityID\",\n    \"amount\": \"int\"\n   }\n  },\n  \"Hit\": {\n   \"record\": {\n    \"target\": \"EntityID\"\n   }\n  },\n  \"Died\": {\n   \"record\": {\n    \"target\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"is_some\",\n      \"value\": {\n       \"op\": \"resolve\",\n       \"entity\": {\n        \"op\": \"var\",\n        \"name\": \"target\"\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"gt\",\n        \"a\": {\n         \"op\": \"var\",\n         \"name\": \"amount\"\n        },\n        \"b\": {\n         \"op\": \"literal\",\n         \"type\": \"int\",\n         \"value\": 0\n        }\n       },\n       \"then\": [\n        {\n         \"op\": \"let\",\n         \"name\": \"hp\",\n         \"value\": {\n          \"op\": \"require\",\n          \"value\": {\n           \"op\": \"read\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"target\"\n           },\n           \"field\": \"hp\"\n          }\n         }\n        },\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"gt\",\n          \"a\": {\n           \"op\": \"var\",\n           \"name\": \"hp\"\n          },\n          \"b\": {\n           \"op\": \"literal\",\n           \"type\": \"int\",\n           \"value\": 0\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"let\",\n           \"name\": \"nextHp\",\n           \"value\": {\n            \"op\": \"select\",\n            \"condition\": {\n             \"op\": \"ge\",\n             \"a\": {\n              \"op\": \"var\",\n              \"name\": \"hp\"\n             },\n             \"b\": {\n              \"op\": \"var\",\n              \"name\": \"amount\"\n             }\n            },\n            \"then\": {\n             \"op\": \"sub\",\n             \"a\": {\n              \"op\": \"var\",\n              \"name\": \"hp\"\n             },\n             \"b\": {\n              \"op\": \"var\",\n              \"name\": \"amount\"\n             }\n            },\n            \"else\": {\n             \"op\": \"literal\",\n             \"type\": \"int\",\n             \"value\": 0\n            }\n           }\n          },\n          {\n           \"op\": \"write\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"target\"\n           },\n           \"field\": \"hp\",\n           \"value\": {\n            \"op\": \"var\",\n            \"name\": \"nextHp\"\n           }\n          },\n          {\n           \"op\": \"emit\",\n           \"event\": \"Hit\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"target\": {\n              \"op\": \"var\",\n              \"name\": \"target\"\n             }\n            }\n           }\n          },\n          {\n           \"op\": \"if\",\n           \"condition\": {\n            \"op\": \"eq\",\n            \"a\": {\n             \"op\": \"var\",\n             \"name\": \"nextHp\"\n            },\n            \"b\": {\n             \"op\": \"literal\",\n             \"type\": \"int\",\n             \"value\": 0\n            }\n           },\n           \"then\": [\n            {\n             \"op\": \"emit\",\n             \"event\": \"Died\",\n             \"payload\": {\n              \"op\": \"record\",\n              \"items\": {\n               \"target\": {\n                \"op\": \"var\",\n                \"name\": \"target\"\n               }\n              }\n             }\n            }\n           ],\n           \"else\": []\n          }\n         ],\n         \"else\": []\n        }\n       ],\n       \"else\": []\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\C2\\requirements.md",
+        "public\\C2\\abi.json",
+        "public\\C2\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "C2",
+      "representation": "js_callback",
+      "public_request_id": "C2-js_callback",
+      "request_digest": "4000b6d05ddf46fdc96bde0db5dd269c2c0fbe4ac89a4767f86c1f3383087c71",
+      "prompt_units_estimate": 7109,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# C2 护盾与伤害结算（跨规则约束）\n\n**ABI：** `Open:{target:EntityID,amount:int}`，任务调用域amount=0..4。字段 `hp:int[0,10],shield:int[0,10],immune:bool`。输出 `Hit:{target}`、`Died:{target}`。\n\n**等价v0 starter：** target不存在或amount=0正常返回；然后require(hp)，hp=0返回；否则hp降至max(0,hp-amount)，发Hit，若降至0再发Died。不读取immune/shield。最大/最小用分支和checked sub表达，不依赖新API。\n\n**v1新规则：** 保留存在性、amount=0、hp=0优先级；hp>0时require(immune)，true返回且不要求shield；false时require(shield)。先用护盾吸收，剩余伤害才扣hp，均不低于0；随后按新值写shield与hp。只要进入这次有效伤害结算就发Hit（全被护盾吸收也发）；hp降至0时再发Died。amount=0不发Hit；已死亡不重复发Died。无需额外攻击者对象。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"hp\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"shield\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"immune\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"target\": \"EntityID\",\n        \"amount\": \"int\"\n      }\n    },\n    \"Hit\": {\n      \"record\": {\n        \"target\": \"EntityID\"\n      }\n    },\n    \"Died\": {\n      \"record\": {\n        \"target\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {target, amount}) {\n  if (!ctx.exists(target) || amount === 0) return;\n  const hp = ctx.require(ctx.read(target, 'hp'));\n  if (hp === 0) return;\n  const nextHp = hp >= amount ? ctx.sub(hp, amount) : 0;\n  ctx.write(target, 'hp', nextHp);\n  ctx.emit('Hit', {target});\n  if (nextHp === 0) ctx.emit('Died', {target});\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\C2\\requirements.md",
+        "public\\C2\\abi.json",
+        "public\\C2\\starter.js"
+      ]
+    },
+    {
+      "task_id": "R1",
+      "representation": "gameir_text",
+      "public_request_id": "R1-gameir_text",
+      "request_digest": "43272f23915511f97bb90f7708e84b815a0a0af7fc64d60cf8f425a89e00f415",
+      "prompt_units_estimate": 12399,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# R1 资源预留新增取消（回归风险）\n\n**ABI：** `Open:{wallet:EntityID,ticket:EntityID,cancel:bool}`。字段 `credits:int[0,10],reserved:bool`。输出 `Reserved:{wallet,ticket}`、`Insufficient:{wallet,ticket}`、`Released:{wallet,ticket}`、`ReleaseDenied:{wallet,ticket}`、`CancelUnavailable:{ticket}`。\n\n**等价v0 starter：** 两实体必须存在，否则无效果。cancel=true只发CancelUnavailable，不读任何cell；cancel=false时require(reserved)，已预留返回且不要求credits；否则require(credits)，至少2则扣2、reserved=true并发Reserved，不足只发Insufficient。公共常量amount=2。两臂都实现完整旧流程，不把取消分支留成TODO。\n\n**v1新规则：** 保留cancel=false的全部行为。cancel=true改为require(reserved)，false正常返回且不要求credits；true再require(credits)。若credits≤8，则返还2、reserved=false、发Released；否则只发ReleaseDenied，保留reserved=true，不依赖越界写入触发错误来表示业务拒绝。已取消不能再次返还。wallet=ticket允许，两个字段互不重名。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"credits\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"reserved\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\",\n        \"cancel\": \"bool\"\n      }\n    },\n    \"Reserved\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"Insufficient\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"Released\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"ReleaseDenied\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"CancelUnavailable\": {\n      \"record\": {\n        \"ticket\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"credits\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"reserved\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"wallet\": \"EntityID\",\n    \"ticket\": \"EntityID\",\n    \"cancel\": \"bool\"\n   }\n  },\n  \"Reserved\": {\n   \"record\": {\n    \"wallet\": \"EntityID\",\n    \"ticket\": \"EntityID\"\n   }\n  },\n  \"Insufficient\": {\n   \"record\": {\n    \"wallet\": \"EntityID\",\n    \"ticket\": \"EntityID\"\n   }\n  },\n  \"Released\": {\n   \"record\": {\n    \"wallet\": \"EntityID\",\n    \"ticket\": \"EntityID\"\n   }\n  },\n  \"ReleaseDenied\": {\n   \"record\": {\n    \"wallet\": \"EntityID\",\n    \"ticket\": \"EntityID\"\n   }\n  },\n  \"CancelUnavailable\": {\n   \"record\": {\n    \"ticket\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"and\",\n      \"a\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"wallet\"\n        }\n       }\n      },\n      \"b\": {\n       \"op\": \"is_some\",\n       \"value\": {\n        \"op\": \"resolve\",\n        \"entity\": {\n         \"op\": \"var\",\n         \"name\": \"ticket\"\n        }\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"var\",\n        \"name\": \"cancel\"\n       },\n       \"then\": [\n        {\n         \"op\": \"emit\",\n         \"event\": \"CancelUnavailable\",\n         \"payload\": {\n          \"op\": \"record\",\n          \"items\": {\n           \"ticket\": {\n            \"op\": \"var\",\n            \"name\": \"ticket\"\n           }\n          }\n         }\n        }\n       ],\n       \"else\": [\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"not\",\n          \"value\": {\n           \"op\": \"require\",\n           \"value\": {\n            \"op\": \"read\",\n            \"entity\": {\n             \"op\": \"var\",\n             \"name\": \"ticket\"\n            },\n            \"field\": \"reserved\"\n           }\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"let\",\n           \"name\": \"cost\",\n           \"value\": {\n            \"op\": \"literal\",\n            \"type\": \"int\",\n            \"value\": 2\n           }\n          },\n          {\n           \"op\": \"let\",\n           \"name\": \"credits\",\n           \"value\": {\n            \"op\": \"require\",\n            \"value\": {\n             \"op\": \"read\",\n             \"entity\": {\n              \"op\": \"var\",\n              \"name\": \"wallet\"\n             },\n             \"field\": \"credits\"\n            }\n           }\n          },\n          {\n           \"op\": \"if\",\n           \"condition\": {\n            \"op\": \"ge\",\n            \"a\": {\n             \"op\": \"var\",\n             \"name\": \"credits\"\n            },\n            \"b\": {\n             \"op\": \"var\",\n             \"name\": \"cost\"\n            }\n           },\n           \"then\": [\n            {\n             \"op\": \"write\",\n             \"entity\": {\n              \"op\": \"var\",\n              \"name\": \"wallet\"\n             },\n             \"field\": \"credits\",\n             \"value\": {\n              \"op\": \"sub\",\n              \"a\": {\n               \"op\": \"var\",\n               \"name\": \"credits\"\n              },\n              \"b\": {\n               \"op\": \"var\",\n               \"name\": \"cost\"\n              }\n             }\n            },\n            {\n             \"op\": \"write\",\n             \"entity\": {\n              \"op\": \"var\",\n              \"name\": \"ticket\"\n             },\n             \"field\": \"reserved\",\n             \"value\": {\n              \"op\": \"literal\",\n              \"type\": \"bool\",\n              \"value\": true\n             }\n            },\n            {\n             \"op\": \"emit\",\n             \"event\": \"Reserved\",\n             \"payload\": {\n              \"op\": \"record\",\n              \"items\": {\n               \"wallet\": {\n                \"op\": \"var\",\n                \"name\": \"wallet\"\n               },\n               \"ticket\": {\n                \"op\": \"var\",\n                \"name\": \"ticket\"\n               }\n              }\n             }\n            }\n           ],\n           \"else\": [\n            {\n             \"op\": \"emit\",\n             \"event\": \"Insufficient\",\n             \"payload\": {\n              \"op\": \"record\",\n              \"items\": {\n               \"wallet\": {\n                \"op\": \"var\",\n                \"name\": \"wallet\"\n               },\n               \"ticket\": {\n                \"op\": \"var\",\n                \"name\": \"ticket\"\n               }\n              }\n             }\n            }\n           ]\n          }\n         ],\n         \"else\": []\n        }\n       ]\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\R1\\requirements.md",
+        "public\\R1\\abi.json",
+        "public\\R1\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "R1",
+      "representation": "js_callback",
+      "public_request_id": "R1-js_callback",
+      "request_digest": "8acf083b6cc52e225c438acc0930e2198757e69d2cbe03cc62f0ddccb261f828",
+      "prompt_units_estimate": 7791,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# R1 资源预留新增取消（回归风险）\n\n**ABI：** `Open:{wallet:EntityID,ticket:EntityID,cancel:bool}`。字段 `credits:int[0,10],reserved:bool`。输出 `Reserved:{wallet,ticket}`、`Insufficient:{wallet,ticket}`、`Released:{wallet,ticket}`、`ReleaseDenied:{wallet,ticket}`、`CancelUnavailable:{ticket}`。\n\n**等价v0 starter：** 两实体必须存在，否则无效果。cancel=true只发CancelUnavailable，不读任何cell；cancel=false时require(reserved)，已预留返回且不要求credits；否则require(credits)，至少2则扣2、reserved=true并发Reserved，不足只发Insufficient。公共常量amount=2。两臂都实现完整旧流程，不把取消分支留成TODO。\n\n**v1新规则：** 保留cancel=false的全部行为。cancel=true改为require(reserved)，false正常返回且不要求credits；true再require(credits)。若credits≤8，则返还2、reserved=false、发Released；否则只发ReleaseDenied，保留reserved=true，不依赖越界写入触发错误来表示业务拒绝。已取消不能再次返还。wallet=ticket允许，两个字段互不重名。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"credits\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"reserved\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\",\n        \"cancel\": \"bool\"\n      }\n    },\n    \"Reserved\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"Insufficient\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"Released\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"ReleaseDenied\": {\n      \"record\": {\n        \"wallet\": \"EntityID\",\n        \"ticket\": \"EntityID\"\n      }\n    },\n    \"CancelUnavailable\": {\n      \"record\": {\n        \"ticket\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {wallet, ticket, cancel}) {\n  if (!ctx.exists(wallet) || !ctx.exists(ticket)) return;\n  if (cancel) { ctx.emit('CancelUnavailable', {ticket}); return; }\n  if (ctx.require(ctx.read(ticket, 'reserved'))) return;\n  const cost = 2;\n  const credits = ctx.require(ctx.read(wallet, 'credits'));\n  if (credits < cost) { ctx.emit('Insufficient', {wallet, ticket}); return; }\n  ctx.write(wallet, 'credits', ctx.sub(credits, cost));\n  ctx.write(ticket, 'reserved', true);\n  ctx.emit('Reserved', {wallet, ticket});\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\R1\\requirements.md",
+        "public\\R1\\abi.json",
+        "public\\R1\\starter.js"
+      ]
+    },
+    {
+      "task_id": "R2",
+      "representation": "gameir_text",
+      "public_request_id": "R2-gameir_text",
+      "request_digest": "493ce04f1257a7c234ff196a4ff0f5491abfe251be565f5498bdd21e9082b75c",
+      "prompt_units_estimate": 10546,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# IR syntax\n\nReturn complete Core JSON with exactly the supplied ABI and the open handler body replaced. Whitespace is flexible; compact or one-space-indented JSON is recommended for output budget. Every expression/statement is an object with op. Supported subset:\n\n- literal: {\"op\":\"literal\",\"type\":\"int\",\"value\":7}; type bool for true/false.\n- var: {\"op\":\"var\",\"name\":\"target\"}; Open payload members are local variables.\n- let statement: {\"op\":\"let\",\"name\":\"balance\",\"value\":EXPR}; named local bindings may be used later in their scope.\n- resolve: {\"op\":\"resolve\",\"entity\":EXPR}; is_some: {\"op\":\"is_some\",\"value\":OPTION}. Resolving a missing entity is none.\n- read: {\"op\":\"read\",\"entity\":EXPR,\"field\":\"fieldName\"}; require: {\"op\":\"require\",\"value\":OPTION}. read returns option; require(none) faults.\n- sub/eq/ge/le/gt/lt/and/or: {\"op\":OP,\"a\":EXPR,\"b\":EXPR}; not: {\"op\":\"not\",\"value\":EXPR}. and/or short circuit; EntityID eq compares value. sub checks safe-int, not field storage range.\n- select: {\"op\":\"select\",\"condition\":BOOL,\"then\":EXPR,\"else\":EXPR}, lazy branches, same result type.\n- if statement: {\"op\":\"if\",\"condition\":BOOL,\"then\":[STATEMENTS],\"else\":[STATEMENTS]}; empty branch [] is allowed.\n- write statement: {\"op\":\"write\",\"entity\":EXPR,\"field\":\"fieldName\",\"value\":EXPR}.\n- record expression: {\"op\":\"record\",\"items\":{\"member\":EXPR}}.\n- emit statement: {\"op\":\"emit\",\"event\":\"EventName\",\"payload\":RECORD}.\n\nChecked a+b is {\"op\":\"sub\",\"a\":A,\"b\":{\"op\":\"sub\",\"a\":{\"op\":\"literal\",\"type\":\"int\",\"value\":0},\"b\":B}}. No new host operation is needed.\n\nProbe example body: [{\"op\":\"write\",\"entity\":{\"op\":\"var\",\"name\":\"target\"},\"field\":\"probe\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}]. Same Probe behavior and information as the JS example.\n"
+          },
+          {
+            "role": "user",
+            "content": "# R2 生产倒计时新增暂停和批量步进（回归风险）\n\n**ABI：** `Open:{machine:EntityID,steps:int}`，任务调用域steps=0..3。字段 `remaining:int[0,10],done:bool,paused:bool`。输出 `Built:{machine}`。\n\n**等价v0 starter：** machine存在；require(done)，true返回；false则require(remaining)，每次固定减1且下界0，写remaining；结果0时done=true并发Built一次。原先忽略paused/steps；二者已在头/参数中，不造成隐藏ABI变更。\n\n**v1新规则：** 存在性后仍先require(done)，true直接返回；未完成且steps=0直接返回，不要求paused/remaining；否则require(paused)，true返回且不要求remaining；false才require(remaining)，按steps减少并饱和到0。结果0时done=true并发Built；后续终态请求不重复。这里明确添加小范围steps参数语义，使修改至少涉及短路、步数和边界三处，而不只是加一个if。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"remaining\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"done\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"paused\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"machine\": \"EntityID\",\n        \"steps\": \"int\"\n      }\n    },\n    \"Built\": {\n      \"record\": {\n        \"machine\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\n{\n \"version\": \"core-v0.1\",\n \"fields\": {\n  \"remaining\": {\n   \"type\": \"int\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\",\n   \"range\": [\n    0,\n    10\n   ]\n  },\n  \"done\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  },\n  \"paused\": {\n   \"type\": \"bool\",\n   \"authority\": \"IR\",\n   \"policy\": \"exclusive\"\n  }\n },\n \"events\": {\n  \"Tick\": {\n   \"record\": {}\n  },\n  \"Open\": {\n   \"record\": {\n    \"machine\": \"EntityID\",\n    \"steps\": \"int\"\n   }\n  },\n  \"Built\": {\n   \"record\": {\n    \"machine\": \"EntityID\"\n   }\n  }\n },\n \"handlers\": [\n  {\n   \"id\": \"open\",\n   \"event\": \"Open\",\n   \"priority\": 0,\n   \"body\": [\n    {\n     \"op\": \"if\",\n     \"condition\": {\n      \"op\": \"is_some\",\n      \"value\": {\n       \"op\": \"resolve\",\n       \"entity\": {\n        \"op\": \"var\",\n        \"name\": \"machine\"\n       }\n      }\n     },\n     \"then\": [\n      {\n       \"op\": \"if\",\n       \"condition\": {\n        \"op\": \"not\",\n        \"value\": {\n         \"op\": \"require\",\n         \"value\": {\n          \"op\": \"read\",\n          \"entity\": {\n           \"op\": \"var\",\n           \"name\": \"machine\"\n          },\n          \"field\": \"done\"\n         }\n        }\n       },\n       \"then\": [\n        {\n         \"op\": \"let\",\n         \"name\": \"remaining\",\n         \"value\": {\n          \"op\": \"require\",\n          \"value\": {\n           \"op\": \"read\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"machine\"\n           },\n           \"field\": \"remaining\"\n          }\n         }\n        },\n        {\n         \"op\": \"let\",\n         \"name\": \"nextRemaining\",\n         \"value\": {\n          \"op\": \"select\",\n          \"condition\": {\n           \"op\": \"ge\",\n           \"a\": {\n            \"op\": \"var\",\n            \"name\": \"remaining\"\n           },\n           \"b\": {\n            \"op\": \"literal\",\n            \"type\": \"int\",\n            \"value\": 1\n           }\n          },\n          \"then\": {\n           \"op\": \"sub\",\n           \"a\": {\n            \"op\": \"var\",\n            \"name\": \"remaining\"\n           },\n           \"b\": {\n            \"op\": \"literal\",\n            \"type\": \"int\",\n            \"value\": 1\n           }\n          },\n          \"else\": {\n           \"op\": \"literal\",\n           \"type\": \"int\",\n           \"value\": 0\n          }\n         }\n        },\n        {\n         \"op\": \"write\",\n         \"entity\": {\n          \"op\": \"var\",\n          \"name\": \"machine\"\n         },\n         \"field\": \"remaining\",\n         \"value\": {\n          \"op\": \"var\",\n          \"name\": \"nextRemaining\"\n         }\n        },\n        {\n         \"op\": \"if\",\n         \"condition\": {\n          \"op\": \"eq\",\n          \"a\": {\n           \"op\": \"var\",\n           \"name\": \"nextRemaining\"\n          },\n          \"b\": {\n           \"op\": \"literal\",\n           \"type\": \"int\",\n           \"value\": 0\n          }\n         },\n         \"then\": [\n          {\n           \"op\": \"write\",\n           \"entity\": {\n            \"op\": \"var\",\n            \"name\": \"machine\"\n           },\n           \"field\": \"done\",\n           \"value\": {\n            \"op\": \"literal\",\n            \"type\": \"bool\",\n            \"value\": true\n           }\n          },\n          {\n           \"op\": \"emit\",\n           \"event\": \"Built\",\n           \"payload\": {\n            \"op\": \"record\",\n            \"items\": {\n             \"machine\": {\n              \"op\": \"var\",\n              \"name\": \"machine\"\n             }\n            }\n           }\n          }\n         ],\n         \"else\": []\n        }\n       ],\n       \"else\": []\n      }\n     ],\n     \"else\": []\n    }\n   ]\n  }\n ],\n \"services\": {},\n \"extensions\": {}\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_ir.md",
+        "public\\R2\\requirements.md",
+        "public\\R2\\abi.json",
+        "public\\R2\\starter.ir.json"
+      ]
+    },
+    {
+      "task_id": "R2",
+      "representation": "js_callback",
+      "public_request_id": "R2-js_callback",
+      "request_digest": "6b8b10b8bbc1296e2dd754c1d1d7de4fc1ba61c45ca5bc4b3db6c7d623763ff4",
+      "prompt_units_estimate": 7104,
+      "input_units_are_tokens": false,
+      "body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "# Shared contract\n\nModify the supplied correct v0 starter into v1. Preserve all explicitly preserved behavior and the fixed ABI. Use only your supplied representation. Return complete raw source without Markdown fences, explanations, tests, new handlers, or changes to field/event declarations. One generation, no feedback, tools, repair, retries, or persistent conversation. Output limit 4096 tokens; source limit 16384 UTF-8 bytes. Input estimate ceiling 24000 UTF-8 bytes + 256/message is NOT a verified input-token ceiling. No padding or omitted necessary requirements.\n\nEntityID is a four-element value [world_epoch,tick,job,ordinal]. Equality means all four components equal. Entities have no separate role type. Roles may alias unless a task explicitly specifies an alias no-op. Exists/resolve tests existence, not presence of fields. Required read of a missing cell throws InvalidEntity; do not replace missing cells with zero/false. bool is strict; integers are checked safe integers, and stored fields obey ABI ranges. Input payloads are trusted closed records; task-specific integer domains are public requirements. No out-of-domain inputs are part of this contract.\n\nOne Open handler id=open, priority=0; JS exports only synchronous onOpen returning undefined. Tick has no handler. services/extensions remain empty. Fields have authority IR, policy exclusive. Pure locals, conditions, short circuit, comparisons, and checked sub are available. Addition uses checked sub(a,sub(0,b)); both representations receive this fact. Only resolve/exists, read/require, checked sub, write and emit are needed. No imports, files, network, services, clock, random, dynamic code, timers, global mutable state, or additional host capabilities.\n\nEach input event sees previous input events committed in this tick. A fault rolls back the entire current tick, including prior input effects and published events; earlier completed ticks remain committed. Normal business rejection commits. Output events are delivered in emission order. All unmentioned fields remain unchanged; no unmentioned events; commands=[].\n\nResource limits: 128 host operations/tick, 32 JS wire requests/handler including done, 256 wire requests/tick, 8192-byte IPC request/response line; bootstrap limit 32768 bytes; max 10 seconds per invocation, 64MiB, 0.25 CPU, 32 PID in the existing isolated runtime. AST work and JS compute are different measures. Evaluation observes complete entities and per-tick status/error/business events/commands plus deterministic replay. Internal harmless read ordering is not an equality requirement. Follow the specified short circuit priorities and calculate required values before business effects.\n\nIndependent syntax example ONLY: Probe Open:{target:EntityID}, field probe:int[0,10]/IR/exclusive. Its entire behavior is writing probe=7. The task ABI and behavior below replace this example; the example is not another required handler.\n\n# Native JS callback syntax\n\nReturn complete raw native JS module with only export function onOpen(ctx, payload). It runs synchronously and returns undefined. Use normal readable const/let, if, return, short circuit, comparisons and pure local helpers. Do not construct or interpret IR or return a Core object. The supplied fixed ABI is installed in the same host.\n\n- ctx.resolve(entity) -> {some:EntityID}|{none:true}; ctx.exists(entity) -> boolean with the same resolve semantics.\n- ctx.read(entity, field) -> option(value); ctx.require(option) -> value or InvalidEntity. Missing required cells do not have default values.\n- ctx.sub(a,b) -> checked safe-int a-b; use it for integer arithmetic. It does not apply stored field ranges.\n- ctx.write(entity, field, value) and ctx.emit(event, recordPayload) -> undefined; fields and record members must match the ABI.\n- Native comparisons and conditional expressions are allowed; conditions and &&/|| short circuit. Equality of EntityIDs means comparing all four components, e.g. a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3], never array reference identity.\n- Checked a+b is ctx.sub(a,ctx.sub(0,b)). No new host operation is needed.\n\nProbe example: export function onOpen(ctx, {target}) { ctx.write(target, 'probe', 7); }. Same Probe behavior and information as the IR example. The real task fields/payload below replace Probe.\n"
+          },
+          {
+            "role": "user",
+            "content": "# R2 生产倒计时新增暂停和批量步进（回归风险）\n\n**ABI：** `Open:{machine:EntityID,steps:int}`，任务调用域steps=0..3。字段 `remaining:int[0,10],done:bool,paused:bool`。输出 `Built:{machine}`。\n\n**等价v0 starter：** machine存在；require(done)，true返回；false则require(remaining)，每次固定减1且下界0，写remaining；结果0时done=true并发Built一次。原先忽略paused/steps；二者已在头/参数中，不造成隐藏ABI变更。\n\n**v1新规则：** 存在性后仍先require(done)，true直接返回；未完成且steps=0直接返回，不要求paused/remaining；否则require(paused)，true返回且不要求remaining；false才require(remaining)，按steps减少并饱和到0。结果0时done=true并发Built；后续终态请求不重复。这里明确添加小范围steps参数语义，使修改至少涉及短路、步数和边界三处，而不只是加一个if。\n\nFIXED ABI (empty body denotes host header):\n{\n  \"version\": \"core-v0.1\",\n  \"fields\": {\n    \"remaining\": {\n      \"type\": \"int\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\",\n      \"range\": [\n        0,\n        10\n      ]\n    },\n    \"done\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    },\n    \"paused\": {\n      \"type\": \"bool\",\n      \"authority\": \"IR\",\n      \"policy\": \"exclusive\"\n    }\n  },\n  \"events\": {\n    \"Tick\": {\n      \"record\": {}\n    },\n    \"Open\": {\n      \"record\": {\n        \"machine\": \"EntityID\",\n        \"steps\": \"int\"\n      }\n    },\n    \"Built\": {\n      \"record\": {\n        \"machine\": \"EntityID\"\n      }\n    }\n  },\n  \"handlers\": [\n    {\n      \"id\": \"open\",\n      \"event\": \"Open\",\n      \"priority\": 0,\n      \"body\": []\n    }\n  ],\n  \"services\": {},\n  \"extensions\": {}\n}\n\nYOUR CORRECT V0 STARTER:\nexport function onOpen(ctx, {machine, steps}) {\n  if (!ctx.exists(machine)) return;\n  if (ctx.require(ctx.read(machine, 'done'))) return;\n  const remaining = ctx.require(ctx.read(machine, 'remaining'));\n  const nextRemaining = remaining >= 1 ? ctx.sub(remaining, 1) : 0;\n  ctx.write(machine, 'remaining', nextRemaining);\n  if (nextRemaining === 0) { ctx.write(machine, 'done', true); ctx.emit('Built', {machine}); }\n}\n\nReturn only complete v1 source in your supplied representation."
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "source_paths": [
+        "public\\common_semantics.md",
+        "public\\api_js.md",
+        "public\\R2\\requirements.md",
+        "public\\R2\\abi.json",
+        "public\\R2\\starter.js"
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "index": 1,
+      "slot_id": "M1-r1-gameir_text",
+      "task_id": "M1",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "M1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "8d119e3e819bc2aa275ffa4d1e77013b9ded07e61589339c3cb426a7f0c4022a"
+    },
+    {
+      "index": 2,
+      "slot_id": "M1-r1-js_callback",
+      "task_id": "M1",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "M1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3cc72c727cf108c258e4abcdd669eafa4badbe34ec1dffc4546da14d65c095c1"
+    },
+    {
+      "index": 3,
+      "slot_id": "M2-r1-js_callback",
+      "task_id": "M2",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "M2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "a1ab706ea0cc9b5d3f04e5e95827cb681b9b1c2fa8abe9a1e2d7de17d1794a6a"
+    },
+    {
+      "index": 4,
+      "slot_id": "M2-r1-gameir_text",
+      "task_id": "M2",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "M2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "1b89c365921d32d97b39f3cf4ebe2af183ae8fde58b9bd40849d7f6dc0283efe"
+    },
+    {
+      "index": 5,
+      "slot_id": "C1-r1-gameir_text",
+      "task_id": "C1",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "C1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3a9f507e9b9cbdcfa4cd3fdbf839afbdd7bc0e2299ba8ee40a2f14d763dd1adc"
+    },
+    {
+      "index": 6,
+      "slot_id": "C1-r1-js_callback",
+      "task_id": "C1",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "C1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "ce0727887ba4e8feaea6891048af999588c3444ae981950690de2af75681dfdf"
+    },
+    {
+      "index": 7,
+      "slot_id": "C2-r1-js_callback",
+      "task_id": "C2",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "C2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "4000b6d05ddf46fdc96bde0db5dd269c2c0fbe4ac89a4767f86c1f3383087c71"
+    },
+    {
+      "index": 8,
+      "slot_id": "C2-r1-gameir_text",
+      "task_id": "C2",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "C2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3fe1dc6b30850ec851050892ce046561daaaf4ffdc39093e23ec446fc0d0e1ca"
+    },
+    {
+      "index": 9,
+      "slot_id": "R1-r1-gameir_text",
+      "task_id": "R1",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "R1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "43272f23915511f97bb90f7708e84b815a0a0af7fc64d60cf8f425a89e00f415"
+    },
+    {
+      "index": 10,
+      "slot_id": "R1-r1-js_callback",
+      "task_id": "R1",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "R1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "8acf083b6cc52e225c438acc0930e2198757e69d2cbe03cc62f0ddccb261f828"
+    },
+    {
+      "index": 11,
+      "slot_id": "R2-r1-js_callback",
+      "task_id": "R2",
+      "repetition": 1,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "R2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "6b8b10b8bbc1296e2dd754c1d1d7de4fc1ba61c45ca5bc4b3db6c7d623763ff4"
+    },
+    {
+      "index": 12,
+      "slot_id": "R2-r1-gameir_text",
+      "task_id": "R2",
+      "repetition": 1,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "R2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "493ce04f1257a7c234ff196a4ff0f5491abfe251be565f5498bdd21e9082b75c"
+    },
+    {
+      "index": 13,
+      "slot_id": "R2-r2-gameir_text",
+      "task_id": "R2",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "R2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "493ce04f1257a7c234ff196a4ff0f5491abfe251be565f5498bdd21e9082b75c"
+    },
+    {
+      "index": 14,
+      "slot_id": "R2-r2-js_callback",
+      "task_id": "R2",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "R2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "6b8b10b8bbc1296e2dd754c1d1d7de4fc1ba61c45ca5bc4b3db6c7d623763ff4"
+    },
+    {
+      "index": 15,
+      "slot_id": "R1-r2-js_callback",
+      "task_id": "R1",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "R1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "8acf083b6cc52e225c438acc0930e2198757e69d2cbe03cc62f0ddccb261f828"
+    },
+    {
+      "index": 16,
+      "slot_id": "R1-r2-gameir_text",
+      "task_id": "R1",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "R1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "43272f23915511f97bb90f7708e84b815a0a0af7fc64d60cf8f425a89e00f415"
+    },
+    {
+      "index": 17,
+      "slot_id": "C2-r2-gameir_text",
+      "task_id": "C2",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "C2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3fe1dc6b30850ec851050892ce046561daaaf4ffdc39093e23ec446fc0d0e1ca"
+    },
+    {
+      "index": 18,
+      "slot_id": "C2-r2-js_callback",
+      "task_id": "C2",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "C2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "4000b6d05ddf46fdc96bde0db5dd269c2c0fbe4ac89a4767f86c1f3383087c71"
+    },
+    {
+      "index": 19,
+      "slot_id": "C1-r2-js_callback",
+      "task_id": "C1",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "C1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "ce0727887ba4e8feaea6891048af999588c3444ae981950690de2af75681dfdf"
+    },
+    {
+      "index": 20,
+      "slot_id": "C1-r2-gameir_text",
+      "task_id": "C1",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "C1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3a9f507e9b9cbdcfa4cd3fdbf839afbdd7bc0e2299ba8ee40a2f14d763dd1adc"
+    },
+    {
+      "index": 21,
+      "slot_id": "M2-r2-gameir_text",
+      "task_id": "M2",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 1,
+      "public_request_id": "M2-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "1b89c365921d32d97b39f3cf4ebe2af183ae8fde58b9bd40849d7f6dc0283efe"
+    },
+    {
+      "index": 22,
+      "slot_id": "M2-r2-js_callback",
+      "task_id": "M2",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 2,
+      "public_request_id": "M2-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "a1ab706ea0cc9b5d3f04e5e95827cb681b9b1c2fa8abe9a1e2d7de17d1794a6a"
+    },
+    {
+      "index": 23,
+      "slot_id": "M1-r2-js_callback",
+      "task_id": "M1",
+      "repetition": 2,
+      "representation": "js_callback",
+      "within_pair_position": 1,
+      "public_request_id": "M1-js_callback",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "3cc72c727cf108c258e4abcdd669eafa4badbe34ec1dffc4546da14d65c095c1"
+    },
+    {
+      "index": 24,
+      "slot_id": "M1-r2-gameir_text",
+      "task_id": "M1",
+      "repetition": 2,
+      "representation": "gameir_text",
+      "within_pair_position": 2,
+      "public_request_id": "M1-gameir_text",
+      "new_session": true,
+      "attempts_max": 1,
+      "repairs_max": 0,
+      "tool_calls_max": 0,
+      "request_digest": "8d119e3e819bc2aa275ffa4d1e77013b9ded07e61589339c3cb426a7f0c4022a"
+    }
+  ]
+}

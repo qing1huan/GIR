@@ -1,0 +1,50 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "remaining": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "done": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    },
+    "paused": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "machine": "EntityID",
+        "steps": "int"
+      }
+    },
+    "Built": {
+      "record": {
+        "machine": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

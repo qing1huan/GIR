@@ -1,0 +1,66 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "credits": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "reward": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        1,
+        3
+      ]
+    },
+    "completed": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    },
+    "claimed": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "player": "EntityID",
+        "quest": "EntityID"
+      }
+    },
+    "Rewarded": {
+      "record": {
+        "player": "EntityID",
+        "quest": "EntityID"
+      }
+    },
+    "RewardBlocked": {
+      "record": {
+        "player": "EntityID",
+        "quest": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

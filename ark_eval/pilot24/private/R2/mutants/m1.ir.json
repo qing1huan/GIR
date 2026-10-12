@@ -1,0 +1,232 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "remaining": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "done": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  },
+  "paused": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "machine": "EntityID",
+    "steps": "int"
+   }
+  },
+  "Built": {
+   "record": {
+    "machine": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "is_some",
+      "value": {
+       "op": "resolve",
+       "entity": {
+        "op": "var",
+        "name": "machine"
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "not",
+        "value": {
+         "op": "require",
+         "value": {
+          "op": "read",
+          "entity": {
+           "op": "var",
+           "name": "machine"
+          },
+          "field": "done"
+         }
+        }
+       },
+       "then": [
+        {
+         "op": "if",
+         "condition": {
+          "op": "gt",
+          "a": {
+           "op": "var",
+           "name": "steps"
+          },
+          "b": {
+           "op": "literal",
+           "type": "int",
+           "value": 0
+          }
+         },
+         "then": [
+          {
+           "op": "if",
+           "condition": {
+            "op": "not",
+            "value": {
+             "op": "require",
+             "value": {
+              "op": "read",
+              "entity": {
+               "op": "var",
+               "name": "machine"
+              },
+              "field": "paused"
+             }
+            }
+           },
+           "then": [
+            {
+             "op": "let",
+             "name": "remaining",
+             "value": {
+              "op": "require",
+              "value": {
+               "op": "read",
+               "entity": {
+                "op": "var",
+                "name": "machine"
+               },
+               "field": "remaining"
+              }
+             }
+            },
+            {
+             "op": "let",
+             "name": "nextRemaining",
+             "value": {
+              "op": "select",
+              "condition": {
+               "op": "ge",
+               "a": {
+                "op": "var",
+                "name": "remaining"
+               },
+               "b": {
+                "op": "literal",
+                "type": "int",
+                "value": 1
+               }
+              },
+              "then": {
+               "op": "sub",
+               "a": {
+                "op": "var",
+                "name": "remaining"
+               },
+               "b": {
+                "op": "literal",
+                "type": "int",
+                "value": 1
+               }
+              },
+              "else": {
+               "op": "literal",
+               "type": "int",
+               "value": 0
+              }
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "machine"
+             },
+             "field": "remaining",
+             "value": {
+              "op": "var",
+              "name": "nextRemaining"
+             }
+            },
+            {
+             "op": "if",
+             "condition": {
+              "op": "eq",
+              "a": {
+               "op": "var",
+               "name": "nextRemaining"
+              },
+              "b": {
+               "op": "literal",
+               "type": "int",
+               "value": 0
+              }
+             },
+             "then": [
+              {
+               "op": "write",
+               "entity": {
+                "op": "var",
+                "name": "machine"
+               },
+               "field": "done",
+               "value": {
+                "op": "literal",
+                "type": "bool",
+                "value": true
+               }
+              },
+              {
+               "op": "emit",
+               "event": "Built",
+               "payload": {
+                "op": "record",
+                "items": {
+                 "machine": {
+                  "op": "var",
+                  "name": "machine"
+                 }
+                }
+               }
+              }
+             ],
+             "else": []
+            }
+           ],
+           "else": []
+          }
+         ],
+         "else": []
+        }
+       ],
+       "else": []
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N02",
+    "intent": "shield_does_not_protect_hp"
+  },
+  {
+    "index": 2,
+    "case_id": "N03",
+    "intent": "remaining_damage_not_applied"
+  },
+  {
+    "index": 3,
+    "case_id": "R02",
+    "intent": "dead_terminal_regression"
+  }
+]

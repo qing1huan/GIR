@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N01",
+    "intent": "steps_ignored"
+  },
+  {
+    "index": 2,
+    "case_id": "N04",
+    "intent": "zero_step_priority_lost"
+  },
+  {
+    "index": 3,
+    "case_id": "R03",
+    "intent": "done_terminal_regression"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "coins": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "tokens": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "sold": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "buyer": "EntityID",
+        "item": "EntityID"
+      }
+    },
+    "Purchased": {
+      "record": {
+        "buyer": "EntityID",
+        "item": "EntityID"
+      }
+    },
+    "PurchaseDenied": {
+      "record": {
+        "buyer": "EntityID",
+        "item": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

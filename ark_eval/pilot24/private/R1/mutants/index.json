@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N02",
+    "intent": "reservation_not_cleared"
+  },
+  {
+    "index": 2,
+    "case_id": "B01",
+    "intent": "refund_capacity_unchecked"
+  },
+  {
+    "index": 3,
+    "case_id": "R01",
+    "intent": "old_reserve_cost_changed"
+  }
+]

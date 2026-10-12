@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N01",
+    "intent": "missing_token_debit"
+  },
+  {
+    "index": 2,
+    "case_id": "B01",
+    "intent": "skip_required_token_on_rejection"
+  },
+  {
+    "index": 3,
+    "case_id": "R02",
+    "intent": "sold_terminal_regression"
+  }
+]
