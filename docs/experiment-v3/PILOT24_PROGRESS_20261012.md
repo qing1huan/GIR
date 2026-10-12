@@ -1,6 +1,6 @@
 > Historical pre-launch snapshot. The exact-51 claim has since been consumed. Current verified progress is **230 PASS / 2 FAIL / 54 NOTRUN / 2 historical unknown**, with 9/51 durable results and no terminal receipt, as of 2026-10-12 15:54:30 UTC. See [the takeover report](PILOT24_TAKEOVER_20261012.md). Do not follow the historical launch instruction below or start the consumed scorer again.
 
-# Pilot24 progress snapshot �� 2026-10-12
+# Pilot24 progress snapshot — 2026-10-12
 
 This is an incomplete research/engineering progress snapshot, not a completed
 288-case result or a stable release. The original 24 answers remain unchanged
