@@ -1,0 +1,252 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "credits": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "reserved": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "wallet": "EntityID",
+    "ticket": "EntityID",
+    "cancel": "bool"
+   }
+  },
+  "Reserved": {
+   "record": {
+    "wallet": "EntityID",
+    "ticket": "EntityID"
+   }
+  },
+  "Insufficient": {
+   "record": {
+    "wallet": "EntityID",
+    "ticket": "EntityID"
+   }
+  },
+  "Released": {
+   "record": {
+    "wallet": "EntityID",
+    "ticket": "EntityID"
+   }
+  },
+  "ReleaseDenied": {
+   "record": {
+    "wallet": "EntityID",
+    "ticket": "EntityID"
+   }
+  },
+  "CancelUnavailable": {
+   "record": {
+    "ticket": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "and",
+      "a": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "wallet"
+        }
+       }
+      },
+      "b": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "ticket"
+        }
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "var",
+        "name": "cancel"
+       },
+       "then": [
+        {
+         "op": "emit",
+         "event": "CancelUnavailable",
+         "payload": {
+          "op": "record",
+          "items": {
+           "ticket": {
+            "op": "var",
+            "name": "ticket"
+           }
+          }
+         }
+        }
+       ],
+       "else": [
+        {
+         "op": "if",
+         "condition": {
+          "op": "not",
+          "value": {
+           "op": "require",
+           "value": {
+            "op": "read",
+            "entity": {
+             "op": "var",
+             "name": "ticket"
+            },
+            "field": "reserved"
+           }
+          }
+         },
+         "then": [
+          {
+           "op": "let",
+           "name": "cost",
+           "value": {
+            "op": "literal",
+            "type": "int",
+            "value": 2
+           }
+          },
+          {
+           "op": "let",
+           "name": "credits",
+           "value": {
+            "op": "require",
+            "value": {
+             "op": "read",
+             "entity": {
+              "op": "var",
+              "name": "wallet"
+             },
+             "field": "credits"
+            }
+           }
+          },
+          {
+           "op": "if",
+           "condition": {
+            "op": "ge",
+            "a": {
+             "op": "var",
+             "name": "credits"
+            },
+            "b": {
+             "op": "var",
+             "name": "cost"
+            }
+           },
+           "then": [
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "wallet"
+             },
+             "field": "credits",
+             "value": {
+              "op": "sub",
+              "a": {
+               "op": "var",
+               "name": "credits"
+              },
+              "b": {
+               "op": "var",
+               "name": "cost"
+              }
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "ticket"
+             },
+             "field": "reserved",
+             "value": {
+              "op": "literal",
+              "type": "bool",
+              "value": true
+             }
+            },
+            {
+             "op": "emit",
+             "event": "Reserved",
+             "payload": {
+              "op": "record",
+              "items": {
+               "wallet": {
+                "op": "var",
+                "name": "wallet"
+               },
+               "ticket": {
+                "op": "var",
+                "name": "ticket"
+               }
+              }
+             }
+            }
+           ],
+           "else": [
+            {
+             "op": "emit",
+             "event": "Insufficient",
+             "payload": {
+              "op": "record",
+              "items": {
+               "wallet": {
+                "op": "var",
+                "name": "wallet"
+               },
+               "ticket": {
+                "op": "var",
+                "name": "ticket"
+               }
+              }
+             }
+            }
+           ]
+          }
+         ],
+         "else": []
+        }
+       ]
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

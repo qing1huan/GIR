@@ -1,0 +1,766 @@
+[
+  {
+    "id": "R01",
+    "task_id": "R1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 4
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Reserved",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R02",
+    "task_id": "R1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 1
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 1
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Insufficient",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R03",
+    "task_id": "R1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R04",
+    "task_id": "R1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S01",
+    "task_id": "R1",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 4
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 4
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "CancelUnavailable",
+            "payload": {
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S02",
+    "task_id": "R1",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": true
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "CancelUnavailable",
+            "payload": {
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S03",
+    "task_id": "R1",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 4
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 4
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S04",
+    "task_id": "R1",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 4
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "reserved": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "cancel": false
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "reserved": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Reserved",
+            "payload": {
+              "wallet": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "ticket": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,552 @@
+[
+  {
+    "id": "R01",
+    "task_id": "C2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 5,
+          "shield": 0,
+          "immune": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 2
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 3,
+              "shield": 0,
+              "immune": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Hit",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R02",
+    "task_id": "C2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 0
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 0
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R03",
+    "task_id": "C2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 0
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R04",
+    "task_id": "C2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 5,
+          "shield": 2,
+          "immune": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 5,
+              "shield": 2,
+              "immune": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S01",
+    "task_id": "C2",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 5,
+          "shield": 2,
+          "immune": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 2,
+              "shield": 2,
+              "immune": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Hit",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S02",
+    "task_id": "C2",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 0
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Hit",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          },
+          {
+            "name": "Died",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S03",
+    "task_id": "C2",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "S04",
+    "task_id": "C2",
+    "group": "S",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "hp": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "amount": 3
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "hp": 0
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Hit",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          },
+          {
+            "name": "Died",
+            "payload": {
+              "target": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  }
+]

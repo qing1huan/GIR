@@ -1,0 +1,47 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "equipped": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    },
+    "locked": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "oldGear": "EntityID",
+        "newGear": "EntityID"
+      }
+    },
+    "Equipped": {
+      "record": {
+        "oldGear": "EntityID",
+        "newGear": "EntityID"
+      }
+    },
+    "EquipDenied": {
+      "record": {
+        "newGear": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

@@ -1,0 +1,159 @@
+{
+  "schema": "gir-create-pair-freeze@2",
+  "scope": "ONE_DEVELOPMENT_CREATE_PAIR_NOT_HOLDOUT_NOT_AI_ADVANTAGE",
+  "previous_protocol_digest": "b139ae8f59fed7e1dc1ce9bfb812bb43c204a4c5265fe505d3637da6de10d89c",
+  "task_id": "P-C02-create",
+  "model": "deepseek-v4-1-flash-260910",
+  "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions",
+  "order": [
+    "gameir_text",
+    "js_callback"
+  ],
+  "independent_sessions": true,
+  "budget_per_arm": {
+    "prompt_units": 24000,
+    "output_tokens": 4096,
+    "attempts": 1,
+    "repairs": 0,
+    "tool_calls": 0
+  },
+  "maximum_pair_output_tokens": 8192,
+  "maximum_pair_attempts": 2,
+  "HTTPS_socket_timeout_seconds_per_arm": 120,
+  "source_bytes_limit": 16384,
+  "host_operations_per_tick": 128,
+  "oracle_case_count_per_arm": 26,
+  "oracle": "FIXED_EVALUATOR_OWNED_NOT_SENT_TO_MODEL",
+  "oracle_holdout": false,
+  "seeds": [
+    1,
+    123
+  ],
+  "artifact_hashes": {
+    "headless_v01/compiler.py": "91620f8ded6caa2f393d9c3739b9149746a36ae6472cf1ee6cfaa9d99f76a485",
+    "headless_v01/runtime.py": "c4c2237941854eb59f8b218906eba7a3f38d624b19693c3450f47cf957575e4c",
+    "headless_v01/types.py": "9333d248be5a00940ca12c3b77c7366c5a16622cf26070ee67a978f8aa16b394",
+    "headless_v01/services.py": "2e230af777ec3253092cc5f7fc6f71722e57c7fcffa7cf25de3a1fa2407bc7c1",
+    "headless_v01/plan_checks.py": "4a34b65a35960ee8db9011d282cee83f16275a3bac5ab5b7cb20e3815b3fafdf",
+    "ark_eval/adapter.py": "cab8912b73aaf4eeada1c670d8f06ca5d65820ae66871041e7d92a31aa82b955",
+    "ark_eval/budget.py": "915bf0c58dac97ec39138d9bd1c075baea9600e05049176a2c1c8865b2539369",
+    "ark_eval/tasks.py": "12e2fdbf28e80819f3eb9d182de5ce5b65875320fbe3562c6f9790531ef6d7f2",
+    "ark_eval/callback_contract.py": "f4c7139c83aad4d0a7e6cbf8c26afc3cd3179762c1879f699bee56f7b5615bc4",
+    "ark_eval/host.py": "c372762ba1655269f5d32196b7295edc37b7918322cf872204b253030608856a",
+    "ark_eval/oracle.py": "a6f0872e2db6061a5dc89ef1303aad8aeccb79d39fc5afcfd83e1605943e6c7c",
+    "ark_eval/final_tests.json": "ec6d50f8905a78a39c9722a5d258a182bbe59bcc56d166cbf80e4c016ba9d475",
+    "ark_eval/build_corpus.py": "b742700ca970bbbcae6f41bcc3cb1a8ae91bb6faca26345c26b41a7efa21b9ee",
+    "ark_eval/container_profile.py": "7e0bbc81ca564e1f6adde2e4f6e0cdb2b314cf3bc992a79b8483780b3e4de600",
+    "ark_eval/node_worker.mjs": "fc28b5883246bbae4a2415a7e531e733062a5b655027f18087fe4e77a2b1970e",
+    "ark_eval/node_supervisor.sh": "a3d37f149331bf888a49d414297df6f86812dcfeab51c933d372eefab9bcfd95",
+    "ark_eval/node_backend.py": "06f8a4317cbc69dd00f564c32735d1529a1f31983156364043f0c1d7aaddd3c3",
+    "ark_eval/js_runner.py": "c2e55762cbcd3121ea7b7216c5aec3cd42836c2e0b37a5b8773cbb3032d1e75d",
+    "ark_eval/node_image_lock.json": "a9f57c981c3ef5797cea56bb140c09c59dce3d4f6dd20e5aef7ae0b61377e34c",
+    "ark_eval/manual_probe.py": "aab9e7e491252a2ff9168a15a93d788b66c29d6b0380ffc2702feb454ca5bd1b",
+    "ark_eval/create_pair.py": "be4cf3d9118023f651b29e7e6606e2cb05f771d28ee192b52101b85ab9949336",
+    "ark_eval/manual_pair.py": "fb52b33eff547df0662a395c6e9e4bab377f16095c77fbf601a4c545a96ffa2e",
+    "ark_eval/create_pair.v1.freeze.json": "ec2be6b554ebf8e133d1ff975525832d5fc91ed873176ca209b38daf14ce5f9b"
+  },
+  "request_digests": {
+    "gameir_text": "31556b65835e88790433268c73cdc8ea2c88827f601889648adf5baf48fba610",
+    "js_callback": "6a4a8479cee8dae4daa614d9bc4a1b08d0b96de6c9bdbae45da29930aa767caa"
+  },
+  "starter_digests": {
+    "gameir_text": "2b6866b41e0b6894ab6c620881e3cfe5be82b0bf4113249d3ccb7b1a2effdfbe",
+    "js_callback": "6e0d6e292c5478e6659a9eda4f9d0403e459a702a268117577e665c38fd421d1"
+  },
+  "common_information_digest": "a50d70bf101ea60438b5637004527a2e45efdb60670d01478e64c780a07a1bed",
+  "public_arms": [
+    {
+      "representation": "gameir_text",
+      "messages": [
+        {
+          "role": "system",
+          "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n"
+        },
+        {
+          "role": "user",
+          "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n提交完整Core JSON：literal、var、let、resolve/is_some、read/require、not/and、ge/le、\nsub、if、write、emit；handler id=open,event=Open,priority=0；其它ABI同共同说明。\n上述操作分别调用同一宿主；普通AST访问成本与JS计算成本分别报告。\nCore节点参数：literal:{type,value}；var:{name}；resolve/read:{entity[,field]}；\nis_some/require/not:{value}；and/ge/le/sub:{a,b}；record:{items:{字段:表达式}}；\nlet语句:{name,value}；if语句:{condition,then:[语句],else:[语句]}；\nwrite语句:{entity,field,value}；emit语句:{event,payload:record表达式}；每节点必须有op。\nlet绑定仅在当前handler/分支作用域可见，player与door为事件payload中的初始变量。\n只输出完整Core JSON，不加Markdown、解释、参考测试或自定义服务/扩展。\n\n独立可见示例：Example:{target:EntityID}，score:int/IR/exclusive。两组示例只写score=7，非开门答案。\n{\"body\":[{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"write\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}],\"event\":\"Example\",\"id\":\"example\",\"priority\":0}\n起始程序：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}"
+        }
+      ],
+      "starter": "{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}",
+      "request_body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n"
+          },
+          {
+            "role": "user",
+            "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\n提交完整Core JSON：literal、var、let、resolve/is_some、read/require、not/and、ge/le、\nsub、if、write、emit；handler id=open,event=Open,priority=0；其它ABI同共同说明。\n上述操作分别调用同一宿主；普通AST访问成本与JS计算成本分别报告。\nCore节点参数：literal:{type,value}；var:{name}；resolve/read:{entity[,field]}；\nis_some/require/not:{value}；and/ge/le/sub:{a,b}；record:{items:{字段:表达式}}；\nlet语句:{name,value}；if语句:{condition,then:[语句],else:[语句]}；\nwrite语句:{entity,field,value}；emit语句:{event,payload:record表达式}；每节点必须有op。\nlet绑定仅在当前handler/分支作用域可见，player与door为事件payload中的初始变量。\n只输出完整Core JSON，不加Markdown、解释、参考测试或自定义服务/扩展。\n\n独立可见示例：Example:{target:EntityID}，score:int/IR/exclusive。两组示例只写score=7，非开门答案。\n{\"body\":[{\"entity\":{\"name\":\"target\",\"op\":\"var\"},\"field\":\"score\",\"op\":\"write\",\"value\":{\"op\":\"literal\",\"type\":\"int\",\"value\":7}}],\"event\":\"Example\",\"id\":\"example\",\"priority\":0}\n起始程序：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}"
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "request_digest": "31556b65835e88790433268c73cdc8ea2c88827f601889648adf5baf48fba610",
+      "prompt_units_estimate": 4072
+    },
+    {
+      "representation": "js_callback",
+      "messages": [
+        {
+          "role": "system",
+          "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n"
+        },
+        {
+          "role": "user",
+          "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\nctx.resolve(entity)->{some:EntityID}|{none:true}; ctx.exists(entity)->bool(同resolve)；\nctx.read(entity,field)->option(value)；ctx.require(option)->value或InvalidEntity；\nctx.sub(a,b)->checked safe-int；ctx.write(entity,field,value)；ctx.emit(event,payload)。\n它们是宿主调用，不是Core构造函数。普通JS if/return/局部变量只控制当前事件；不得保留可变全局状态。\n提交 export function onOpen(ctx, {player, door}) {...}；不导入依赖。TS本轮暂缓。\n只输出export function onOpen(ctx, {player, door}) {...}，不加Markdown或解释。\nctx接口同步；只使用给定宿主API和普通局部变量/条件。不得导入依赖、创建工具或访问环境。\n\n独立可见示例：Example:{target:EntityID}，score:int/IR/exclusive。两组示例只写score=7，非开门答案。\nexport function onExample(ctx, {target}) { ctx.write(target, 'score', 7); }\n起始程序：\nexport function onOpen(ctx, {player, door}) {\n  // TODO\n}\n"
+        }
+      ],
+      "starter": "export function onOpen(ctx, {player, door}) {\n  // TODO\n}\n",
+      "request_body": {
+        "model": "deepseek-v4-1-flash-260910",
+        "messages": [
+          {
+            "role": "system",
+            "content": "同一可信游戏宿主上的 GameIR 与 JS 回调对照；无服务、网络、文件或时钟。\n按顺序：resolve(player)，仅当存在才 resolve(door)；任一不存在则返回且无事件。\n双方存在后 require(read(door,open))；已开门则返回，不读取玩家 keys。\n门未开时 require(read(player,keys))；缺失 cell 为 InvalidEntity，整个 tick 回滚。\nkeys >= cost 时按顺序 write(player,keys,sub(keys,cost))、write(door,open,true)、emit Opened(door)。\n否则 emit MissingKey(player)。cost 为1。\n每次成功只发一次 Opened；同tick重复Open和后续tick重复Open均不再扣钥匙。\n输入实体不要求 player/door 不同；字段缺失遵循上述 require 规则。\n每事件读取快照加自身写入；其它 handler 的写入在该事件合并前不可见。冲突/错误回滚整个tick。\nkeys:int[0,10]；open:bool；两字段authority=IR,policy=exclusive；EntityID为[world_epoch,tick,job,ordinal]。\nOpen:{player:EntityID,door:EntityID}；Opened:{door:EntityID}；MissingKey:{player:EntityID}；Tick:{}。\n宿主操作上限128/tick；本小试每臂模型尝试1、修复0、工具0；最终测试不反馈。\n\n共同宿主空manifest（两组相同，不含实现）：\n{\"events\":{\"MissingKey\":{\"record\":{\"player\":\"EntityID\"}},\"Open\":{\"record\":{\"door\":\"EntityID\",\"player\":\"EntityID\"}},\"Opened\":{\"record\":{\"door\":\"EntityID\"}},\"Tick\":{\"record\":{}}},\"extensions\":{},\"fields\":{\"keys\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"range\":[0,10],\"type\":\"int\"},\"open\":{\"authority\":\"IR\",\"policy\":\"exclusive\",\"type\":\"bool\"}},\"handlers\":[],\"services\":{},\"version\":\"core-v0.1\"}\n输出预算每臂4096 tokens，源码UTF-8上限16384bytes；不调用工具、不请求修复。\n"
+          },
+          {
+            "role": "user",
+            "content": "实现 Open(player,door)：双方存在、门未开且玩家钥匙至少1时扣1把钥匙，打开门并发出一次 Opened(door)。钥匙不足发出 MissingKey(player)。门已开或任一实体不存在时不改变状态，不发出事件。重复 Open 在后续 tick 不重复消耗。\nctx.resolve(entity)->{some:EntityID}|{none:true}; ctx.exists(entity)->bool(同resolve)；\nctx.read(entity,field)->option(value)；ctx.require(option)->value或InvalidEntity；\nctx.sub(a,b)->checked safe-int；ctx.write(entity,field,value)；ctx.emit(event,payload)。\n它们是宿主调用，不是Core构造函数。普通JS if/return/局部变量只控制当前事件；不得保留可变全局状态。\n提交 export function onOpen(ctx, {player, door}) {...}；不导入依赖。TS本轮暂缓。\n只输出export function onOpen(ctx, {player, door}) {...}，不加Markdown或解释。\nctx接口同步；只使用给定宿主API和普通局部变量/条件。不得导入依赖、创建工具或访问环境。\n\n独立可见示例：Example:{target:EntityID}，score:int/IR/exclusive。两组示例只写score=7，非开门答案。\nexport function onExample(ctx, {target}) { ctx.write(target, 'score', 7); }\n起始程序：\nexport function onOpen(ctx, {player, door}) {\n  // TODO\n}\n"
+          }
+        ],
+        "max_tokens": 4096,
+        "temperature": 0,
+        "stream": false,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "request_digest": "6a4a8479cee8dae4daa614d9bc4a1b08d0b96de6c9bdbae45da29930aa767caa",
+      "prompt_units_estimate": 3515
+    }
+  ],
+  "repair_budget": 0,
+  "feedback_to_model": "NONE",
+  "input_token_accounting": "MATCHED_24000_PROMPT_UNITS_CEILING_NOT_VERIFIED_TOKENIZER",
+  "provider_usage": "REPORTED_TOTAL_COMPLETION_TOKENS_NO_INFERRED_REASONING_SPLIT",
+  "thinking_parameters": {
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "thinking_support": {
+    "official_source": "https://www.volcengine.com/docs/ark/deep-thinking",
+    "evidence": "OFFICIAL_INDEXED_MODEL_SPECIFIC_EXCERPT_ENABLED_DEFAULT_AND_DISABLED",
+    "Plan_compatibility": "UNVERIFIED_PENDING_USER_LOCAL_REQUEST",
+    "nonempty_reasoning_response": "HALT_THINKING_MISMATCH_NO_DEFAULT_FALLBACK"
+  },
+  "model_revision_claim": "EXACT_REPORTED_IDENTIFIER_ONLY_NOT_WEIGHTS_ATTESTATION",
+  "candidate_execution": "BLOCKED_PENDING_SOURCE_REVIEW_AND_FRESH_OS_ISOLATION_CHECK",
+  "runtime_semantics": "EXISTING_SHARED_HOST_IR_AND_JS_FIXED_ORACLE",
+  "ir_architecture_frozen": false,
+  "TS": "DEFERRED",
+  "Vitric": "ORIGINAL_BASELINE_ABSENT"
+}

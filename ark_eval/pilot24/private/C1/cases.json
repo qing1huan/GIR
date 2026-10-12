@@ -1,0 +1,1228 @@
+[
+  {
+    "id": "N01",
+    "task_id": "C1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 5
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": true,
+              "reward": 2
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Rewarded",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N02",
+    "task_id": "C1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 5
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": true,
+              "reward": 2
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Rewarded",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      },
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 5
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": true,
+              "reward": 2
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N03",
+    "task_id": "C1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "claimed": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "claimed": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N04",
+    "task_id": "C1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 7
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 3
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 10
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": true,
+              "reward": 3
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Rewarded",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B01",
+    "task_id": "C1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 8
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 3
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 8
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false,
+              "reward": 3
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "RewardBlocked",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B02",
+    "task_id": "C1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": false,
+          "reward": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": false,
+              "reward": 2
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B03",
+    "task_id": "C1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B04",
+    "task_id": "C1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 2
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          2
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                2
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false,
+              "reward": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R01",
+    "task_id": "C1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": false,
+          "claimed": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": false,
+              "claimed": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R02",
+    "task_id": "C1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R03",
+    "task_id": "C1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 2
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false,
+              "reward": 2
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R04",
+    "task_id": "C1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "credits": 10
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "completed": true,
+          "claimed": false,
+          "reward": 1
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "credits": 10
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "completed": true,
+              "claimed": false,
+              "reward": 1
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "RewardBlocked",
+            "payload": {
+              "player": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "quest": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,245 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "equipped": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  },
+  "locked": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "oldGear": "EntityID",
+    "newGear": "EntityID"
+   }
+  },
+  "Equipped": {
+   "record": {
+    "oldGear": "EntityID",
+    "newGear": "EntityID"
+   }
+  },
+  "EquipDenied": {
+   "record": {
+    "newGear": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "and",
+      "a": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "oldGear"
+        }
+       }
+      },
+      "b": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "newGear"
+        }
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "not",
+        "value": {
+         "op": "eq",
+         "a": {
+          "op": "var",
+          "name": "oldGear"
+         },
+         "b": {
+          "op": "var",
+          "name": "newGear"
+         }
+        }
+       },
+       "then": [
+        {
+         "op": "let",
+         "name": "early",
+         "value": {
+          "op": "require",
+          "value": {
+           "op": "read",
+           "entity": {
+            "op": "var",
+            "name": "oldGear"
+           },
+           "field": "equipped"
+          }
+         }
+        },
+        {
+         "op": "if",
+         "condition": {
+          "op": "not",
+          "value": {
+           "op": "require",
+           "value": {
+            "op": "read",
+            "entity": {
+             "op": "var",
+             "name": "newGear"
+            },
+            "field": "equipped"
+           }
+          }
+         },
+         "then": [
+          {
+           "op": "if",
+           "condition": {
+            "op": "require",
+            "value": {
+             "op": "read",
+             "entity": {
+              "op": "var",
+              "name": "newGear"
+             },
+             "field": "locked"
+            }
+           },
+           "then": [
+            {
+             "op": "emit",
+             "event": "EquipDenied",
+             "payload": {
+              "op": "record",
+              "items": {
+               "newGear": {
+                "op": "var",
+                "name": "newGear"
+               }
+              }
+             }
+            }
+           ],
+           "else": [
+            {
+             "op": "let",
+             "name": "oldEquipped",
+             "value": {
+              "op": "require",
+              "value": {
+               "op": "read",
+               "entity": {
+                "op": "var",
+                "name": "oldGear"
+               },
+               "field": "equipped"
+              }
+             }
+            },
+            {
+             "op": "if",
+             "condition": {
+              "op": "var",
+              "name": "oldEquipped"
+             },
+             "then": [
+              {
+               "op": "write",
+               "entity": {
+                "op": "var",
+                "name": "oldGear"
+               },
+               "field": "equipped",
+               "value": {
+                "op": "literal",
+                "type": "bool",
+                "value": false
+               }
+              },
+              {
+               "op": "write",
+               "entity": {
+                "op": "var",
+                "name": "newGear"
+               },
+               "field": "equipped",
+               "value": {
+                "op": "literal",
+                "type": "bool",
+                "value": true
+               }
+              },
+              {
+               "op": "emit",
+               "event": "Equipped",
+               "payload": {
+                "op": "record",
+                "items": {
+                 "oldGear": {
+                  "op": "var",
+                  "name": "oldGear"
+                 },
+                 "newGear": {
+                  "op": "var",
+                  "name": "newGear"
+                 }
+                }
+               }
+              }
+             ],
+             "else": [
+              {
+               "op": "emit",
+               "event": "EquipDenied",
+               "payload": {
+                "op": "record",
+                "items": {
+                 "newGear": {
+                  "op": "var",
+                  "name": "newGear"
+                 }
+                }
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ],
+         "else": []
+        }
+       ],
+       "else": []
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

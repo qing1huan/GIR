@@ -1,0 +1,1120 @@
+[
+  {
+    "id": "N01",
+    "task_id": "M2",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": true,
+              "locked": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Equipped",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N02",
+    "task_id": "M2",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": false
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "EquipDenied",
+            "payload": {
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N03",
+    "task_id": "M2",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": false
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N04",
+    "task_id": "M2",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": true,
+              "locked": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Equipped",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B01",
+    "task_id": "M2",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B02",
+    "task_id": "M2",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "EquipDenied",
+            "payload": {
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B03",
+    "task_id": "M2",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          2
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                2
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": true
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B04",
+    "task_id": "M2",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": true
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R01",
+    "task_id": "M2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R02",
+    "task_id": "M2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": true
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R03",
+    "task_id": "M2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": true
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R04",
+    "task_id": "M2",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "equipped": true
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "equipped": false,
+          "locked": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "oldGear": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "equipped": true
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "equipped": false,
+              "locked": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "EquipDenied",
+            "payload": {
+              "newGear": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  }
+]

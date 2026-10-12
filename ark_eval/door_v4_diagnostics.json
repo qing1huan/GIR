@@ -1,0 +1,1301 @@
+{
+  "schema": "gir-door-v4-diagnostic-oracle@1",
+  "holdout": false,
+  "case_count_per_task_arm": 8,
+  "origin": "HAND_AUTHORED_FROM_V4_CONTRACT_NOT_RUNTIME_REFERENCE_OR_CANDIDATE_OUTPUT",
+  "score_scope": "SEPARATE_FROM_ORIGINAL26; NO_OLD_CANDIDATE_RESCORE",
+  "cases": [
+    {
+      "id": "v4-P-C02-modify-D01-missing-open-seed1",
+      "task_id": "P-C02-modify",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 2
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D01-missing-open-seed123",
+      "task_id": "P-C02-modify",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 2
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D02-missing-player-before-open-seed1",
+      "task_id": "P-C02-modify",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D02-missing-player-before-open-seed123",
+      "task_id": "P-C02-modify",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D03-missing-door-before-keys-seed1",
+      "task_id": "P-C02-modify",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D03-missing-door-before-keys-seed123",
+      "task_id": "P-C02-modify",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D04-whole-tick-rollback-seed1",
+      "task_id": "P-C02-modify",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 2
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {
+            "open": false
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            2
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            },
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "open": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-modify-D04-whole-tick-rollback-seed123",
+      "task_id": "P-C02-modify",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 2
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {
+            "open": false
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            2
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            },
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "open": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D01-missing-open-seed1",
+      "task_id": "P-C02-debug",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 1
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 1
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D01-missing-open-seed123",
+      "task_id": "P-C02-debug",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 1
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 1
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D02-missing-player-before-open-seed1",
+      "task_id": "P-C02-debug",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D02-missing-player-before-open-seed123",
+      "task_id": "P-C02-debug",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D03-missing-door-before-keys-seed1",
+      "task_id": "P-C02-debug",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D03-missing-door-before-keys-seed123",
+      "task_id": "P-C02-debug",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  99
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "COMMITTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D04-whole-tick-rollback-seed1",
+      "task_id": "P-C02-debug",
+      "seed": 1,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 1
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {
+            "open": false
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            2
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            },
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 1
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "open": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    },
+    {
+      "id": "v4-P-C02-debug-D04-whole-tick-rollback-seed123",
+      "task_id": "P-C02-debug",
+      "seed": 123,
+      "initial": [
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            0
+          ],
+          "values": {
+            "keys": 1
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            1
+          ],
+          "values": {
+            "open": false
+          }
+        },
+        {
+          "id": [
+            "world",
+            -1,
+            "genesis",
+            2
+          ],
+          "values": {}
+        }
+      ],
+      "steps": [
+        {
+          "inputs": [
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  1
+                ]
+              }
+            },
+            {
+              "name": "Open",
+              "payload": {
+                "player": [
+                  "world",
+                  -1,
+                  "genesis",
+                  0
+                ],
+                "door": [
+                  "world",
+                  -1,
+                  "genesis",
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "keys": 1
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "open": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "statuses": [
+          "ABORTED"
+        ],
+        "events": [],
+        "commands": [],
+        "errors": [
+          "InvalidEntity"
+        ]
+      }
+    }
+  ]
+}

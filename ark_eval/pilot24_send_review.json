@@ -1,0 +1,8 @@
+{
+  "schema": "gir-pilot24-send-review@1",
+  "decision": "PASS",
+  "entry_digest": "814753c6601784c027a20e8bb88de85f1e2f4fd37524891e364085fbd2ce01c1",
+  "material_digest": "5db1fbc7855755e0cae1c033294bee8a46c43192c669419da781350d4e2aefa1",
+  "scope_digest": "44f5882a92ecabb7f22f7d6296d049c4332fab358ad08646548159a6b0bc45c5",
+  "candidate_execution_authorized": false
+}

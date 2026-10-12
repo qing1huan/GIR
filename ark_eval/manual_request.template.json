@@ -1,0 +1,22 @@
+{
+  "mode": "USER_REVIEW_ONLY_NOT_SENDABLE",
+  "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "model": "deepseek-v4-1-flash-260910",
+  "api_style_candidate": "chat_completions_unverified",
+  "max_tokens": 128,
+  "output_token_cap_range": [1, 256],
+  "automatic_budget_increase": false,
+  "temperature": 0,
+  "stream": false,
+  "automatic_retries": 0,
+  "tools": [],
+  "existing_plan_only": true,
+  "paid_fallback": false,
+  "purchases_upgrades_reset_cards": false,
+  "scope": "ONE_CONNECTIVITY_REQUEST_ONLY_NOT_PAIRED_BENCHMARK",
+  "user_status_record": "user_local_status.public.json",
+  "credential_input": "PRIVATE_USER_TERMINAL_GETPASS_ONLY",
+  "independent_terms_verification": "UNKNOWN",
+  "generated_source_execution": false,
+  "next_fair_comparison_gates": ["Same exact model/revision on both arms", "Provider token ceilings", "Candidate source review; fixed catalog remains enforced"]
+}

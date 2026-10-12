@@ -1,0 +1,264 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "credits": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "reward": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    1,
+    3
+   ]
+  },
+  "completed": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  },
+  "claimed": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "player": "EntityID",
+    "quest": "EntityID"
+   }
+  },
+  "Rewarded": {
+   "record": {
+    "player": "EntityID",
+    "quest": "EntityID"
+   }
+  },
+  "RewardBlocked": {
+   "record": {
+    "player": "EntityID",
+    "quest": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "and",
+      "a": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "player"
+        }
+       }
+      },
+      "b": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "quest"
+        }
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "not",
+        "value": {
+         "op": "require",
+         "value": {
+          "op": "read",
+          "entity": {
+           "op": "var",
+           "name": "quest"
+          },
+          "field": "claimed"
+         }
+        }
+       },
+       "then": [
+        {
+         "op": "if",
+         "condition": {
+          "op": "require",
+          "value": {
+           "op": "read",
+           "entity": {
+            "op": "var",
+            "name": "quest"
+           },
+           "field": "completed"
+          }
+         },
+         "then": [
+          {
+           "op": "let",
+           "name": "reward",
+           "value": {
+            "op": "require",
+            "value": {
+             "op": "read",
+             "entity": {
+              "op": "var",
+              "name": "quest"
+             },
+             "field": "reward"
+            }
+           }
+          },
+          {
+           "op": "let",
+           "name": "credits",
+           "value": {
+            "op": "require",
+            "value": {
+             "op": "read",
+             "entity": {
+              "op": "var",
+              "name": "player"
+             },
+             "field": "credits"
+            }
+           }
+          },
+          {
+           "op": "let",
+           "name": "nextCredits",
+           "value": {
+            "op": "sub",
+            "a": {
+             "op": "var",
+             "name": "credits"
+            },
+            "b": {
+             "op": "sub",
+             "a": {
+              "op": "literal",
+              "type": "int",
+              "value": 0
+             },
+             "b": {
+              "op": "var",
+              "name": "reward"
+             }
+            }
+           }
+          },
+          {
+           "op": "if",
+           "condition": {
+            "op": "le",
+            "a": {
+             "op": "var",
+             "name": "nextCredits"
+            },
+            "b": {
+             "op": "literal",
+             "type": "int",
+             "value": 10
+            }
+           },
+           "then": [
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "player"
+             },
+             "field": "credits",
+             "value": {
+              "op": "var",
+              "name": "nextCredits"
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "quest"
+             },
+             "field": "claimed",
+             "value": {
+              "op": "literal",
+              "type": "bool",
+              "value": true
+             }
+            },
+            {
+             "op": "emit",
+             "event": "Rewarded",
+             "payload": {
+              "op": "record",
+              "items": {
+               "player": {
+                "op": "var",
+                "name": "player"
+               },
+               "quest": {
+                "op": "var",
+                "name": "quest"
+               }
+              }
+             }
+            }
+           ],
+           "else": [
+            {
+             "op": "emit",
+             "event": "RewardBlocked",
+             "payload": {
+              "op": "record",
+              "items": {
+               "player": {
+                "op": "var",
+                "name": "player"
+               },
+               "quest": {
+                "op": "var",
+                "name": "quest"
+               }
+              }
+             }
+            }
+           ]
+          }
+         ],
+         "else": []
+        }
+       ],
+       "else": []
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

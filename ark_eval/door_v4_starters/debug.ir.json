@@ -1,0 +1,200 @@
+{
+  "events": {
+    "MissingKey": {
+      "record": {
+        "player": "EntityID"
+      }
+    },
+    "Open": {
+      "record": {
+        "door": "EntityID",
+        "player": "EntityID"
+      }
+    },
+    "Opened": {
+      "record": {
+        "door": "EntityID"
+      }
+    },
+    "Tick": {
+      "record": {}
+    }
+  },
+  "extensions": {},
+  "fields": {
+    "keys": {
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ],
+      "type": "int"
+    },
+    "open": {
+      "authority": "IR",
+      "policy": "exclusive",
+      "type": "bool"
+    }
+  },
+  "handlers": [
+    {
+      "body": [
+        {
+          "condition": {
+            "a": {
+              "op": "is_some",
+              "value": {
+                "entity": {
+                  "name": "player",
+                  "op": "var"
+                },
+                "op": "resolve"
+              }
+            },
+            "b": {
+              "op": "is_some",
+              "value": {
+                "entity": {
+                  "name": "door",
+                  "op": "var"
+                },
+                "op": "resolve"
+              }
+            },
+            "op": "and"
+          },
+          "else": [],
+          "op": "if",
+          "then": [
+            {
+              "condition": {
+                "op": "not",
+                "value": {
+                  "op": "require",
+                  "value": {
+                    "entity": {
+                      "name": "door",
+                      "op": "var"
+                    },
+                    "field": "open",
+                    "op": "read"
+                  }
+                }
+              },
+              "else": [],
+              "op": "if",
+              "then": [
+                {
+                  "name": "cost",
+                  "op": "let",
+                  "value": {
+                    "op": "literal",
+                    "type": "int",
+                    "value": 1
+                  }
+                },
+                {
+                  "name": "keys",
+                  "op": "let",
+                  "value": {
+                    "op": "require",
+                    "value": {
+                      "entity": {
+                        "name": "player",
+                        "op": "var"
+                      },
+                      "field": "keys",
+                      "op": "read"
+                    }
+                  }
+                },
+                {
+                  "condition": {
+                    "a": {
+                      "name": "keys",
+                      "op": "var"
+                    },
+                    "b": {
+                      "name": "cost",
+                      "op": "var"
+                    },
+                    "op": "le"
+                  },
+                  "else": [
+                    {
+                      "event": "MissingKey",
+                      "op": "emit",
+                      "payload": {
+                        "items": {
+                          "player": {
+                            "name": "player",
+                            "op": "var"
+                          }
+                        },
+                        "op": "record"
+                      }
+                    }
+                  ],
+                  "op": "if",
+                  "then": [
+                    {
+                      "entity": {
+                        "name": "player",
+                        "op": "var"
+                      },
+                      "field": "keys",
+                      "op": "write",
+                      "value": {
+                        "a": {
+                          "name": "keys",
+                          "op": "var"
+                        },
+                        "b": {
+                          "name": "cost",
+                          "op": "var"
+                        },
+                        "op": "sub"
+                      }
+                    },
+                    {
+                      "entity": {
+                        "name": "door",
+                        "op": "var"
+                      },
+                      "field": "open",
+                      "op": "write",
+                      "value": {
+                        "op": "literal",
+                        "type": "bool",
+                        "value": true
+                      }
+                    },
+                    {
+                      "event": "Opened",
+                      "op": "emit",
+                      "payload": {
+                        "items": {
+                          "door": {
+                            "name": "door",
+                            "op": "var"
+                          }
+                        },
+                        "op": "record"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "event": "Open",
+      "id": "open",
+      "priority": 0
+    }
+  ],
+  "services": {},
+  "version": "core-v0.1"
+}

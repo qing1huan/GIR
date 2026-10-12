@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N01",
+    "intent": "old_equipment_not_disabled"
+  },
+  {
+    "index": 2,
+    "case_id": "B01",
+    "intent": "alias_priority_lost"
+  },
+  {
+    "index": 3,
+    "case_id": "R01",
+    "intent": "equipped_terminal_regression"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "schema": "gir-v4-user-local-entry-bindings@1",
+  "protocol_digest": "4ddc8d41cac2e8571c2048366c6dd1e5f23881d7e8f00fdaf27d16340e2e9709",
+  "artifact_sha256": {
+    "ark_eval/manual_door_v4.py": "1e5c63e602cdce67419e1ca73b99b4aa5447c60e917799ced7e3238b9e5d9ae2",
+    "ark_eval/tests/test_manual_door_v4.py": "c7b4cd1ead7b972b7bd387d4cb52681ae9f43532f67b828eeb802d899002e155",
+    "docs/ark-door-v4-manual-batch.md": "454eb11c9ecb4bc6c5a85e486adbb878615e4530221ff24bbe9950f85c20ab8b",
+    "ark_eval/local_key_file.py": "16b645feaf44c39bb31bd21cf746ead6f75b4b7640d3795184602c9bf57e7c0d",
+    "ark_eval/manual_probe.py": "df052186fda0f68a4644372a0113ce859ffce668d4fdb866004713c6b9e6e952",
+    "ark_eval/manual_pair.py": "6d1681e6dfb7401cee362b9c11a34eed3c63038017253d8ae9c85ddcb94166cc",
+    "ark_eval/adapter.py": "4222613cd19bd9651341060327a7f31a62e75b55ca824c9296d8d162e9f5fc51",
+    "ark_eval/contract_assessment.py": "1771c356325ae3394693e3b5b6ff17615a9cf38d8dfc9fc2077568fd8122c3fd"
+  },
+  "human_private_confirmation": "SEND_V4",
+  "agent_send_authorized": false,
+  "candidate_execution_authorized": false
+}

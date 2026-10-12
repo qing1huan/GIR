@@ -1,0 +1,1164 @@
+[
+  {
+    "id": "N01",
+    "task_id": "M1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 3,
+              "tokens": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Purchased",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N02",
+    "task_id": "M1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 2,
+          "tokens": 1
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 0,
+              "tokens": 0
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Purchased",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N03",
+    "task_id": "M1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 0
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 5,
+              "tokens": 0
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "PurchaseDenied",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "N04",
+    "task_id": "M1",
+    "group": "N",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 3,
+              "tokens": 2
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Purchased",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B01",
+    "task_id": "M1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 0
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 0
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": false
+            }
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B02",
+    "task_id": "M1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 5,
+              "tokens": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B03",
+    "task_id": "M1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3,
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 3,
+              "tokens": 2,
+              "sold": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "Purchased",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "B04",
+    "task_id": "M1",
+    "group": "B",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          2
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          },
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                2
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 5,
+              "tokens": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": false
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              2
+            ],
+            "values": {}
+          }
+        ],
+        "status": "ABORTED",
+        "error": "InvalidEntity",
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R01",
+    "task_id": "M1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 1,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 1,
+              "tokens": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [
+          {
+            "name": "PurchaseDenied",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R02",
+    "task_id": "M1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": true
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": true
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R03",
+    "task_id": "M1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {
+          "coins": 5,
+          "tokens": 3
+        }
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {}
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {
+              "coins": 5,
+              "tokens": 3
+            }
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {}
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  },
+  {
+    "id": "R04",
+    "task_id": "M1",
+    "group": "R",
+    "seed": 1,
+    "initial": [
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          0
+        ],
+        "values": {}
+      },
+      {
+        "id": [
+          "world",
+          -1,
+          "genesis",
+          1
+        ],
+        "values": {
+          "sold": false
+        }
+      }
+    ],
+    "steps": [
+      {
+        "inputs": [
+          {
+            "name": "Open",
+            "payload": {
+              "buyer": [
+                "world",
+                -1,
+                "genesis",
+                0
+              ],
+              "item": [
+                "world",
+                -1,
+                "genesis",
+                99
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "expected_ticks": [
+      {
+        "entities": [
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              0
+            ],
+            "values": {}
+          },
+          {
+            "id": [
+              "world",
+              -1,
+              "genesis",
+              1
+            ],
+            "values": {
+              "sold": false
+            }
+          }
+        ],
+        "status": "COMMITTED",
+        "error": null,
+        "events": [],
+        "commands": []
+      }
+    ]
+  }
+]

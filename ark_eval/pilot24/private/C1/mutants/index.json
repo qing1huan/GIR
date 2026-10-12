@@ -1,0 +1,17 @@
+[
+  {
+    "index": 1,
+    "case_id": "N01",
+    "intent": "fixed_reward_not_replaced"
+  },
+  {
+    "index": 2,
+    "case_id": "B01",
+    "intent": "claim_marked_when_denied"
+  },
+  {
+    "index": 3,
+    "case_id": "R01",
+    "intent": "incomplete_terminal_regression"
+  }
+]

@@ -1,0 +1,304 @@
+{
+ "version": "core-v0.1",
+ "fields": {
+  "coins": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "tokens": {
+   "type": "int",
+   "authority": "IR",
+   "policy": "exclusive",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "sold": {
+   "type": "bool",
+   "authority": "IR",
+   "policy": "exclusive"
+  }
+ },
+ "events": {
+  "Tick": {
+   "record": {}
+  },
+  "Open": {
+   "record": {
+    "buyer": "EntityID",
+    "item": "EntityID"
+   }
+  },
+  "Purchased": {
+   "record": {
+    "buyer": "EntityID",
+    "item": "EntityID"
+   }
+  },
+  "PurchaseDenied": {
+   "record": {
+    "buyer": "EntityID",
+    "item": "EntityID"
+   }
+  }
+ },
+ "handlers": [
+  {
+   "id": "open",
+   "event": "Open",
+   "priority": 0,
+   "body": [
+    {
+     "op": "if",
+     "condition": {
+      "op": "and",
+      "a": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "buyer"
+        }
+       }
+      },
+      "b": {
+       "op": "is_some",
+       "value": {
+        "op": "resolve",
+        "entity": {
+         "op": "var",
+         "name": "item"
+        }
+       }
+      }
+     },
+     "then": [
+      {
+       "op": "if",
+       "condition": {
+        "op": "not",
+        "value": {
+         "op": "require",
+         "value": {
+          "op": "read",
+          "entity": {
+           "op": "var",
+           "name": "item"
+          },
+          "field": "sold"
+         }
+        }
+       },
+       "then": [
+        {
+         "op": "let",
+         "name": "cost",
+         "value": {
+          "op": "literal",
+          "type": "int",
+          "value": 2
+         }
+        },
+        {
+         "op": "let",
+         "name": "coins",
+         "value": {
+          "op": "require",
+          "value": {
+           "op": "read",
+           "entity": {
+            "op": "var",
+            "name": "buyer"
+           },
+           "field": "coins"
+          }
+         }
+        },
+        {
+         "op": "if",
+         "condition": {
+          "op": "ge",
+          "a": {
+           "op": "var",
+           "name": "coins"
+          },
+          "b": {
+           "op": "var",
+           "name": "cost"
+          }
+         },
+         "then": [
+          {
+           "op": "let",
+           "name": "tokens",
+           "value": {
+            "op": "require",
+            "value": {
+             "op": "read",
+             "entity": {
+              "op": "var",
+              "name": "buyer"
+             },
+             "field": "tokens"
+            }
+           }
+          },
+          {
+           "op": "if",
+           "condition": {
+            "op": "and",
+            "a": {
+             "op": "ge",
+             "a": {
+              "op": "var",
+              "name": "coins"
+             },
+             "b": {
+              "op": "var",
+              "name": "cost"
+             }
+            },
+            "b": {
+             "op": "ge",
+             "a": {
+              "op": "var",
+              "name": "tokens"
+             },
+             "b": {
+              "op": "literal",
+              "type": "int",
+              "value": 1
+             }
+            }
+           },
+           "then": [
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "buyer"
+             },
+             "field": "coins",
+             "value": {
+              "op": "sub",
+              "a": {
+               "op": "var",
+               "name": "coins"
+              },
+              "b": {
+               "op": "var",
+               "name": "cost"
+              }
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "buyer"
+             },
+             "field": "tokens",
+             "value": {
+              "op": "sub",
+              "a": {
+               "op": "var",
+               "name": "tokens"
+              },
+              "b": {
+               "op": "literal",
+               "type": "int",
+               "value": 1
+              }
+             }
+            },
+            {
+             "op": "write",
+             "entity": {
+              "op": "var",
+              "name": "item"
+             },
+             "field": "sold",
+             "value": {
+              "op": "literal",
+              "type": "bool",
+              "value": true
+             }
+            },
+            {
+             "op": "emit",
+             "event": "Purchased",
+             "payload": {
+              "op": "record",
+              "items": {
+               "buyer": {
+                "op": "var",
+                "name": "buyer"
+               },
+               "item": {
+                "op": "var",
+                "name": "item"
+               }
+              }
+             }
+            }
+           ],
+           "else": [
+            {
+             "op": "emit",
+             "event": "PurchaseDenied",
+             "payload": {
+              "op": "record",
+              "items": {
+               "buyer": {
+                "op": "var",
+                "name": "buyer"
+               },
+               "item": {
+                "op": "var",
+                "name": "item"
+               }
+              }
+             }
+            }
+           ]
+          }
+         ],
+         "else": [
+          {
+           "op": "emit",
+           "event": "PurchaseDenied",
+           "payload": {
+            "op": "record",
+            "items": {
+             "buyer": {
+              "op": "var",
+              "name": "buyer"
+             },
+             "item": {
+              "op": "var",
+              "name": "item"
+             }
+            }
+           }
+          }
+         ]
+        }
+       ],
+       "else": []
+      }
+     ],
+     "else": []
+    }
+   ]
+  }
+ ],
+ "services": {},
+ "extensions": {}
+}

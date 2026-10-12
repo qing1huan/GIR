@@ -1,0 +1,59 @@
+{
+  "version": "core-v0.1",
+  "fields": {
+    "hp": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "shield": {
+      "type": "int",
+      "authority": "IR",
+      "policy": "exclusive",
+      "range": [
+        0,
+        10
+      ]
+    },
+    "immune": {
+      "type": "bool",
+      "authority": "IR",
+      "policy": "exclusive"
+    }
+  },
+  "events": {
+    "Tick": {
+      "record": {}
+    },
+    "Open": {
+      "record": {
+        "target": "EntityID",
+        "amount": "int"
+      }
+    },
+    "Hit": {
+      "record": {
+        "target": "EntityID"
+      }
+    },
+    "Died": {
+      "record": {
+        "target": "EntityID"
+      }
+    }
+  },
+  "handlers": [
+    {
+      "id": "open",
+      "event": "Open",
+      "priority": 0,
+      "body": []
+    }
+  ],
+  "services": {},
+  "extensions": {}
+}

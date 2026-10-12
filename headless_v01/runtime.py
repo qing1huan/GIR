@@ -137,6 +137,18 @@ class Runtime:
             raise Fault("TypeError", {"event": name}, "type")
         return validate_value(self.core["events"][name], event.get("payload"))
 
+    def execute_job(self, job, body, payload):
+        """Trusted host dispatch seam; Core data still cannot install callbacks."""
+        job.execute(body, payload)
+
+    def capture_execution(self, txn, result):
+        """Optional trusted audit seam; never changes persisted world or result."""
+        pass
+
+    def finish_dispatch(self, txn):
+        """Trusted seam for validating a complete recorded callback segment."""
+        pass
+
     def step(self, inputs=None, observations=None, replies=None, observation_events=None, query_responses=None, control=None):
         request = copy.deepcopy({"inputs": [] if inputs is None else inputs,
                                  "observations": [] if observations is None else observations,
@@ -160,6 +172,7 @@ class Runtime:
             if not self.halted: self.failed_request = {k: copy.deepcopy(v) for k, v in request.items() if k != "control"}
             self.halted = True
             result = txn.result("ABORTED", fault)
+        self.capture_execution(txn, result)
         self.history.append({"request": request, "result": copy.deepcopy(result)})
         return result
 
@@ -172,6 +185,9 @@ class Transaction:
         self.counts = defaultdict(int); self.events = []; self.effects = []; self.reads = []; self.commands = []
         self.observations = {}; self.query_responses = []; self.job = None; self.source = None
         self.current_event = None
+        self.host_counts = defaultdict(int); self.ir_ast_units = 0
+        self.callback_transcripts = []
+        self.callback_wire_count = 0
 
     def charge(self, resource="units", count=1):
         self.counts[resource] += count
@@ -242,10 +258,11 @@ class Transaction:
                 h = next(h for h in self.core["handlers"] if h["id"] == handler_id)
                 self.job = canonical_json([h["priority"], h["id"], event["id"], ""])
                 job = Job(self, h, event, sm)
-                job.execute(h["body"], copy.deepcopy(event["payload"]))
+                self.runtime.execute_job(job, h["body"], copy.deepcopy(event["payload"]))
                 effects.extend(job.effects)
             emissions, notifications = self.merge(sm, effects, event)
             queue.extend(emissions + notifications)
+        self.runtime.finish_dispatch(self)
         self.state["tick"] = checked_numeric("int", self.state["tick"]+1)
         self.state["outbox"].extend(copy.deepcopy(self.commands))
 
@@ -338,6 +355,71 @@ class Job:
     def source(self, node):
         self.txn.source = node["_source"]
         self.txn.charge()
+        self.txn.ir_ast_units += 1
+
+    def host_operation(self, op):
+        self.txn.host_counts[op] += 1
+        limit = getattr(self.txn.runtime, "host_operation_limit", None)
+        if limit is not None and sum(self.txn.host_counts.values()) > limit:
+            raise Fault("BudgetExceeded", {"resource": "host_operations", "limit": limit})
+
+    def host_resolve(self, id_):
+        self.host_operation("resolve")
+        key = entity_key(id_); self.txn.access("resolve", id_)
+        return {"some": copy.deepcopy(id_)} if key in self.overlay else {"none": True}
+
+    def host_read(self, id_, field, observe=False):
+        self.host_operation("observe" if observe else "read")
+        key = entity_key(id_); self.txn.access("observe" if observe else "read", id_, field)
+        if observe:
+            if key not in self.overlay or field not in self.txn.observations.get(key, {}):
+                raise Fault("ObservationMissing", {"entity": id_, "field": field})
+            return copy.deepcopy(self.txn.observations[key][field])
+        values = self.overlay.get(key, {})
+        return {"some": copy.deepcopy(values[field])} if field in values else {"none": True}
+
+    def host_int_sub(self, a, b):
+        self.host_operation("int_sub")
+        return checked_numeric("int", a-b)
+
+    def host_write(self, node, id_, field, value):
+        op = node["op"]; self.host_operation(op)
+        key = entity_key(id_); schema = self.txn.core["fields"][field]
+        self.txn.source = node["_source"]; self.txn.charge("accesses")
+        if key not in self.overlay: raise Fault("InvalidEntity", {"entity": id_})
+        if schema.get("notify") and field not in self.overlay[key]:
+            raise Fault("InvalidEntity", {"reason": "notified cell must be initialized by spawn", "field": field})
+        if op == "write":
+            if "clamp" in schema: self.txn.schema_read(key, field, schema["clamp"]["max_field"])
+            self.txn.source = node["_source"]
+            self.txn.runtime.check_invariant(self.overlay[key], field, value); preview = value
+        else:
+            self.txn.access("add_base", id_, field)
+            if field not in self.overlay[key]: raise Fault("InvalidEntity", {"entity": id_, "field": field})
+            preview = checked_numeric(schema["type"], self.overlay[key][field]+value)
+        self.overlay[key][field] = copy.deepcopy(preview)
+        self.record(node, entity=id_, field=field, value=value)
+
+    def host_emit(self, node, name, payload, delay=None):
+        op = node["op"]; self.host_operation(op)
+        if delay is not None and delay < 1: raise Fault("TypeError", {"delay": delay}, source=node["_source"])
+        self.txn.charge("events")
+        identity = [op, self.event["id"], self.txn.job, self.emit_ordinal]
+        id_ = op+":"+digest(identity); self.emit_ordinal += 1
+        event = {"id": id_, "name": name, "payload": copy.deepcopy(payload)}
+        self.record(node, value=event, identity=identity, **({"delay": delay} if delay is not None else {}))
+
+    def host_draw(self, node, bound):
+        self.host_operation("draw")
+        if not 0 < bound <= 2**32: raise Fault("TypeError", {"bound": bound}, source=node["_source"])
+        threshold = 2**32 - 2**32 % bound
+        while True:
+            self.txn.charge(); rng = self.txn.state["rng"]; x = rng["state"]
+            x ^= (x << 13) & 0xffffffff; x ^= x >> 17; x ^= (x << 5) & 0xffffffff; x &= 0xffffffff
+            rng["state"] = x; rng["draws"] += 1
+            if x < threshold: break
+        value = x % bound; self.record(node, value=value, bound=bound)
+        return value
 
     def eval(self, node, env):
         self.source(node); op = node["op"]
@@ -345,21 +427,17 @@ class Job:
         if fold is not None:
             for source in fold["trace"][1:]:
                 self.txn.source = source; self.txn.charge()
+                self.txn.ir_ast_units += 1
             return validate_value(node["_type"], fold["value"])
         def e(key): return self.eval(node[key], env)
         if op == "literal": value = copy.deepcopy(node["value"])
         elif op == "var": value = copy.deepcopy(env[node["name"]])
         elif op in {"read", "observe", "resolve"}:
-            id_ = e("entity"); key = entity_key(id_); self.txn.source = node["_source"]
+            id_ = e("entity"); self.txn.source = node["_source"]
             if op == "resolve":
-                self.txn.access(op, id_); value = {"some": id_} if key in self.overlay else {"none": True}
+                value = self.host_resolve(id_)
             else:
-                field = node["field"]; self.txn.access(op, id_, field)
-                if op == "read":
-                    values = self.overlay.get(key, {}); value = {"some": copy.deepcopy(values[field])} if field in values else {"none": True}
-                else:
-                    if key not in self.overlay or field not in self.txn.observations.get(key, {}): raise Fault("ObservationMissing", {"entity": id_, "field": field})
-                    value = copy.deepcopy(self.txn.observations[key][field])
+                value = self.host_read(id_, node["field"], op == "observe")
         elif op == "require":
             option = e("value")
             if "some" not in option: raise Fault("InvalidEntity", {"reason": "require(None)"}, source=node["_source"])
@@ -376,7 +454,9 @@ class Job:
         elif op in {"add", "sub", "mul", "div", "eq", "lt", "le", "gt", "ge", "contains", "concat"}:
             a, b = e("a"), e("b")
             if op == "add": value = a+b
-            elif op == "sub": value = a-b
+            elif op == "sub":
+                try: value = self.host_int_sub(a, b) if node["_type"] == "int" else a-b
+                except Fault as fault: fault.source = node["_source"]; raise
             elif op == "mul": value = a*b
             elif op == "div":
                 if b == 0: raise Fault("NumericOverflow", {"operation": "division by zero"}, source=node["_source"])
@@ -466,21 +546,8 @@ class Job:
             def e(key): return self.eval(node[key], env)
             if op == "let": env[node["name"]] = e("value")
             elif op in {"write", "add"}:
-                id_, value = e("entity"), e("value"); key = entity_key(id_); field = node["field"]
-                schema = self.txn.core["fields"][field]
-                self.txn.source = node["_source"]; self.txn.charge("accesses")
-                if key not in self.overlay: raise Fault("InvalidEntity", {"entity": id_})
-                if schema.get("notify") and field not in self.overlay[key]: raise Fault("InvalidEntity", {"reason": "notified cell must be initialized by spawn", "field": field})
-                if op == "write":
-                    if "clamp" in schema: self.txn.schema_read(key, field, schema["clamp"]["max_field"])
-                    self.txn.source = node["_source"]
-                    self.txn.runtime.check_invariant(self.overlay[key], field, value); preview = value
-                else:
-                    self.txn.access("add_base", id_, field)
-                    if field not in self.overlay[key]: raise Fault("InvalidEntity", {"entity": id_, "field": field})
-                    preview = checked_numeric(schema["type"], self.overlay[key][field]+value)
-                self.overlay[key][field] = copy.deepcopy(preview)
-                self.record(node, entity=id_, field=field, value=value)
+                id_, value = e("entity"), e("value")
+                self.host_write(node, id_, node["field"], value)
             elif op == "assert":
                 if not e("condition"): raise Fault("AssertionFailed", source=node["_source"])
             elif op == "if":
@@ -511,22 +578,9 @@ class Job:
             elif op in {"emit", "schedule"}:
                 payload = e("payload")
                 delay = e("delay") if op == "schedule" else None
-                if delay is not None and delay < 1: raise Fault("TypeError", {"delay": delay}, source=node["_source"])
-                self.txn.charge("events")
-                identity = [op, self.event["id"], self.txn.job, self.emit_ordinal]
-                id_ = op+":"+digest(identity); self.emit_ordinal += 1
-                event = {"id": id_, "name": node["event"], "payload": copy.deepcopy(payload)}
-                self.record(node, value=event, identity=identity, **({"delay": delay} if delay is not None else {}))
+                self.host_emit(node, node["event"], payload, delay)
             elif op == "draw":
-                bound = e("bound")
-                if not 0 < bound <= 2**32: raise Fault("TypeError", {"bound": bound}, source=node["_source"])
-                threshold = 2**32 - 2**32 % bound
-                while True:  # Host rejection loop is charged and terminates on the same units budget.
-                    self.txn.charge(); rng = self.txn.state["rng"]; x = rng["state"]
-                    x ^= (x << 13) & 0xffffffff; x ^= x >> 17; x ^= (x << 5) & 0xffffffff; x &= 0xffffffff
-                    rng["state"] = x; rng["draws"] += 1
-                    if x < threshold: break
-                env[node["name"]] = x % bound; self.record(node, value=env[node["name"]], bound=bound)
+                env[node["name"]] = self.host_draw(node, e("bound"))
             elif op == "command":
                 args = e("args"); service = self.txn.core["services"][node["service"]]
                 resource = args[service["resource_field"]]
