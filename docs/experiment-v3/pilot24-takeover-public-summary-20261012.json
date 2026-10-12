@@ -1,6 +1,6 @@
 {
   "kind": "SANITIZED_PARTIAL_PILOT24_PROGRESS_NOT_TERMINAL_RECEIPT",
-  "observed_utc": "2026-10-12T15:54:30.907038+00:00",
+  "observed_utc": "2026-10-12T16:43:54.116900+00:00",
   "study_kind": "TWO_REPRESENTATION_NO_FEEDBACK_EXPLORATION_NOT_ABC",
   "task_clusters": 6,
   "generation_slots": 24,
@@ -14,35 +14,15 @@
   "scope_digest": "63d2c9432483f0a9843eda05436a077a838ccd09493556e7ffcf99de68506628",
   "previous_public_snapshot": "97328d4807192414766beacd35ad05b3fc19417f",
   "fixed_288_counts": {
-    "PASS": 230,
+    "PASS": 235,
     "FAIL": 2,
-    "NOTRUN": 54,
+    "NOTRUN": 49,
     "HARNESS_ERROR": 2
   },
   "forward51": {
-    "completed_durable_results": 9,
+    "completed_durable_results": 14,
     "reserved_unconfirmed": [],
     "not_reserved": [
-      [
-        "M2-r2-gameir_text",
-        "B03"
-      ],
-      [
-        "M2-r2-gameir_text",
-        "B04"
-      ],
-      [
-        "M2-r2-gameir_text",
-        "R01"
-      ],
-      [
-        "M2-r2-gameir_text",
-        "R02"
-      ],
-      [
-        "M2-r2-gameir_text",
-        "R03"
-      ],
       [
         "M2-r2-gameir_text",
         "R04"
@@ -266,6 +246,46 @@
         "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B02.json",
         "sha256": "17c4b3e398bb481125394f7556f0178c1b69537b00f52bf4c51d71ba3a5bac91",
         "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B03.json",
+        "sha256": "8854a7a373f48b84de85ca3ffb3d29be0a29febcd016f0da2005220abcd0fca3",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "B04",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-B04.json",
+        "sha256": "7de89edb829a554c38ccc2c9016fb016e66e683c82b08118fb5d1abed14509aa",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R01",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R01.json",
+        "sha256": "911397fde6cd9b311074b4de7e0dbf77afbd1d4303c768915be1929094a2c747",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R02",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R02.json",
+        "sha256": "ce13be0db251734a0f0585b35de292bc7ffec46d4ea2bf2147c0ebf0556185ad",
+        "completion_event_present": true
+      },
+      {
+        "slot_id": "M2-r2-gameir_text",
+        "case_id": "R03",
+        "status": "PASS",
+        "path": "results/pilot24-recovery-score-forward51-executed-20261012-001/result-M2-r2-gameir_text-R03.json",
+        "sha256": "e68b82fafce9a769adae5066e732f1ee93b3a5d040fdd583aa42ae45e1c6a25e",
+        "completion_event_present": true
       }
     ]
   },
@@ -274,9 +294,9 @@
       "generation_slots": 12,
       "unique_source_hashes": 7,
       "case_counts": {
-        "PASS": 112,
+        "PASS": 117,
         "FAIL": 2,
-        "NOTRUN": 30,
+        "NOTRUN": 25,
         "HARNESS_ERROR": 0
       },
       "slot_outcomes": {
@@ -679,9 +699,9 @@
       "representation": "gameir_text",
       "source_sha256": "9318965d46dc86f6f4948975f53caa9505f310e81d66ee8758e2b952849f176c",
       "counts": {
-        "PASS": 6,
+        "PASS": 11,
         "FAIL": 0,
-        "NOTRUN": 6,
+        "NOTRUN": 1,
         "HARNESS_ERROR": 0
       },
       "outcome": "SCORING_PENDING",
@@ -806,23 +826,23 @@
   "observed_result_continuity": {
     "kind": "READ_ONLY_OBSERVED_RESULT_CONTINUITY",
     "status": "PASS",
-    "snapshots_checked": 14,
-    "distinct_durable_rows": 9,
+    "snapshots_checked": 16,
+    "distinct_durable_rows": 14,
     "candidate_executions": 0,
     "new_model_calls": 0
   },
   "local_evidence": {
     "validated_snapshot": {
-      "path": "results/pilot24-forward51-file-observation-20261012-001/snapshot-20261012T155430-908038.json",
-      "sha256": "3f5e076f4b4c4f5e66aeee4ba86d13b9cb3a350895caff954840542e8955a3c5"
+      "path": "results/pilot24-forward51-file-observation-20261012-001/snapshot-20261012T164354-120659.json",
+      "sha256": "c6bf205f8b8e184ed286abd18d3e31dc091af1ac990396e2962cd8bdab30c9b6"
     },
     "full_file_audit": {
-      "path": "results/pilot24-takeover-readonly-audit-20261012-001/report-publication-20261012T155607-187732.json",
-      "sha256": "4483cc3a3a2cbf57daf1c69cd70304330b6c2cfe4c8ced6d5cd0f964462f85c4"
+      "path": "results/pilot24-takeover-readonly-audit-20261012-001/report-publication-20261012T164533-235.json",
+      "sha256": "2409e60fe89321ee2a56b283e93afa98fba14b45b5bd0c0922790fc72413af86"
     },
     "score_material": {
-      "path": "results/pilot24-takeover-readonly-audit-20261012-001/score-material-230-001.json",
-      "sha256": "d0da81fff48e03099fb53314564ab3d7d2584b80f3f7d3a56e986213a4299a62"
+      "path": "results/pilot24-takeover-readonly-audit-20261012-001/score-material-235-001.json",
+      "sha256": "960815114512562da9a2dcac5dd512f063cf655e3df95cf8c1f328248b817ecf"
     }
   },
   "current_process_liveness": "UNKNOWN_NO_QUERY_AFTER_ACCESS_DENIED",
@@ -833,5 +853,6 @@
   "engineering_or_control_tests_counted_as_scoring_rows": false,
   "a_b_c_experiment_completed": false,
   "runtime_code_changed_for_this_publication": false,
-  "unuploaded_original_local_development_commits": 39
+  "unuploaded_original_local_development_commits": 39,
+  "previous_published_takeover_snapshot": "60da52fc57a063e0bc36b72f45b00daec2378dfb"
 }
